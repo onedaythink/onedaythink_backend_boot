@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HaruChat {
 
-    private ChatRoomDetail chatRoomDetail;
-    private ChatMessageDetail chatMessageDetail;
+    private HaruChatRoomDetail haruChatRoomDetail;
+    private HaruChatMessageDetail haruChatMessageDetail;
 }

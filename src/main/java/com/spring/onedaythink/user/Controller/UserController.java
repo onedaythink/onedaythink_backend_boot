@@ -20,10 +20,11 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping(value = "auth/login")
-    public void loginUser() {
-        System.out.println("print");
-        log.debug("test");
+    @PostMapping(value = "auth")
+    public ResponseEntity<Object> loginUser(@RequestBody User user) {
+        User loginUser = userService.loginUser(user);
+        log.debug("login test");
+        return ResponseEntity.ok(loginUser);
     }
 
     @GetMapping(value = "admin/users")
