@@ -23,4 +23,11 @@
         )
     </insert>
 
+    <select id="selectLoginUser" parameterType="User" resultType="User">
+        select *
+        from user_tb
+        where user_id = #{userId}
+            and status = 'n'
+    </select>
+
 </mapper>
