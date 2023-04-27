@@ -19,7 +19,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @PostMapping(value = "auth")
     public ResponseEntity<Object> loginUser(@RequestBody User user) {
         User loginUser = userService.loginUser(user);
