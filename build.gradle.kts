@@ -53,6 +53,7 @@ dependencies {
 
     /** 웹소켓  **/
     implementation("org.springframework.boot:spring-boot-starter-websocket")
+
 }
 
 tasks.withType<Test> {
