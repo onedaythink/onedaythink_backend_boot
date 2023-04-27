@@ -75,6 +75,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsers(User user) {
         return userMapper.selectListUsers(user);
     }
+
     @Override
     public User editUser(User user) {
         user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
