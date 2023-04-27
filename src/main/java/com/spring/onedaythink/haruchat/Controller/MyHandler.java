@@ -1,4 +1,4 @@
-package com.spring.onedaythink.chat.Controller;
+package com.spring.onedaythink.haruchat.Controller;
 
 import com.spring.onedaythink.chat.vo.Chat;
 import com.spring.onedaythink.chat.vo.ChatRoomDetail;
