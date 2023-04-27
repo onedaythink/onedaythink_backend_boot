@@ -76,7 +76,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectListUsers(user);
     }
     @Override
-    @Transactional
     public User editUser(User user) {
         user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
         userMapper.updateUser(user);
@@ -84,7 +83,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public int withdrawUser(User user) {
         return userMapper.deleteUser(user);
     }
