@@ -203,3 +203,9 @@ http-nio-8080-exec-3 DEBUG case3 - opinion test
 http-nio-8080-exec-3 DEBUG case3 - 1
 http-nio-8080-exec-3 DEBUG case3 - 1
 http-nio-8080-exec-3 DEBUG case3 - 구려요 dadadaㅎ
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - opinion test
+http-nio-8080-exec-1 DEBUG case3 - 1
+http-nio-8080-exec-1 DEBUG case3 - 1
+http-nio-8080-exec-1 DEBUG case3 - 구려요 dadadaㅎ
