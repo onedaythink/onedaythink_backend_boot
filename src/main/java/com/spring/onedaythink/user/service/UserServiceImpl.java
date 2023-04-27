@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public int registerUser(User user) {
         user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
         log.debug(user.getUserPwd());
@@ -41,7 +40,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public User loginUser(User user) {
         // login 시 사용하는 id 만 가지고 일단 db 를 불러온 뒤
         User loginUser = userMapper.selectLoginUser(user);
@@ -51,7 +49,6 @@ public class UserServiceImpl implements UserService {
             log.debug("해당 아이디의 유저가 존재하지 않습니다.");
             return null;
         }
-
         // 만약 비밀번호가 일치하지 않는다면
         if (!passwordEncoder.matches(user.getUserPwd(), loginUser.getUserPwd())) {
             log.debug("유저가 로그인 창에 입력한 비밀번호를 인코딩한 값 : " + passwordEncoder.encode(user.getUserPwd()));
