@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public int withdrawUser(User user) {
+
         return userMapper.deleteUser(user);
     }
 }
