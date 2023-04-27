@@ -71,3 +71,7 @@ restartedMain DEBUG case3 - start
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 http-nio-8080-exec-1 DEBUG case3 - $2a$10$MwpSelMWGt488WXA/kXrhOYCsHjXxZ37plaKCW93SbZ/UJ.wmxrii
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start

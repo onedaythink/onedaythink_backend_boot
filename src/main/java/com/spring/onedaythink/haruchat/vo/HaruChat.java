@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Chat {
+public class HaruChat {
 
     private ChatRoomDetail chatRoomDetail;
     private ChatMessageDetail chatMessageDetail;
