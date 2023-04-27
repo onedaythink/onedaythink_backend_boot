@@ -88,21 +88,12 @@ http-nio-8080-exec-1 DEBUG case3 - 搿滉犯鞚胳棎 靹标车頄堨姷雼堧嫟.
 http-nio-8080-exec-1 DEBUG case3 - login test
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - $2a$10$s.rMM3IbvnptQAcL5mR29O5fb0FRv/ZxWVyVHKs9nZFlsdQEl0vEm
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - $2a$10$0M2SoKf56In590k6vItRTOs.kGnjmyOO0511rCBPkQOHFwZJ3H4RO
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
-main DEBUG case3 - start
-restartedMain DEBUG case3 - start
-main DEBUG case3 - start
-restartedMain DEBUG case3 - start
-main DEBUG case3 - start
-restartedMain DEBUG case3 - start
-http-nio-8080-exec-1 DEBUG case3 - addSubject
-http-nio-8080-exec-1 DEBUG case3 - 货肺款 林力 持扁~
-http-nio-8080-exec-2 DEBUG case3 - addSubject
-http-nio-8080-exec-2 DEBUG case3 - 货肺款 林力 持扁~
-main DEBUG case3 - start
-restartedMain DEBUG case3 - start
-http-nio-8080-exec-1 DEBUG case3 - addSubject
-http-nio-8080-exec-1 DEBUG case3 - 货肺款 林力 持扁~
+http-nio-8080-exec-1 DEBUG case3 - $2a$10$8gqyBRVqfqUfgzSUp1C/We0pmHTeMyIffEi5chYPAH1cWND2gVMba
+http-nio-8080-exec-2 DEBUG case3 - 搿滉犯鞚胳棎 靹标车頄堨姷雼堧嫟.
+http-nio-8080-exec-2 DEBUG case3 - login test

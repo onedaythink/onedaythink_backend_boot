@@ -22,7 +22,6 @@ public class LogAspect {
         log.debug("======> logAspect Method : " +
                 pjp.getSignature().getName());
         return result;
-
     }
 
 }
