@@ -4,4 +4,6 @@ import com.spring.onedaythink.subject.vo.Subject;
 
 public interface SubjectService {
 
+
+    int addSubject(Subject subject);
 }

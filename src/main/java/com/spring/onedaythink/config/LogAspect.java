@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogAspect {
 
-
     private Logger log = LogManager.getLogger("case 3");
     @Around("execution(* com..service.*Service.edit*(..))")
     public Object aopLogging(ProceedingJoinPoint pjp) throws Throwable {
@@ -23,7 +22,6 @@ public class LogAspect {
         log.debug("======> logAspect Method : " +
                 pjp.getSignature().getName());
         return result;
-
     }
 
 }

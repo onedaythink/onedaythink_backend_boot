@@ -17,5 +17,11 @@ public class SubjectServiceImpl implements SubjectService {
     @Autowired
     private SubjectMapper subjectMapper;
 
+    @Override
+    public int addSubject(Subject subject) {
+        log.debug(subject.getContent());
+        return subjectMapper.insertSubject(subject);
+    }
+
 
 }

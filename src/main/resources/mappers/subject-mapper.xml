@@ -4,6 +4,9 @@
 
 <mapper namespace="com.spring.onedaythink.subject.mapper.SubjectMapper">
 
-
+    <insert id="insertSubject" parameterType="Subject">
+        INSERT INTO `SUBJECT_TB` (`content`)
+        VALUES (#{content})
+    </insert>
 
 </mapper>
