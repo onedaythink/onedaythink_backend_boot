@@ -169,3 +169,16 @@ http-nio-8080-exec-1 DEBUG case3 - $2a$10$8gqyBRVqfqUfgzSUp1C/We0pmHTeMyIffEi5ch
 http-nio-8080-exec-2 DEBUG case3 - 로그인에 성공했습니다.
 http-nio-8080-exec-2 DEBUG case3 - login test
 >>>>>>> 865ea1e4c2473f658ca61bef51892a9d6097b15f
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - opinion test
+http-nio-8080-exec-2 DEBUG case3 - opinion test
+http-nio-8080-exec-3 DEBUG case3 - opinion test
+http-nio-8080-exec-4 DEBUG case3 - opinion test
+http-nio-8080-exec-5 DEBUG case3 - opinion test

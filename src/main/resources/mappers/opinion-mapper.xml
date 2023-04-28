@@ -5,8 +5,20 @@
 <mapper namespace="com.spring.onedaythink.opinion.mapper.OpinionMapper">
 
     <insert id="insertOpinion" parameterType="Opinion">
-        insert into `user_opinion_tb` (`user_no`,`sub_no`, `opinion`) VALUES
-       (#{userNo},#{subNo},#{opinion})
+        insert into `user_opinion_tb` (`user_no`,`sub_no`, `opinion`,`is_public`) VALUES
+       (#{userNo},#{subNo},#{opinion},#{isPublic})
     </insert>
 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
