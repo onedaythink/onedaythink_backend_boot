@@ -7,4 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface OpinionMapper {
 
     public int insertOpinion(Opinion opinion);
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> fc41cf295b65784806305e2fcdcdd496d546400d

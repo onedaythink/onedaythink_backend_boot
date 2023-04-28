@@ -16,4 +16,8 @@ public class Opinion {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fc41cf295b65784806305e2fcdcdd496d546400d
