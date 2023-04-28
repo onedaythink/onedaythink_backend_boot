@@ -14,10 +14,4 @@ public class Opinion {
     private int userOpiNo,userNo,subNo;
     private String opinion,createAt,isPublic,withdraw;
 
-
-
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> fc41cf295b65784806305e2fcdcdd496d546400d
