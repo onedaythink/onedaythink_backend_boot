@@ -14,7 +14,7 @@ public class User {
 
     private int userNo;
     private String userId, userPwd, gender, birth,
-            userName, nickname, email, userImg,
+            userName, nickname, email, userOriginImg, userImgPath,
             blackList, status, userType;
 
 }
