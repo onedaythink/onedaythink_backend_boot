@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping(value = "auth")
+    @PostMapping(value = "auth/login")
     public ResponseEntity<Object> loginUser(@RequestBody User user) {
         User loginUser = userService.loginUser(user);
         log.debug("login test");
@@ -33,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
-    @PostMapping(value = "users/signup")
+    @PostMapping(value = "auth/signup")
     public ResponseEntity<Object> registerUser(@RequestBody User user){
         int result = userService.registerUser(user);
         return ResponseEntity.ok(result);

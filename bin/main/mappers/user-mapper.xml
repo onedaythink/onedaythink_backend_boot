@@ -1,0 +1,75 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.onedaythink.user.mapper.UserMapper">
+
+    <select id="userIdCheck" parameterType="User" resultType="User">
+        select user_id
+        from user_tb
+        where user_id = #{userId}
+    </select>
+
+    <select id="nicknameCheck" parameterType="User" resultType="User">
+        select nickname
+        from user_tb
+        where nickname = #{nickname}
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into user_tb (`user_id`, `user_pwd`, `gender`, `birth`, `user_name`, `nickname`
+        <if test='email != null and email != ""'>, email</if>
+        <if test="userOriginImg != null and userOriginImg != ''">, user_origin_img</if>
+        <if test="userImgPath != null and userImgPath != ''">, user_img_path</if>
+        <if test='userType != null and userType != ""'>, user_type</if>
+        ) values
+        (#{userId}, #{userPwd}, #{gender}, #{birth}, #{userName}, #{nickname}
+        <if test='email != null and email != ""'>, #{email}</if>
+        <if test="userOriginImg != null and userOriginImg != ''">, #{userOriginImg}</if>
+        <if test="userImgPath != null and userImgPath != ''">, #{userImgPath}</if>
+        <if test='userType != null and userType != ""'>, #{userType}</if>
+        )
+    </insert>
+
+    <select id="selectLoginUser" parameterType="User" resultType="User">
+        select *
+        from user_tb
+        where user_id = #{userId}
+          and status = 'n'
+    </select>
+
+    <select id="selectUser" parameterType="User" resultType="User">
+        select *
+        from user_tb
+        where user_no = #{userNo}
+--           and status = 'n'
+    </select>
+
+    <select id="selectListUsers" parameterType="User" resultType="User">
+        select *
+        from user_tb
+        where status = 'n';
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        update user_tb
+        <set>
+            <if test="">user_pwd = #{userPwd}</if>
+            <if test="">gender</if>
+            <if test="birth != null and birth != ''">birth = #{birth}</if>
+            <if test="userName != null and userName != ''">user_name = #{userName}</if>
+            <if test="nickname != null and nickname != ''">nickname = #{nickname}</if>
+            <if test="email != null and email != ''">email = #{email}</if>
+            <if test="userOriginImg != null and userOriginImg != ''">user_origin_img = #{userOriginImg}</if>
+            <if test="userImgPath != null and userImgPath != ''">user_img_path = #{userImgPath}</if>
+        </set>
+        where user_no = #{userNo}
+    </update>
+
+    <update id="deleteUser" parameterType="User">
+        update user_tb
+        set status = 'y'
+        where user_no = #{userNo}
+    </update>
+
+</mapper>
