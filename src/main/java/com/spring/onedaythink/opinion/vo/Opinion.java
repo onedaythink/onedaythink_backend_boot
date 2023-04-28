@@ -14,6 +14,4 @@ public class Opinion {
     private int userOpiNo,userNo,subNo;
     private String opinion,createAt,isPublic,withdraw;
 
-
-
 }

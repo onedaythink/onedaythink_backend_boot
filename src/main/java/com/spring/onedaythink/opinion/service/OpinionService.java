@@ -1,7 +1,6 @@
 package com.spring.onedaythink.opinion.service;
 
 import com.spring.onedaythink.opinion.vo.Opinion;
-import com.spring.onedaythink.user.vo.User;
 
 public interface OpinionService {
 
@@ -17,7 +16,6 @@ public interface OpinionService {
 
     // 나의 의견 생성
     int addOpinions(Opinion opinion);
-
     // 나의 의견 수정
 
     // 나의 의견 삭제

@@ -23,5 +23,9 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectMapper.insertSubject(subject);
     }
 
-
+    @Override
+    public List<Subject> getSubject() {
+        log.debug("getSubject");
+        return subjectMapper.selectSubject();
+    }
 }

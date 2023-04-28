@@ -1,38 +1,33 @@
 package com.spring.onedaythink.config;
 
-import com.spring.onedaythink.chat.Controller.MyHandler;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
-@EnableWebSocket
-public class WebSocketConfig implements WebSocketConfigurer {
+@EnableWebSocketMessageBroker
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry
-                .addHandler(myHandler(), "/myHandler")
-                .setAllowedOrigins("*");
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/ws")
+                .setAllowedOrigins("http://localhost:4000")
+                .addInterceptors().withSockJS();
     }
 
-    @Bean
-    public WebSocketHandler myHandler() {
-        return new MyHandler();
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.enableSimpleBroker("/topic", "queue");
+        registry.setApplicationDestinationPrefixes("/pub");
     }
 }
 
 /*
-    위 코드에서는 WebSocketHandler 인터페이스의 메소드를 구현하여
-    WebSocket 연결 시 동작하는 메소드들을 작성합니다.
-    afterConnectionEstablished 메소드는 WebSocket 연결이 성공했을 때 호출되며,
-    handleMessage 메소드는 WebSocket으로부터 메시지를 받았을 때 호출됩니다.
-    handleTransportError 메소드는 에러가 발생했을 때 호출되며,
-    afterConnectionClosed 메소드는 WebSocket 연결이 종료되었을 때 호출됩니다.
+    앞으로 웹소켓 서버의 엔드포인트는 /ws이다.
+    클라이언트는 다른 origin이므로 cors 오류를 방지하기 위해 setAllowedOrigins를 미리 사용해서 허용할 origin을 등록해둔다.
+    * 는 모든 origin 허용이다. (보안을 위해선 특정 origin만 등록하자...)
+    Message broker를 설정하기 위해 configureMessageBroker method를 overide 한다.
 
-    이제 백엔드와 프론트엔드에서 WebSocket을 사용할 수 있습니다.
-    웹소켓을 이용하면 실시간으로 데이터를 주고받을 수 있으므로, 채팅이나 알림 등에 사용될 수 있습니다.
- */
+    enableSimpleBroker()를 사용해서 /sub가 prefix로 붙은 destination의 클라이언트에게 메시지를 보낼 수 있도록 Simple Broker를 등록한다.
+    setApplicationestinationPrefiexs()를 사용해서 /pub가 prefix로 붙은 메시지들은 @MessageMapping이 붙은 method로 바운드된다.
+*/

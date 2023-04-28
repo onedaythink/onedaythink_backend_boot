@@ -19,6 +19,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @PostMapping(value = "auth")
     public ResponseEntity<Object> loginUser(@RequestBody User user) {
         User loginUser = userService.loginUser(user);
@@ -32,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
-    @PostMapping(value = "users/signup")
+    @PostMapping(value = "auth/signup")
     public ResponseEntity<Object> registerUser(@RequestBody User user){
         int result = userService.registerUser(user);
         return ResponseEntity.ok(result);
