@@ -2,7 +2,6 @@ package com.spring.onedaythink.subject.Controller;
 
 import com.spring.onedaythink.subject.service.SubjectService;
 import com.spring.onedaythink.subject.vo.Subject;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,12 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
 
-//    @GetMapping(value="subject")
-//    public ResponseEntity getSubject() {
-//        List<Subject> subjectList = subjectService.getSubject();
-//        log.debug("getSubject");
-//        return ResponseEntity.ok(getSubject);
-//    }
+    @GetMapping
+    public ResponseEntity getSubject() {
+        List<Subject> subjectList = subjectService.getSubject();
+        log.debug("getSubject");
+        return ResponseEntity.ok(subjectList);
+    }
 
     @PostMapping
     public ResponseEntity addSubject(@RequestBody Subject subject) {
