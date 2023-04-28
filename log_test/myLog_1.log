@@ -176,3 +176,6 @@ http-nio-8080-exec-1 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedU
 http-nio-8080-exec-8 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=w)
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - 0
