@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping(value = "auth/login")
+    @PostMapping(value = "auth")
     public ResponseEntity<Object> loginUser(@RequestBody User user) {
         User loginUser = userService.loginUser(user);
         log.debug("login test");
