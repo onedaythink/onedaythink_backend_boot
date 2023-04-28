@@ -106,3 +106,7 @@ main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 http-nio-8080-exec-1 DEBUG case3 - addSubject
 http-nio-8080-exec-1 DEBUG case3 - 货肺款 林力 持扁~
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - addSubject
+http-nio-8080-exec-1 DEBUG case3 - 货肺款 林力 持扁~
