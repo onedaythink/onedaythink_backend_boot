@@ -117,3 +117,62 @@ restartedMain DEBUG case3 - start
 http-nio-8080-exec-1 DEBUG case3 - $2a$10$8gqyBRVqfqUfgzSUp1C/We0pmHTeMyIffEi5chYPAH1cWND2gVMba
 http-nio-8080-exec-2 DEBUG case3 - 로그인에 성공했습니다.
 http-nio-8080-exec-2 DEBUG case3 - login test
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=1)
+http-nio-8080-exec-2 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=w)
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-7 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=w)
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-8 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=w)
+http-nio-8080-exec-10 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=w)
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=w)
+http-nio-8080-exec-8 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=w)
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
