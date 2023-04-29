@@ -28,4 +28,22 @@ public class SubjectServiceImpl implements SubjectService {
         log.debug("getSubject");
         return subjectMapper.selectSubject();
     }
+
+    @Override
+    public int deleteSubject(Subject subject) {
+        log.debug("deleteSubject");
+        return subjectMapper.deleteSubject(subject);
+    }
+
+    @Override
+    public Subject getMainSubject() {
+        log.debug("getMainSubject");
+        return subjectMapper.selectRandomSubject();
+    }
+
+    @Override
+    public int updateSubjectDate(Subject subject) {
+        log.debug("updateSubjectDate");
+        return subjectMapper.updateSubjectDate(subject);
+    }
 }

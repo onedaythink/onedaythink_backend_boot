@@ -12,7 +12,13 @@ public interface SubjectService {
     // 논제 전체 조회
     List<Subject> getSubject();
 
-    // 논제 랜덤 조회
+    // 논제 램덤 조회
+    Subject getMainSubject();
+    int updateSubjectDate(Subject subject);
+    // 논제 수정
+
+    // 논제 삭제
+    int deleteSubject(Subject subject);
 
 
 

@@ -19,6 +19,7 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
 
+    // 논제 전체 조회
     @GetMapping
     public ResponseEntity getSubject() {
         List<Subject> subjectList = subjectService.getSubject();
@@ -26,6 +27,16 @@ public class SubjectController {
         return ResponseEntity.ok(subjectList);
     }
 
+    // 논제 랜덤 조회
+    @PostMapping(value = "/main")
+    public ResponseEntity mainSubject(){
+        log.debug("mainSubject");
+        Subject subject = subjectService.getMainSubject();
+        int result = subjectService.updateSubjectDate(subject);
+        return ResponseEntity.ok(subject);
+    }
+
+    // 논제 추가
     @PostMapping
     public ResponseEntity addSubject(@RequestBody Subject subject) {
         log.debug("addSubject");
@@ -33,12 +44,15 @@ public class SubjectController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value="/{subNo}")
-    public ResponseEntity deleteSubject(@RequestBody Subject subject){
+    // 논제 삭제
+    @PostMapping(value="/delete/{subNo}")
+    public ResponseEntity deleteSubject(@PathVariable int subNo){
         log.debug("deleteSubject");
-        int result =0;
-        return ResponseEntity.ok("test");
+        Subject subject = Subject.builder().subNo(subNo).build();
+        int result = subjectService.deleteSubject(subject);
+        return ResponseEntity.ok(result);
 
     }
+
 
 }

@@ -1,16 +1,11 @@
 package com.spring.onedaythink.haruchat.Controller;
 
-import com.spring.onedaythink.chat.vo.Chat;
-import com.spring.onedaythink.chat.vo.ChatRoomDetail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
-
-import java.util.Calendar;
 
 public class MyHandler implements WebSocketHandler {
 

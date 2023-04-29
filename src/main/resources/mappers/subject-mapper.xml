@@ -5,12 +5,34 @@
 <mapper namespace="com.spring.onedaythink.subject.mapper.SubjectMapper">
 
     <insert id="insertSubject" parameterType="Subject">
-        INSERT INTO `SUBJECT_TB` (`content`)
+        INSERT INTO subject_tb (content)
         VALUES (#{content})
     </insert>
 
     <select id="selectSubject" resultType="Subject">
         SELECT *
-        FROM `SUBJECT_TB`
+        FROM subject_tb
+        WHERE withdraw = 'n'
     </select>
+
+    <update id="updateSubjectDate" parameterType="Subject">
+        UPDATE subject_tb
+        SET sub_date = IFNULL(sub_date,NOW())
+        WHERE sub_no = #{subNo}
+    </update>
+
+    <select id="selectRandomSubject" resultType="Subject">
+        SELECT sub_no, content, sub_img_path
+        FROM subject_tb
+        WHERE sub_no >= (SELECT FLOOR(MAX(sub_no) * RAND()) FROM subject_tb)
+        LIMIT 1;
+    </select>
+
+    <update id="deleteSubject" parameterType="Subject">
+        UPDATE subject_tb
+        SET withdraw = 'y'
+        WHERE sub_no = #{subNo};
+    </update>
+
+
 </mapper>

@@ -1,0 +1,150 @@
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - deleteSubject
+http-nio-8080-exec-1 DEBUG case3 - deleteSubject
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : deleteSubject
+http-nio-8080-exec-2 DEBUG case3 - deleteSubject
+http-nio-8080-exec-2 DEBUG case3 - deleteSubject
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : deleteSubject
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - deleteSubject
+http-nio-8080-exec-1 DEBUG case3 - deleteSubject
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : deleteSubject
+http-nio-8080-exec-3 DEBUG case3 - getSubject
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : getSubject
+http-nio-8080-exec-3 DEBUG case3 - getSubject
+http-nio-8080-exec-5 DEBUG case3 - deleteSubject
+http-nio-8080-exec-5 DEBUG case3 - deleteSubject
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect Method : deleteSubject
+http-nio-8080-exec-6 DEBUG case3 - deleteSubject
+http-nio-8080-exec-6 DEBUG case3 - deleteSubject
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect Method : deleteSubject
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - mainSubject
+http-nio-8080-exec-1 DEBUG case3 - getMainSubject
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-3 DEBUG case3 - mainSubject
+http-nio-8080-exec-3 DEBUG case3 - getMainSubject
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-4 DEBUG case3 - mainSubject
+http-nio-8080-exec-4 DEBUG case3 - getMainSubject
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-6 DEBUG case3 - mainSubject
+http-nio-8080-exec-6 DEBUG case3 - getMainSubject
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-7 DEBUG case3 - mainSubject
+http-nio-8080-exec-7 DEBUG case3 - getMainSubject
+http-nio-8080-exec-7 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-7 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-9 DEBUG case3 - mainSubject
+http-nio-8080-exec-9 DEBUG case3 - getMainSubject
+http-nio-8080-exec-9 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-9 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - mainSubject
+http-nio-8080-exec-1 DEBUG case3 - getMainSubject
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-1 DEBUG case3 - updateSubjectDate
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : updateSubjectDate
+http-nio-8080-exec-2 DEBUG case3 - mainSubject
+http-nio-8080-exec-2 DEBUG case3 - getMainSubject
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-2 DEBUG case3 - updateSubjectDate
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : updateSubjectDate
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - mainSubject
+http-nio-8080-exec-1 DEBUG case3 - getMainSubject
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-1 DEBUG case3 - updateSubjectDate
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : updateSubjectDate
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getRandomHaruBot
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getRandomHaruBot
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getRandomHaruBot
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getRandomHaruBot
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getRandomHaruBot
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getRandomHaruBot
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getRandomHaruBot
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getRandomHaruBot
+http-nio-8080-exec-1 DEBUG case3 - getRandomHaruBot
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-3 DEBUG case3 - startHaruChat
+http-nio-8080-exec-3 DEBUG case3 - createHaruChatRoom
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : createHaruChatRoom
+http-nio-8080-exec-3 DEBUG case3 - getHaruChatRoomInfo
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : getHaruChatRoomInfo
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-2 DEBUG case3 - startHaruChat
+http-nio-8080-exec-2 DEBUG case3 - createHaruChatRoom
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : createHaruChatRoom
+http-nio-8080-exec-2 DEBUG case3 - getHaruChatRoomInfo
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getHaruChatRoomInfo
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - startHaruChat
+http-nio-8080-exec-1 DEBUG case3 - createHaruChatRoom
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : createHaruChatRoom
+http-nio-8080-exec-1 DEBUG case3 - getHaruChatRoomInfo
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getHaruChatRoomInfo
+http-nio-8080-exec-1 DEBUG case3 - selectedHaruBot
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : selectedHaruBot
+http-nio-8080-exec-3 DEBUG case3 - startHaruChat
+http-nio-8080-exec-3 DEBUG case3 - createHaruChatRoom
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : createHaruChatRoom
+http-nio-8080-exec-3 DEBUG case3 - getHaruChatRoomInfo
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : getHaruChatRoomInfo
+http-nio-8080-exec-3 DEBUG case3 - selectedHaruBot
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : selectedHaruBot

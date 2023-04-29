@@ -15,7 +15,7 @@ public class OpinionServiceImpl implements OpinionService{
     @Autowired
     private OpinionMapper opinionMapper;
 
-    //유저 논제 입력
+    //유저 의견 입력
     @Override
     public int addOpinions(Opinion opinion) {
 
