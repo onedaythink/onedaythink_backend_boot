@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface git UserMapper {
+public interface UserMapper {
 
     public User userIdCheck(User user);
 
