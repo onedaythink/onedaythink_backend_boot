@@ -148,3 +148,40 @@ http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method :
 http-nio-8080-exec-3 DEBUG case3 - selectedHaruBot
 http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : selectedHaruBot
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getLastMessage
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
+http-nio-8080-exec-3 DEBUG case3 - getLastMessage
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getLastMessage
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
+http-nio-8080-exec-2 DEBUG case3 - getLastMessage
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getLastMessage
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getLastMessage
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getLastMessage
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-2 DEBUG case3 - getLastMessage
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
+http-nio-8080-exec-2 DEBUG case3 - getLastMessage
