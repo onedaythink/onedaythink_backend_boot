@@ -12,10 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HaruChatRoomDetail {
 
-<<<<<<< HEAD
     private ChatRoom chatRoom;
-=======
->>>>>>> 7f292db9435659a08e0854ff7594b6d0e2bb73c7
+
     private int haruNo, chatRoomNo;
 
 
