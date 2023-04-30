@@ -28,6 +28,7 @@ public class OpinionController {
         int result = opinionService.addOpinions(opinion);
         return ResponseEntity.ok(result);
     }
+
     //나의 생각 수정
     @PutMapping(value="/{userNo}")
     public ResponseEntity<Object> editOpinions(@PathVariable int userNo,@RequestBody Opinion opinion)
@@ -54,17 +55,27 @@ public class OpinionController {
     }
 
     //타인의 생각 좋아요
-    @PostMapping(value ="/like/{userNo}/{userOpiNo}")
+  /*  @PostMapping(value ="/like/{userNo}/{userOpiNo}")
     public ResponseEntity<Object> addLikeOpinion(@PathVariable int userNo,@PathVariable int userOpiNo)
     {
         likeOpinion.set(userNo);
         likeOpinion.set(userOpiNo);
         int result = opinionService.addLikeOpinions(likeOpinion);
         return ResponseEntity.ok(result);
-    }
+    }*/
     //타인의 생각 좋아요 취소
 
     //나의 공간 - 나의전체조회
 
     //메인 - 나의 생각 조회
+
+    @GetMapping(value = "{userNo}/{subDate}")
+    public ResponseEntity<Object> getTodayOpinion(@PathVariable int userNo, @PathVariable String subDate) {
+        log.debug("getOpinion");
+        Opinion opinion = opinionService.getTodayOpinion(Opinion.builder().userNo(userNo).createAt(subDate).build());
+        return ResponseEntity.ok(opinion);
+    }
+
+    
+
 }

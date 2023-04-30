@@ -12,8 +12,23 @@ public interface SubjectMapper {
     public int insertSubject(Subject subject);
 
     // 논체 전체 조회
-    public List<Subject> selectSubject();
+    public List<Subject> selectSubjects();
 
+    public Subject selectSubjectBySubNo(Subject subject);
 
+    // 논제 랜덤 조회
+    public Subject selectRandomSubject(Subject subject);
 
+    public int updateSubjectDate(Subject subject);
+    public Subject selectUpdatedMainSubject(Subject subject);
+
+    // 논제 삭제
+    public int deleteSubject(Subject subject);
+
+    public Subject selectSubjectBySubDate(Subject subject);
+
+    //
+    public List<Subject> selectNullSubjectDates();
+
+    public int updateSubjectWithRandomDate(Subject subject);
 }

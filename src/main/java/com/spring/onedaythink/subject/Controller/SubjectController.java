@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="subject")
+@RequestMapping(value="api/v1/subject")
 public class SubjectController {
 
     private Logger log = LogManager.getLogger("case3");
@@ -19,25 +19,44 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
 
-    @GetMapping
-    public ResponseEntity getSubject() {
-        List<Subject> subjectList = subjectService.getSubject();
-        log.debug("getSubject");
+    @GetMapping(value = "subjects")
+    public ResponseEntity getSubjects() {
+        List<Subject> subjectList = subjectService.getSubjects();
+        log.debug("getSubjects");
         return ResponseEntity.ok(subjectList);
     }
 
-    @PostMapping
+    @GetMapping(value = "subjects/{subNo}")
+    public ResponseEntity getSubject(@PathVariable int subNo) {
+        Subject subject = subjectService.getSubject(Subject.builder().subNo(subNo).build());
+        log.debug("getSubject");
+        return ResponseEntity.ok(subject);
+    }
+
+    // 논제 랜덤 조회
+    @PostMapping(value = "subjects/main/{subDate}")
+    public ResponseEntity mainSubject(@PathVariable String subDate){
+        log.debug("mainSubject");
+        Subject subject = subjectService.getMainSubject(Subject.builder().subDate(subDate).build());
+        return ResponseEntity.ok(subject);
+    }
+
+
+    // 논제 추가
+    @PostMapping(value = "subjects")
     public ResponseEntity addSubject(@RequestBody Subject subject) {
         log.debug("addSubject");
         int result = subjectService.addSubject(subject);
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value="/{subNo}")
-    public ResponseEntity deleteSubject(@RequestBody Subject subject){
+    // 논제 삭제
+    @PostMapping(value="subjects/delete/{subNo}")
+    public ResponseEntity deleteSubject(@PathVariable int subNo){
         log.debug("deleteSubject");
-        int result =0;
-        return ResponseEntity.ok("test");
+        Subject subject = Subject.builder().subNo(subNo).build();
+        int result = subjectService.deleteSubject(subject);
+        return ResponseEntity.ok(result);
 
     }
 

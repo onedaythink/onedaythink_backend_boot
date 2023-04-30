@@ -27,9 +27,14 @@
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
-.log_test
+log_test/**
 .idea/modules/misc.xml
+<<<<<<< HEAD
 f
+=======
+src/main/resources/application.properties
+
+>>>>>>> 4eca06ccc309961fa79c8da01859b119c5a7cc4c
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries

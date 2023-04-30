@@ -16,6 +16,9 @@ public interface OpinionService {
 
     // 나의 의견 조회
 
+    // 오늘의 나의 의견 조회
+    Opinion getTodayOpinion(Opinion opinion);
+
     // 나의 의견 생성
     int addOpinions(Opinion opinion);
     // 나의 의견 수정
