@@ -17,20 +17,25 @@ public class ReportServiceImpl implements ReportService {
     @Autowired
     private ReportMapper reportMapper;
 
+    // 신고하기 생성
     @Override
     public int reportInsertUser(Report report){
         return reportMapper.insertReport(report);
-
     }
+
+    //신고하기 전체 조회
     @Override
     public List<Report> reportSelectAll(){
         return reportMapper.selectAllReport();
     }
+
+    // 신고하기 개별 조회
     @Override
     public Report reportSelectOne(Report report){
         return reportMapper.selectOneReport(report);
     }
 
+    // 신고하기 수정
     @Override
     public Report reportResultUpdate(Report report){
         int result = reportMapper.updateReport(report);
