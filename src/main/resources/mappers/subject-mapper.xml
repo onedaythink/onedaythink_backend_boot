@@ -9,26 +9,34 @@
         VALUES (#{content})
     </insert>
 
-    <select id="selectSubject" resultType="Subject">
+    <select id="selectSubjects" resultType="Subject">
         SELECT *
         FROM subject_tb
         WHERE withdraw = 'n'
     </select>
 
-    <update id="updateSubjectDate" parameterType="Subject">
-        UPDATE subject_tb
-        SET sub_date = IFNULL(sub_date,NOW())
-        WHERE sub_no = #{subNo}
-    </update>
-
-    <select id="selectRandomSubject" parameterType="Subject" resultType="Subject">
+    <select id="selectNullSubjectDates" resultType="Subject">
         SELECT *
         FROM subject_tb
-        WHERE sub_date = #{subDate}
-        <if test="subDate == null or subDate ==''">
-        OR sub_no >= (SELECT FLOOR(MAX(sub_no) * RAND()) FROM subject_tb)
-        ORDER BY RAND() LIMIT 1 </if>
+        WHERE sub_date is NULL
     </select>
+    <select id="selectSubjectBySubNo" parameterType="Subject" resultType="Subject">
+        SELECT *
+        FROM `SUBJECT_TB`
+        WHERE sub_date = #{subNo}
+    </select>
+
+    <select id="selectSubjectBySubDate" parameterType="Subject" resultType="Subject">
+        SELECT *
+        FROM `SUBJECT_TB`
+        WHERE sub_date = #{subDate}
+    </select>
+
+    <update id="updateSubjectDate" parameterType="Subject">
+        update subject_tb
+        set sub_date = #{subDate}
+        where sub_no = #{subNo}
+    </update>
 
     <update id="deleteSubject" parameterType="Subject">
         UPDATE subject_tb

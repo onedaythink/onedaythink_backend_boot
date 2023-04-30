@@ -19,25 +19,31 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
 
-    // 논제 전체 조회
-    @GetMapping
-    public ResponseEntity getSubject() {
-        List<Subject> subjectList = subjectService.getSubject();
-        log.debug("getSubject");
+    @GetMapping(value = "subjects")
+    public ResponseEntity getSubjects() {
+        List<Subject> subjectList = subjectService.getSubjects();
+        log.debug("getSubjects");
         return ResponseEntity.ok(subjectList);
     }
 
+    @GetMapping(value = "subjects/{subNo}")
+    public ResponseEntity getSubject(@PathVariable int subNo) {
+        Subject subject = subjectService.getSubject(Subject.builder().subNo(subNo).build());
+        log.debug("getSubject");
+        return ResponseEntity.ok(subject);
+    }
+
     // 논제 랜덤 조회
-    @PostMapping(value = "/main/{subDate}")
+    @PostMapping(value = "subjects/main/{subDate}")
     public ResponseEntity mainSubject(@PathVariable String subDate){
         log.debug("mainSubject");
-        System.out.println(subDate);
         Subject subject = subjectService.getMainSubject(Subject.builder().subDate(subDate).build());
         return ResponseEntity.ok(subject);
     }
 
+
     // 논제 추가
-    @PostMapping
+    @PostMapping(value = "subjects")
     public ResponseEntity addSubject(@RequestBody Subject subject) {
         log.debug("addSubject");
         int result = subjectService.addSubject(subject);
@@ -45,7 +51,7 @@ public class SubjectController {
     }
 
     // 논제 삭제
-    @PostMapping(value="/delete/{subNo}")
+    @PostMapping(value="subjects/delete/{subNo}")
     public ResponseEntity deleteSubject(@PathVariable int subNo){
         log.debug("deleteSubject");
         Subject subject = Subject.builder().subNo(subNo).build();
@@ -53,6 +59,5 @@ public class SubjectController {
         return ResponseEntity.ok(result);
 
     }
-
 
 }
