@@ -27,7 +27,7 @@
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
-.log_test
+.log_test/
 .idea/modules/misc.xml
 .resources/application.properties
 
