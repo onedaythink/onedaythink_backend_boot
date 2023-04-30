@@ -21,17 +21,19 @@
         WHERE sub_no = #{subNo}
     </update>
 
-    <select id="selectRandomSubject" resultType="Subject">
-        SELECT sub_no, content, sub_img_path
+    <select id="selectRandomSubject" parameterType="Subject" resultType="Subject">
+        SELECT *
         FROM subject_tb
-        WHERE sub_no >= (SELECT FLOOR(MAX(sub_no) * RAND()) FROM subject_tb)
-        LIMIT 1;
+        WHERE sub_date = #{subDate}
+        <if test="subDate == null or subDate ==''">
+        OR sub_no >= (SELECT FLOOR(MAX(sub_no) * RAND()) FROM subject_tb)
+        ORDER BY RAND() LIMIT 1 </if>
     </select>
 
     <update id="deleteSubject" parameterType="Subject">
         UPDATE subject_tb
         SET withdraw = 'y'
-        WHERE sub_no = #{subNo};
+        WHERE sub_no = #{subNo}
     </update>
 
 

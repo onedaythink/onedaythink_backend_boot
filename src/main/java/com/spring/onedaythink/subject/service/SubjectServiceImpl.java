@@ -36,14 +36,14 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Subject getMainSubject() {
+    public Subject getMainSubject(Subject subject) {
         log.debug("getMainSubject");
-        return subjectMapper.selectRandomSubject();
-    }
-
-    @Override
-    public int updateSubjectDate(Subject subject) {
-        log.debug("updateSubjectDate");
-        return subjectMapper.updateSubjectDate(subject);
+        log.debug(subject);
+        Subject mainSubject = subjectMapper.selectRandomSubject(subject);
+        System.out.println(mainSubject.getSubDate());
+        if( mainSubject.getSubDate()==null || mainSubject.getSubDate().equals("")){
+            subjectMapper.updateSubjectDate(mainSubject);
+        }
+        return mainSubject;
     }
 }

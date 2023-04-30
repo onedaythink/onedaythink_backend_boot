@@ -13,8 +13,8 @@ public interface SubjectService {
     List<Subject> getSubject();
 
     // 논제 램덤 조회
-    Subject getMainSubject();
-    int updateSubjectDate(Subject subject);
+    Subject getMainSubject(Subject subject);
+
     // 논제 수정
 
     // 논제 삭제

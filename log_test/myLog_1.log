@@ -185,3 +185,81 @@ http-nio-8080-exec-2 DEBUG case3 - getLastMessage
 http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.chat.service.ChatServiceImpl
 http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
 http-nio-8080-exec-2 DEBUG case3 - getLastMessage
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-3 DEBUG case3 - mainSubject
+http-nio-8080-exec-3 DEBUG case3 - getMainSubject
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-2 DEBUG case3 - mainSubject
+http-nio-8080-exec-2 DEBUG case3 - getMainSubject
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-4 DEBUG case3 - mainSubject
+http-nio-8080-exec-4 DEBUG case3 - getMainSubject
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-2 DEBUG case3 - mainSubject
+http-nio-8080-exec-2 DEBUG case3 - getMainSubject
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-3 DEBUG case3 - mainSubject
+http-nio-8080-exec-3 DEBUG case3 - getMainSubject
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-1 DEBUG case3 - mainSubject
+http-nio-8080-exec-1 DEBUG case3 - getMainSubject
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-4 DEBUG case3 - mainSubject
+http-nio-8080-exec-4 DEBUG case3 - getMainSubject
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-5 DEBUG case3 - mainSubject
+http-nio-8080-exec-5 DEBUG case3 - getMainSubject
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-6 DEBUG case3 - mainSubject
+http-nio-8080-exec-6 DEBUG case3 - getMainSubject
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - mainSubject
+http-nio-8080-exec-1 DEBUG case3 - getMainSubject
+http-nio-8080-exec-1 DEBUG case3 - Subject(subNo=0, content=null, subOriginImg=null, subImgPath=null, subDate=2023-04-29, withdraw=null)
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-2 DEBUG case3 - mainSubject
+http-nio-8080-exec-2 DEBUG case3 - getMainSubject
+http-nio-8080-exec-2 DEBUG case3 - Subject(subNo=0, content=null, subOriginImg=null, subImgPath=null, subDate=2023-04-29, withdraw=null)
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - mainSubject
+http-nio-8080-exec-1 DEBUG case3 - getMainSubject
+http-nio-8080-exec-1 DEBUG case3 - Subject(subNo=0, content=null, subOriginImg=null, subImgPath=null, subDate=2023-04-29, withdraw=null)
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-2 DEBUG case3 - mainSubject
+http-nio-8080-exec-2 DEBUG case3 - getMainSubject
+http-nio-8080-exec-2 DEBUG case3 - Subject(subNo=0, content=null, subOriginImg=null, subImgPath=null, subDate=2023-04-29, withdraw=null)
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - mainSubject
+http-nio-8080-exec-1 DEBUG case3 - getMainSubject
+http-nio-8080-exec-1 DEBUG case3 - Subject(subNo=0, content=null, subOriginImg=null, subImgPath=null, subDate=2023-04-29, withdraw=null)
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
+http-nio-8080-exec-3 DEBUG case3 - mainSubject
+http-nio-8080-exec-3 DEBUG case3 - getMainSubject
+http-nio-8080-exec-3 DEBUG case3 - Subject(subNo=0, content=null, subOriginImg=null, subImgPath=null, subDate=2023-04-28, withdraw=null)
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject

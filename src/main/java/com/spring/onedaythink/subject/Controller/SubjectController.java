@@ -28,11 +28,11 @@ public class SubjectController {
     }
 
     // 논제 랜덤 조회
-    @PostMapping(value = "/main")
-    public ResponseEntity mainSubject(){
+    @PostMapping(value = "/main/{subDate}")
+    public ResponseEntity mainSubject(@PathVariable String subDate){
         log.debug("mainSubject");
-        Subject subject = subjectService.getMainSubject();
-        int result = subjectService.updateSubjectDate(subject);
+        System.out.println(subDate);
+        Subject subject = subjectService.getMainSubject(Subject.builder().subDate(subDate).build());
         return ResponseEntity.ok(subject);
     }
 
