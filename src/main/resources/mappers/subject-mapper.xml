@@ -9,4 +9,8 @@
         VALUES (#{content})
     </insert>
 
+    <select id="selectSubject" resultType="Subject">
+        SELECT *
+        FROM `SUBJECT_TB`
+    </select>
 </mapper>

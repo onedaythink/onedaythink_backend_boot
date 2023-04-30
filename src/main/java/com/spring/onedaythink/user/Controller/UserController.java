@@ -33,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
-    @PostMapping(value = "users/signup")
+    @PostMapping(value = "auth/signup")
     public ResponseEntity<Object> registerUser(@RequestBody User user){
         int result = userService.registerUser(user);
         return ResponseEntity.ok(result);

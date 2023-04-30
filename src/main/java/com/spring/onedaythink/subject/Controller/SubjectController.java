@@ -1,22 +1,44 @@
 package com.spring.onedaythink.subject.Controller;
 
+import com.spring.onedaythink.subject.service.SubjectService;
+import com.spring.onedaythink.subject.vo.Subject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping(value="api/v1/")
+@RequestMapping(value="subject")
 public class SubjectController {
 
     private Logger log = LogManager.getLogger("case3");
 
-    @GetMapping(value="subject")
+    @Autowired
+    private SubjectService subjectService;
+
+    @GetMapping
     public ResponseEntity getSubject() {
+        List<Subject> subjectList = subjectService.getSubject();
         log.debug("getSubject");
+        return ResponseEntity.ok(subjectList);
+    }
+
+    @PostMapping
+    public ResponseEntity addSubject(@RequestBody Subject subject) {
+        log.debug("addSubject");
+        int result = subjectService.addSubject(subject);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value="/{subNo}")
+    public ResponseEntity deleteSubject(@RequestBody Subject subject){
+        log.debug("deleteSubject");
+        int result =0;
         return ResponseEntity.ok("test");
+
     }
 
 }

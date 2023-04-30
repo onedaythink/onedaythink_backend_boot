@@ -4,6 +4,7 @@ import com.spring.onedaythink.opinion.vo.Opinion;
 
 public interface OpinionService {
 
+
     // 의견 전체 조회
     // => 내가 좋아요 누를 의견 조회(동적쿼리)
 
@@ -14,8 +15,7 @@ public interface OpinionService {
     // 나의 의견 조회
 
     // 나의 의견 생성
-    public int addOpinions(Opinion opinion);
-
+    int addOpinions(Opinion opinion);
     // 나의 의견 수정
 
     // 나의 의견 삭제

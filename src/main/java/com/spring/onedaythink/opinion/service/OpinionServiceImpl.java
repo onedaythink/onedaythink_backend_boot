@@ -15,12 +15,10 @@ public class OpinionServiceImpl implements OpinionService{
     @Autowired
     private OpinionMapper opinionMapper;
 
+    //유저 논제 입력
     @Override
     public int addOpinions(Opinion opinion) {
 
-        log.debug(opinion.getUserNo());
-        log.debug(opinion.getSubNo());
-        log.debug(opinion.getOpinion());
         int result = opinionMapper.insertOpinion(opinion);
         return result;
     }
