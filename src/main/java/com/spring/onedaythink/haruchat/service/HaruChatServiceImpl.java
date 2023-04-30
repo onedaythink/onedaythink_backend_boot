@@ -4,7 +4,10 @@ import com.spring.onedaythink.haruchat.mapper.HaruChatMapper;
 import com.spring.onedaythink.haruchat.vo.HaruChat;
 import com.spring.onedaythink.haruchat.vo.HaruChatRoom;
 import com.spring.onedaythink.haruchat.vo.HaruChatRoomDetail;
+<<<<<<< HEAD
 import com.spring.onedaythink.report.vo.Report;
+=======
+>>>>>>> 7f292db9435659a08e0854ff7594b6d0e2bb73c7
 import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,6 +54,7 @@ public class HaruChatServiceImpl implements HaruChatService{
         }
         return resultSum;
     }
+<<<<<<< HEAD
 
     // 하루봇 채팅방 전체 조회
     @Override
@@ -70,3 +74,6 @@ public class HaruChatServiceImpl implements HaruChatService{
     }
 
 }
+=======
+}
+>>>>>>> 7f292db9435659a08e0854ff7594b6d0e2bb73c7

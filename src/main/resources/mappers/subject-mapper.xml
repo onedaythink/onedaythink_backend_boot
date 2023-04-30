@@ -5,12 +5,51 @@
 <mapper namespace="com.spring.onedaythink.subject.mapper.SubjectMapper">
 
     <insert id="insertSubject" parameterType="Subject">
-        INSERT INTO `SUBJECT_TB` (`content`)
+        INSERT INTO subject_tb (content)
         VALUES (#{content})
     </insert>
 
-    <select id="selectSubject" resultType="Subject">
+    <select id="selectSubjects" resultType="Subject">
+        SELECT *
+        FROM subject_tb
+        WHERE withdraw = 'n'
+    </select>
+
+    <select id="selectNullSubjectDates" resultType="Subject">
+        SELECT *
+        FROM subject_tb
+        WHERE sub_date is NULL
+    </select>
+
+    <select id="selectSubjectBySubNo" parameterType="Subject" resultType="Subject">
         SELECT *
         FROM `SUBJECT_TB`
+        WHERE sub_date = #{subNo}
     </select>
+
+    <select id="selectSubjectBySubDate" parameterType="Subject" resultType="Subject">
+        SELECT *
+        FROM `SUBJECT_TB`
+        WHERE sub_date = #{subDate}
+    </select>
+
+    <update id="updateSubjectDate" parameterType="Subject">
+        update subject_tb
+        set sub_date = #{subDate}
+        where sub_no = #{subNo}
+    </update>
+
+    <update id="deleteSubject" parameterType="Subject">
+        UPDATE subject_tb
+        SET withdraw = 'y'
+        WHERE sub_no = #{subNo}
+    </update>
+
+    <update id="updateSubject" parameterType="Subject">
+        UPDATE subject_tb
+        SET content = #{content}
+        WHERE sub_no = #{subNo}
+    </update>
+
+
 </mapper>

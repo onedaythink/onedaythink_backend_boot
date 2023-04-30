@@ -42,7 +42,7 @@
         select *
         from user_tb
         where user_no = #{userNo}
---           and status = 'n'
+--         and status = 'n'
     </select>
 
     <select id="selectListUsers" parameterType="User" resultType="User">

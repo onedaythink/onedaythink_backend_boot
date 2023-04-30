@@ -3,7 +3,10 @@ package com.spring.onedaythink.haruchat.Controller;
 import com.spring.onedaythink.haruchat.service.HaruChatService;
 import com.spring.onedaythink.haruchat.vo.HaruChat;
 import com.spring.onedaythink.haruchat.vo.HaruChatRoom;
+<<<<<<< HEAD
 import com.spring.onedaythink.report.vo.Report;
+=======
+>>>>>>> 7f292db9435659a08e0854ff7594b6d0e2bb73c7
 import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +44,7 @@ public class HaruChatController {
         return ResponseEntity.ok(resultsum);
     }
 
+<<<<<<< HEAD
     // 페르소나봇들과의 채팅방 전체 조회
     @GetMapping(value = "/haruChatAll")
     public ResponseEntity<Object> selectAllharuChatRoom(){
@@ -78,3 +82,8 @@ public class HaruChatController {
 //        return ResponseEntity.ok(result);
 //    }
 }
+=======
+
+
+}
+>>>>>>> 7f292db9435659a08e0854ff7594b6d0e2bb73c7

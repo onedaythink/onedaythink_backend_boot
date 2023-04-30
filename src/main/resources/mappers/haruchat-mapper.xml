@@ -28,6 +28,7 @@
         VALUES (#{chatRoomNo},#{haruNo})
     </insert>
 
+<<<<<<< HEAD
     <!-- 하루 채팅방 전체 조회-->
     <select id="selectAllharuChatRoom" parameterType="HaruChat" resultType="HaruChat">
         select *
@@ -42,3 +43,6 @@
     </select>
 
 </mapper>
+=======
+</mapper>
+>>>>>>> 7f292db9435659a08e0854ff7594b6d0e2bb73c7
