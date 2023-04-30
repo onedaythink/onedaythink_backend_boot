@@ -1,5 +1,9 @@
 package com.spring.onedaythink.chat.service;
 
+import com.spring.onedaythink.chat.vo.Chat;
+import com.spring.onedaythink.chat.vo.ChatMessage;
+import com.spring.onedaythink.chat.vo.ChatRoom;
+
 public interface ChatService {
 
     /*
@@ -16,7 +20,7 @@ public interface ChatService {
     // 채팅 메세지 생성
 
     // 채팅 마지막 메세지 조회
-
+    ChatMessage getLastMessage(ChatRoom chatRoom);
     // 채팅방-유저 신고
 
     // 신고목록 전체조회

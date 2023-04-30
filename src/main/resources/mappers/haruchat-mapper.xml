@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.onedaythink.haruchat.mapper.HaruChatMapper">
+
+    <select id="selectHaruBot" resultType="HaruChat">
+        SELECT *
+        FROM haru_tb
+        WHERE haru_no >= (SELECT FLOOR(MAX(haru_no) * RAND()) FROM haru_tb)
+        LIMIT 4;
+    </select>
+
+    <insert id="insertHaruChatRoom" parameterType="User">
+        INSERT INTO haru_chat_room_tb (user_no, create_at)
+        VALUES (#{userNo}, NOW())
+    </insert>
+
+    <select id="selectHaruChatRoomNo" resultType="HaruChatRoom">
+        SELECT chat_room_no
+        FROM haru_chat_room_tb
+        ORDER BY create_at DESC
+        LIMIT 1;
+    </select>
+
+    <insert id="insertHaruChatRoomHaru" parameterType="HaruChatRoomDetail">
+        INSERT INTO haru_chat_room_haru_tb
+        VALUES (#{chatRoomNo},#{haruNo})
+    </insert>
+
+</mapper>

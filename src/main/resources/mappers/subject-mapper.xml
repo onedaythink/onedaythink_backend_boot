@@ -5,16 +5,23 @@
 <mapper namespace="com.spring.onedaythink.subject.mapper.SubjectMapper">
 
     <insert id="insertSubject" parameterType="Subject">
-        INSERT INTO `SUBJECT_TB` (`content`)
+        INSERT INTO subject_tb (content)
         VALUES (#{content})
     </insert>
 
     <select id="selectSubjects" resultType="Subject">
         SELECT *
-        FROM `SUBJECT_TB`
+        FROM subject_tb
+        WHERE withdraw = 'n'
     </select>
 
-    <select id="selectSubject" parameterType="Subject" resultType="Subject">
+    <select id="selectSubjectBySubNo" parameterType="Subject" resultType="Subject">
+        SELECT *
+        FROM `SUBJECT_TB`
+        WHERE sub_date = #{subNo}
+    </select>
+
+    <select id="selectSubjectBySubDate" parameterType="Subject" resultType="Subject">
         SELECT *
         FROM `SUBJECT_TB`
         WHERE sub_date = #{subDate}
@@ -26,9 +33,32 @@
         where sub_date = null
     </select>
 
-    <update id="updateSubDate" parameterType="SubDate">
+    <update id="updateSubDate" parameterType="Subject">
         update subject_tb
-        set sub_date = #{sub_date}
+        set sub_date = #{subDate}
         where sub_no = #{subNo}
     </update>
+
+    <update id="updateSubjectWithRandomDate" parameterType="Subject">
+        UPDATE `subject_tb` AS t1
+            INNER JOIN (
+            SELECT sub_no
+            FROM `subject_tb`
+            WHERE sub_no >= (
+                SELECT FLOOR(MAX(sub_no) * RAND())
+                FROM `subject_tb`
+            )
+            LIMIT 1
+            ) AS t2
+            ON t1.sub_no = t2.sub_no
+            SET t1.sub_date = IFNULL(t1.sub_date, #{subDate})
+    </update>
+
+    <update id="deleteSubject" parameterType="Subject">
+        UPDATE subject_tb
+        SET withdraw = 'y'
+        WHERE sub_no = #{subNo};
+    </update>
+
+
 </mapper>
