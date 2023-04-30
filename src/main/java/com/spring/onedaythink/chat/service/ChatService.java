@@ -15,12 +15,16 @@ public interface ChatService {
 
     // 채탕벙 수정(대기에서 수락/거절/종료)
 
+    // 채팅방 종료
+    int closeChatRoom(ChatRoom chatRoom);
+
     // 챠탕 메세지 전체 조회
 
     // 채팅 메세지 생성
 
     // 채팅 마지막 메세지 조회
     ChatMessage getLastMessage(ChatRoom chatRoom);
+
     // 채팅방-유저 신고
 
     // 신고목록 전체조회

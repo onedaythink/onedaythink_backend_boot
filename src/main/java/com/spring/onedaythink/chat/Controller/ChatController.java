@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "api/v1/chat")
+@RequestMapping(value = "api/v1")
 public class ChatController {
 
     private Logger log = LogManager.getLogger("case3");
@@ -21,15 +21,20 @@ public class ChatController {
     private ChatService chatService;
 
     // 마지막 메시지 조회
-    @GetMapping(value="/{chatRoomNo}")
+    @GetMapping(value="chat/{chatRoomNo}")
     public ResponseEntity getLastMessage(@PathVariable int chatRoomNo){
-        ChatRoom chatRoom = ChatRoom.builder().chatRoomNo(chatRoomNo).build();
-        ChatMessage lastMessage = chatService.getLastMessage(chatRoom);
+        ChatMessage lastMessage = chatService.getLastMessage(ChatRoom.builder().chatRoomNo(chatRoomNo).build());
         log.debug("getLastMessage");
         return ResponseEntity.ok(lastMessage);
     }
 
     // 채팅 종료
+    @PostMapping(value="chat/{chatRoomNo}/close")
+    public ResponseEntity closeChatRoom(@PathVariable int chatRoomNo){
+        log.debug("closeChatRoom");
+        int result = chatService.closeChatRoom(ChatRoom.builder().chatRoomNo(chatRoomNo).build());
+        return ResponseEntity.ok(result);
+    }
 
 
 

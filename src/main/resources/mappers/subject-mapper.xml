@@ -20,6 +20,7 @@
         FROM subject_tb
         WHERE sub_date is NULL
     </select>
+
     <select id="selectSubjectBySubNo" parameterType="Subject" resultType="Subject">
         SELECT *
         FROM `SUBJECT_TB`
@@ -41,6 +42,12 @@
     <update id="deleteSubject" parameterType="Subject">
         UPDATE subject_tb
         SET withdraw = 'y'
+        WHERE sub_no = #{subNo}
+    </update>
+
+    <update id="updateSubject" parameterType="Subject">
+        UPDATE subject_tb
+        SET content = #{content}
         WHERE sub_no = #{subNo}
     </update>
 
