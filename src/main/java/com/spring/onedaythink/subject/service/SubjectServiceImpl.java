@@ -41,12 +41,13 @@ public class SubjectServiceImpl implements SubjectService {
         } else {
             // 조회가 안될 경우
             // 1) subject list 중에서 subDate 가 null 인 리스트를 조회
+            List<Subject> nullSubjectDateList = subjectMapper.selectNullSubjectDates();
             // 2) 해당 리스트에 담긴 subject 중에서 임의의 1개의 subNo을 추출
+            Subject updateSubject = nullSubjectDateList.get(new Random().nextInt(nullSubjectDateList.size()));
             // 3) 추출한 subNo 을 가지고 업데이트를 한 뒤
-            // 4) subNo 을 가지고 조회를 해서 리턴
-//            List<Subject> nullSubjectDateList = subjectMapper.selectNullSubjectDates();
-//            Subject updateSubject = nullSubjectDateList.get(new Random().nextInt(nullSubjectDateList.size()));
-            subjectMapper.updateSubjectWithRandomDate(subject);
+            updateSubject.setSubDate(subject.getSubDate());
+            // 4) subDate 을 가지고 다시 조회를 해서 리턴
+            subjectMapper.updateSubjectDate(updateSubject);
             return subjectMapper.selectSubjectBySubDate(subject);
         }
     }
@@ -68,4 +69,5 @@ public class SubjectServiceImpl implements SubjectService {
         log.debug("updateSubjectDate");
         return subjectMapper.updateSubjectDate(subject);
     }
+
 }

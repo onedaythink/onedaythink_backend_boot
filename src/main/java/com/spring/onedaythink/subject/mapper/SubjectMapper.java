@@ -18,6 +18,7 @@ public interface SubjectMapper {
 
     // 논제 랜덤 조회
     public Subject selectRandomSubject(Subject subject);
+
     public int updateSubjectDate(Subject subject);
 
     // 논제 삭제

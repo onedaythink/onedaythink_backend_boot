@@ -2,7 +2,6 @@ package com.spring.onedaythink.opinion.Controller;
 
 import com.spring.onedaythink.opinion.service.OpinionService;
 import com.spring.onedaythink.opinion.vo.Opinion;
-import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,10 @@ public class OpinionController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value = "{userNo}/{subejctNp}")
-    public ResponseEntity<Object> getOpinions(String userNo, String subejctNp)
+    @GetMapping(value = "{userNo}/{subDate}")
+    public ResponseEntity<Object> getTodayOpinion(@PathVariable int userNo, @PathVariable String subDate) {
+        log.debug("getOpinion");
+        Opinion opinion = opinionService.getTodayOpinion(Opinion.builder().userNo(userNo).createAt(subDate).build());
+        return ResponseEntity.ok(opinion);
+    }
 }

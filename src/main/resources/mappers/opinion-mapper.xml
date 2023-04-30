@@ -9,6 +9,15 @@
        (#{userNo},#{subNo},#{opinion},#{isPublic})
     </insert>
 
+    <select id="selectTodayOpinion" parameterType="Opinion" resultType="Opinion">
+        <![CDATA[
+                select *
+                from user_opinion_tb
+                where user_no = #{userNo}
+                  and create_at >=  concat(#{createAt}, ' 00:00:00')
+                  and create_at < concat(#{createAt},' 23:59:59')
+                ]]>
+    </select>
 </mapper>
 
 
