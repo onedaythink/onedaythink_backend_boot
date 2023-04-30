@@ -4,11 +4,32 @@
 
 <mapper namespace="com.spring.onedaythink.opinion.mapper.OpinionMapper">
 
+    <!-- 의견 작성  -->
     <insert id="insertOpinion" parameterType="Opinion">
-        insert into `user_opinion_tb` (`user_no`,`sub_no`, `opinion`,`is_public`) VALUES
+        insert into `user_opinion_tb` (user_no,`sub_no`, `opinion`,`is_public`) VALUES
        (#{userNo},#{subNo},#{opinion},#{isPublic})
     </insert>
 
+    <!--의견 수정-->
+    <update id="updateOpinion" parameterType="Opinion">
+        UPDATE `user_opinion_tb`
+        SET opinion=#{opinion}, is_public=#{isPublic}
+        WHERE user_opi_no=#{userOpiNo}
+    </update>
+
+    <!-- 의견 삭제   -->
+    <update id="deleteOpinion" parameterType="Opinion">
+        UPDATE `user_opinion_tb`
+        SET `withdraw` = 'y'
+        WHERE user_no = #{userNo} AND sub_no = #{subNo}
+    </update>
+
+    <!-- 타인의 생각 전체조회 -->
+    <select id="selectAllOtherOpinion" parameterType="Opinion" resultType="Opinion">
+        SELECT *
+        FROM user_opinion_tb
+        WHERE sub_no = #{subNo}
+    </select>
 </mapper>
 
 
