@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="haruchat")
+@RequestMapping(value="api/v1/haruchat")
 public class HaruChatController {
 
     private Logger log = LogManager.getLogger("case3");

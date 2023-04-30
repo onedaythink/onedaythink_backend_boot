@@ -20,6 +20,7 @@ public interface SubjectMapper {
     public Subject selectRandomSubject(Subject subject);
 
     public int updateSubjectDate(Subject subject);
+    public Subject selectUpdatedMainSubject(Subject subject);
 
     // 논제 삭제
     public int deleteSubject(Subject subject);

@@ -64,10 +64,4 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectMapper.deleteSubject(subject);
     }
 
-    @Override
-    public int updateSubjectDate(Subject subject) {
-        log.debug("updateSubjectDate");
-        return subjectMapper.updateSubjectDate(subject);
-    }
-
 }
