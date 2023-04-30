@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="subject")
+@RequestMapping(value="api/v1/subject")
 public class SubjectController {
 
     private Logger log = LogManager.getLogger("case3");

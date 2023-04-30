@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "chat")
+@RequestMapping(value = "api/v1/chat")
 public class ChatController {
 
     private Logger log = LogManager.getLogger("case3");

@@ -40,7 +40,6 @@ public class SubjectServiceImpl implements SubjectService {
         log.debug("getMainSubject");
         log.debug(subject);
         Subject mainSubject = subjectMapper.selectRandomSubject(subject);
-        System.out.println(mainSubject.getSubDate());
         if( mainSubject.getSubDate()==null || mainSubject.getSubDate().equals("")){
             subjectMapper.updateSubjectDate(mainSubject);
         }
