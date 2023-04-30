@@ -12,8 +12,9 @@ public interface SubjectMapper {
     public int insertSubject(Subject subject);
 
     // 논체 전체 조회
-    public List<Subject> selectSubject();
+    public List<Subject> selectSubjects();
 
+    public Subject selectSubject(Subject subject);
 
 
 }

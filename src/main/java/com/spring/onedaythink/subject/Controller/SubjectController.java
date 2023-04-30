@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="subject")
+@RequestMapping(value="api/v1/")
 public class SubjectController {
 
     private Logger log = LogManager.getLogger("case3");
@@ -19,21 +19,28 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
 
-    @GetMapping
-    public ResponseEntity getSubject() {
-        List<Subject> subjectList = subjectService.getSubject();
-        log.debug("getSubject");
+    @GetMapping(value = "subjects")
+    public ResponseEntity getSubjects() {
+        List<Subject> subjectList = subjectService.getSubjects();
+        log.debug("getSubjects");
         return ResponseEntity.ok(subjectList);
     }
 
-    @PostMapping
+    @GetMapping(value = "subjects/{subDate}")
+    public ResponseEntity getSubject(@PathVariable String subDate) {
+        Subject subject = subjectService.getSubject(Subject.builder().subDate(subDate).build());
+        log.debug("getSubject");
+        return ResponseEntity.ok(subject);
+    }
+
+    @PostMapping(value = "subjects")
     public ResponseEntity addSubject(@RequestBody Subject subject) {
         log.debug("addSubject");
         int result = subjectService.addSubject(subject);
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value="/{subNo}")
+    @GetMapping(value="subjects/{subNo}")
     public ResponseEntity deleteSubject(@RequestBody Subject subject){
         log.debug("deleteSubject");
         int result =0;

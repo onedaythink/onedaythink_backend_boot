@@ -24,8 +24,14 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> getSubject() {
+    public List<Subject> getSubjects() {
         log.debug("getSubject");
-        return subjectMapper.selectSubject();
+        return subjectMapper.selectSubjects();
+    }
+
+    @Override
+    public Subject getSubject(Subject subject) {
+        log.debug("getSubject");
+        return subjectMapper.selectSubject(subject);
     }
 }

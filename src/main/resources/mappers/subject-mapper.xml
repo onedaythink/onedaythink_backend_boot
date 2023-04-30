@@ -9,8 +9,26 @@
         VALUES (#{content})
     </insert>
 
-    <select id="selectSubject" resultType="Subject">
+    <select id="selectSubjects" resultType="Subject">
         SELECT *
         FROM `SUBJECT_TB`
     </select>
+
+    <select id="selectSubject" parameterType="Subject" resultType="Subject">
+        SELECT *
+        FROM `SUBJECT_TB`
+        WHERE sub_date = #{subDate}
+    </select>
+
+    <select id="selectNullSubDate" resultType="Subject">
+        select sub_no
+        from `SUBJECT_tb`
+        where sub_date = null
+    </select>
+
+    <update id="updateSubDate" parameterType="SubDate">
+        update subject_tb
+        set sub_date = #{sub_date}
+        where sub_no = #{subNo}
+    </update>
 </mapper>
