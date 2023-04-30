@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value="opinions")
+@RequestMapping(value="api/v1/opinions")
 public class OpinionController {
 
     private Logger log = LogManager.getLogger("case3");
@@ -27,4 +27,7 @@ public class OpinionController {
         int result = opinionService.addOpinions(opinion);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping(value = "{userNo}/{subejctNp}")
+    public ResponseEntity<Object> getOpinions(String userNo, String subejctNp)
 }
