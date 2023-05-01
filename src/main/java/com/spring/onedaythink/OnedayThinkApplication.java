@@ -11,12 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 public class OnedayThinkApplication {
-
-    private static Logger log = LogManager.getLogger("case3");
     public static void main(String[] args) {
-
-
-        log.debug("start");
         SpringApplication.run(OnedayThinkApplication.class, args);
     }
 

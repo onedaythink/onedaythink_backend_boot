@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .logoutSuccessUrl("/")
 //                    .permitAll();
                     .antMatchers("/api/v1/**").permitAll()
-                    .antMatchers("/ws/**").permitAll()// 모든 프리플라이트 요청 허용
+                    .antMatchers("/ws/**").permitAll() //
+                    .antMatchers("/stomp/chat/**").permitAll() // 모든 프리플라이트 요청 허용
                 .anyRequest().authenticated();
 //                .and()
 //                .apply(new JwtConfig(jwtTokenProvider)); // JwtConfig 적용

@@ -25,10 +25,15 @@
     </update>
 
     <!-- 타인의 생각 전체조회 -->
-    <select id="selectAllOtherOpinion" parameterType="Opinion" resultType="Opinion">
-        SELECT *
-        FROM user_opinion_tb
-        WHERE sub_no = #{subNo}
+    <select id="selectAllOtherOpinion" parameterType="OpinionDetails" resultType="OpinionDetails">
+        SELECT B.nickname, B.user_origin_img, A.user_opi_no, A.user_no, A.opinion,
+        (SELECT COUNT(*) FROM like_opinion_tb WHERE user_opi_no = A.user_opi_no) AS count
+        FROM user_opinion_tb AS A
+        JOIN user_tb AS B ON A.user_no = B.user_no
+        JOIN like_opinion_tb AS C ON A.user_opi_no = C.user_opi_no AND B.user_no = C.user_no
+        WHERE A.sub_no = #{subNo}
+        AND A.user_no != #{userNo}
+        AND A.is_public = 'y'
 
     </select>
 
@@ -38,8 +43,9 @@
                 select *
                 from user_opinion_tb
                 where user_no = #{userNo}
-                  and create_at >=  concat(#{createAt}, ' 00:00:00')
+                  and create_at >= concat(#{createAt}, ' 00:00:00')
                   and create_at < concat(#{createAt},' 23:59:59')
+                  and withdraw = 'n'
                 ]]>
     </select>
 

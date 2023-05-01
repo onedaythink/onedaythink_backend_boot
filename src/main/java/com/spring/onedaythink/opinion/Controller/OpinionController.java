@@ -3,6 +3,7 @@ package com.spring.onedaythink.opinion.Controller;
 import com.spring.onedaythink.opinion.service.OpinionService;
 import com.spring.onedaythink.opinion.vo.LikeOpinion;
 import com.spring.onedaythink.opinion.vo.Opinion;
+import com.spring.onedaythink.opinion.vo.OpinionDetails;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,12 @@ public class OpinionController {
     @Autowired
     private OpinionService opinionService;
 
-//나의 생각 입력'
+    //나의 생각 입력'
     @PostMapping(value="/{userNo}")
     public ResponseEntity<Object> addOpinions(@PathVariable int userNo,@RequestBody Opinion opinion)
     {
         opinion.setUserNo(userNo);
+        log.debug(opinion);
         int result = opinionService.addOpinions(opinion);
         return ResponseEntity.ok(result);
     }
@@ -48,10 +50,11 @@ public class OpinionController {
     }
 
     //타인의 생각조회
-    @GetMapping(value = "/{subNo}")
-    public ResponseEntity<List<Opinion>> getOtherOpinions(@PathVariable int subNo) {
-        List<Opinion> opinionList;
-        opinionList = opinionService.getOtherOpinions(Opinion.builder().subNo(subNo).build());
+    @GetMapping(value = "create-at/{subNo}/{userNo}")
+    public ResponseEntity<List<OpinionDetails>> getOtherOpinions(@PathVariable int subNo, @PathVariable int userNo) {
+        List<OpinionDetails> opinionList;
+        opinionList = opinionService.getOtherOpinions(OpinionDetails.builder().userNo(userNo).subNo(subNo).build());
+        log.debug(opinionList);
         return ResponseEntity.ok(opinionList);
     }
 
@@ -77,17 +80,22 @@ public class OpinionController {
             return ResponseEntity.ok(opinionList);
         }
 
-
-
     //메인 - 나의 생각 조회
     @GetMapping(value = "{userNo}/{subDate}")
     public ResponseEntity<Object> getTodayOpinion(@PathVariable int userNo, @PathVariable String subDate) {
         log.debug("getOpinion");
         Opinion opinion = opinionService.getTodayOpinion(Opinion.builder().userNo(userNo).createAt(subDate).build());
+        log.debug(opinion);
         return ResponseEntity.ok(opinion);
     }
 
-
+//    @GetMapping(value = "/{subDate}")
+//    public ResponseEntity<Object> getOpinionByCreateAt(@PathVariable int userNo, @PathVariable String subDate) {
+//        log.debug("getOpinion");
+//        Opinion opinion = opinionService.getTodayOpinion(Opinion.builder().userNo(userNo).createAt(subDate).build());
+//        log.debug(opinion);
+//        return ResponseEntity.ok(opinion);
+//    }
 
 }
 
