@@ -18,18 +18,21 @@ public class SubjectServiceImpl implements SubjectService {
     @Autowired
     private SubjectMapper subjectMapper;
 
+    // 논제 추가
     @Override
     public int addSubject(Subject subject) {
         log.debug(subject.getContent());
         return subjectMapper.insertSubject(subject);
     }
 
+    // 논제 전체 조회
     @Override
     public List<Subject> getSubjects() {
         log.debug("getSubject");
         return subjectMapper.selectSubjects();
     }
 
+    // 메인 논제 랜덤 조회
     @Override
     public Subject getMainSubject(Subject subject) {
         log.debug("getMainSubject");
@@ -52,22 +55,26 @@ public class SubjectServiceImpl implements SubjectService {
         }
     }
 
+    // 단일 논제 조회
     @Override
     public Subject getSubject(Subject subject) {
         log.debug("getSubject");
         return subjectMapper.selectSubjectBySubNo(subject);
     }
 
+    // 논제 삭제
     @Override
     public int deleteSubject(Subject subject) {
         log.debug("deleteSubject");
         return subjectMapper.deleteSubject(subject);
     }
 
-    @Override
-    public int updateSubjectDate(Subject subject) {
-        log.debug("updateSubjectDate");
-        return subjectMapper.updateSubjectDate(subject);
-    }
+    // 논제 수정
 
+    @Override
+    public int editSubject(Subject subject) {
+        log.debug("editSubject");
+        return subjectMapper.updateSubject(subject);
+
+    }
 }

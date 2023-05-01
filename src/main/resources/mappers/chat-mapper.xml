@@ -12,4 +12,10 @@
         LIMIT 1
     </select>
 
+    <update id="updateChatRoomClosed" parameterType="ChatRoom">
+        UPDATE chat_room_tb
+        SET is_close='y'
+        WHERE chat_room_no = #{chatRoomNo}
+    </update>
+
 </mapper>

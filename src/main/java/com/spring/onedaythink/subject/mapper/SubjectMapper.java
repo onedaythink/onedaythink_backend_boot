@@ -14,20 +14,19 @@ public interface SubjectMapper {
     // 논체 전체 조회
     public List<Subject> selectSubjects();
 
+    // 단일 논제 조회
     public Subject selectSubjectBySubNo(Subject subject);
 
     // 논제 랜덤 조회
-    public Subject selectRandomSubject(Subject subject);
-
     public int updateSubjectDate(Subject subject);
+    public Subject selectSubjectBySubDate(Subject subject);
+    public List<Subject> selectNullSubjectDates();
 
     // 논제 삭제
     public int deleteSubject(Subject subject);
 
-    public Subject selectSubjectBySubDate(Subject subject);
+    // 논제 수정
+    public int updateSubject(Subject subject);
 
-    //
-    public List<Subject> selectNullSubjectDates();
 
-    public int updateSubjectWithRandomDate(Subject subject);
 }

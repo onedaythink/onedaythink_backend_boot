@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="api/v1/")
+@RequestMapping(value="api/v1")
 public class SubjectController {
 
     private Logger log = LogManager.getLogger("case3");
@@ -60,4 +60,11 @@ public class SubjectController {
 
     }
 
+    // 논제 수정
+    @PostMapping(value="subjects/update/{subNo}")
+    public ResponseEntity editSubject(@RequestBody Subject subject){
+        log.debug("editSubject");
+        int result = subjectService.editSubject(subject);
+        return ResponseEntity.ok(result);
+    }
 }

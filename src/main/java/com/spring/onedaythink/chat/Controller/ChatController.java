@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @RestController
-@RequestMapping(value = "api/v1/chat")
+@RequestMapping(value = "api/v1/")
 public class ChatController {
 
     private Logger log = LogManager.getLogger("case3");
@@ -24,22 +24,29 @@ public class ChatController {
     private ChatService chatService;
 
     // 마지막 메시지 조회
-    @GetMapping(value="/{chatRoomNo}")
+    @GetMapping(value="chat/{chatRoomNo}")
     public ResponseEntity getLastMessage(@PathVariable int chatRoomNo){
-        ChatRoom chatRoom = ChatRoom.builder().chatRoomNo(chatRoomNo).build();
-        ChatMessage lastMessage = chatService.getLastMessage(chatRoom);
+        ChatMessage lastMessage = chatService.getLastMessage(ChatRoom.builder().chatRoomNo(chatRoomNo).build());
         log.debug("getLastMessage");
         return ResponseEntity.ok(lastMessage);
     }
 
     // 해당 사용자가 가지고 있는 채팅방 목록 조회
-    @GetMapping(value = "/rooms/{userNp}")
-    public ResponseEntity<Object> getCharRooms(@PathVariable int userNo){
-
+    @GetMapping(value = "chat/rooms/{userNp}")
+    public ResponseEntity<Object> getCharRooms(@PathVariable int userNo) {
         log.debug("# All Chat Rooms");
 
         return ResponseEntity.ok(null);
     }
+
+    // 채팅 종료
+    @PostMapping(value="chat/{chatRoomNo}/close")
+    public ResponseEntity closeChatRoom(@PathVariable int chatRoomNo){
+        log.debug("closeChatRoom");
+        int result = chatService.closeChatRoom(ChatRoom.builder().chatRoomNo(chatRoomNo).build());
+        return ResponseEntity.ok(result);
+    }
+
 
     //채팅방 개설
     @PostMapping(value = "/room")
@@ -48,14 +55,12 @@ public class ChatController {
 
         return ResponseEntity.ok(null);
     }
+2
+    //    채팅방 요청 승인/거절 관리
+    @PostMapping(value = "chat/room/status/{roomNo}")
+    public ResponseEntity<Object> editRoomStatus(@PathVariable int roomNo) {
+        log.debug("room status");
 
-    //채팅방 요청 승인/거절 관리
-//    @PostMapping("/room/process")
-//    public ResponseEntity<Object> (String roomId, Model model){
-//
-//        log.info("# get Chat Room, roomID : " + roomId);
-//
-//        return ResponseEntity.ok(null);
-//    }
-
+        return ResponseEntity.ok(null);
+    }
 }
