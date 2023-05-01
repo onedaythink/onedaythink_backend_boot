@@ -1,5 +1,78 @@
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
+<<<<<<< HEAD
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : deleteOpinions
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect Method : addOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : deleteOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : deleteOpinions
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+http-nio-8080-exec-7 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-7 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+http-nio-8080-exec-9 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-9 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+http-nio-8080-exec-10 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-10 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+=======
+>>>>>>> d3035bb88d7c0470f80e8973fe0159839517c5ac
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 main DEBUG case3 - start
@@ -10,6 +83,8 @@ main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
+<<<<<<< HEAD
+=======
 http-nio-8080-exec-7 DEBUG case3 - Report(chatReportNo=0, chatRoomNo=1, accusedUserNo=1, reportNo=1, reportResult=w)
 http-nio-8080-exec-7 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.report.service.ReportServiceImpl
 http-nio-8080-exec-7 DEBUG config.TransactionAspect - ======> logAspect Method : reportInsertUser
@@ -64,6 +139,7 @@ http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: co
 http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : selectAllharuChatRoom
 http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : selectOneHaruChatRoom
+>>>>>>> d3035bb88d7c0470f80e8973fe0159839517c5ac
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 main DEBUG case3 - start
@@ -76,6 +152,8 @@ main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
+<<<<<<< HEAD
+=======
 http-nio-8080-exec-1 DEBUG case3 - HaruChat(haruChatRoomDetail=null, haruChatMessageDetail=null, haruNo=0, haruName=null, haruPrompt=null, haruOriginImg=null, haruImgPath=null, status=null)
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : insertHaruChatMsg
@@ -98,6 +176,7 @@ http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method :
 http-nio-8080-exec-2 DEBUG case3 - HaruChat(haruChatRoomDetail=null, haruChatMessageDetail=null, haruNo=0, haruName=null, haruPrompt=null, haruOriginImg=null, haruImgPath=null, status=null)
 http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : insertHaruChatMsg
+>>>>>>> d3035bb88d7c0470f80e8973fe0159839517c5ac
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 main DEBUG case3 - start
@@ -106,6 +185,8 @@ main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
+<<<<<<< HEAD
+=======
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : insertHaruChatMsg
 http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
@@ -156,10 +237,73 @@ main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : insertHaruChatMsg
+>>>>>>> d3035bb88d7c0470f80e8973fe0159839517c5ac
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 main DEBUG case3 - start
 restartedMain DEBUG case3 - start
+<<<<<<< HEAD
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-5 DEBUG case3 - getOpinion
+http-nio-8080-exec-5 DEBUG case3 - getMyOpinion
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect Method : getMyOpinion
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getOpinion
+http-nio-8080-exec-1 DEBUG case3 - getMyOpinion
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMyOpinion
+http-nio-8080-exec-2 DEBUG case3 - getOpinion
+http-nio-8080-exec-2 DEBUG case3 - getMyOpinion
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getMyOpinion
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-2 DEBUG case3 - getOpinion
+http-nio-8080-exec-2 DEBUG case3 - getMyOpinion
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getMyOpinion
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG case3 - getMyOpinion
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getMyOpinion
+http-nio-8080-exec-2 DEBUG case3 - getMyOpinion
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : getMyOpinion
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect Method : deleteOpinions
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect Method : deleteOpinions
+http-nio-8080-exec-7 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-7 DEBUG config.TransactionAspect - ======> logAspect Method : deleteOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : addLikeOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : addLikeOpinions
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect Method : addLikeOpinions
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-3 DEBUG config.TransactionAspect - ======> logAspect Method : addLikeOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : DeleteLikeOpinion
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : DeleteLikeOpinion
+=======
 http-nio-8080-exec-1 DEBUG case3 - getLastMessage
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getLastMessage
@@ -210,3 +354,22 @@ main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : selectAllharuChatRoom
+>>>>>>> d3035bb88d7c0470f80e8973fe0159839517c5ac
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : editOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : deleteOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : deleteOpinions
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : DeleteLikeOpinion
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : DeleteLikeOpinion

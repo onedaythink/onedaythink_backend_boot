@@ -12,4 +12,5 @@ public interface ChatMapper {
 
     // 채팅방 종료
     public int updateChatRoomClosed(ChatRoom chatRoom);
+
 }
