@@ -3,6 +3,7 @@ package com.spring.onedaythink.opinion.Controller;
 import com.spring.onedaythink.opinion.service.OpinionService;
 import com.spring.onedaythink.opinion.vo.LikeOpinion;
 import com.spring.onedaythink.opinion.vo.Opinion;
+import com.spring.onedaythink.opinion.vo.OpinionDetails;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,9 @@ public class OpinionController {
 
     //타인의 생각조회
     @GetMapping(value = "create-at/{subNo}/{userNo}")
-    public ResponseEntity<List<Opinion>> getOtherOpinions(@PathVariable int subNo, @PathVariable int userNo) {
-        List<Opinion> opinionList;
-        opinionList = opinionService.getOtherOpinions(Opinion.builder().userNo(userNo).subNo(subNo).build());
+    public ResponseEntity<List<OpinionDetails>> getOtherOpinions(@PathVariable int subNo, @PathVariable int userNo) {
+        List<OpinionDetails> opinionList;
+        opinionList = opinionService.getOtherOpinions(OpinionDetails.builder().userNo(userNo).subNo(subNo).build());
         log.debug(opinionList);
         return ResponseEntity.ok(opinionList);
     }
