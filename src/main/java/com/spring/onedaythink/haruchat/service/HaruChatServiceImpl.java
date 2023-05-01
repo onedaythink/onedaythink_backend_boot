@@ -72,8 +72,8 @@ public class HaruChatServiceImpl implements HaruChatService{
 
     // 하루봇 채팅메세지 생성
     @Override
-    public int insertHaruChatMsg(HaruChat haruChat){
-        return haruChatMapper.insertHaruChatMsg(haruChat);
+    public int insertHaruChatMsg(HaruChatMessage haruChatMessage){
+        return haruChatMapper.insertHaruChatMsg(haruChatMessage);
     }
 
     // 하루봇 채팅방 나가기
