@@ -1,5 +1,6 @@
 package com.spring.onedaythink.report.vo;
 
+import com.spring.onedaythink.report.vo.Report;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReportDetail {
 
-    private int chatReportNo, chatRoomNo, accusedUserNo, reportNo
-                ;
+    private Report report;
 
-
-    private String reportResult,
-                    reportContent,
+    private String  reportContent,
                     userOpinionNo,
                     userNo;
 

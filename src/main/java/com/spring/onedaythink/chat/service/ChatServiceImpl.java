@@ -16,9 +16,18 @@ public class ChatServiceImpl implements ChatService{
     @Autowired
     private ChatMapper chatMapper;
 
+    // 마지막 메세지 조회
     @Override
     public ChatMessage getLastMessage(ChatRoom chatRoom) {
          log.debug("getLastMessage");
          return chatMapper.selectLastMessage(chatRoom);
+    }
+
+    // 채팅방 종료
+
+    @Override
+    public int closeChatRoom(ChatRoom chatRoom) {
+        log.debug("closeChatRoom");
+        return chatMapper.updateChatRoomClosed(chatRoom);
     }
 }
