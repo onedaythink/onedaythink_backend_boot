@@ -232,3 +232,9 @@ main DEBUG case3 - start
 restartedMain DEBUG case3 - start
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
 http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : insertHaruChatMsg
+main DEBUG case3 - start
+restartedMain DEBUG case3 - start
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : insertHaruChatMsg
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.haruchat.service.HaruChatServiceImpl
+http-nio-8080-exec-2 DEBUG config.TransactionAspect - ======> logAspect Method : insertHaruChatMsg
