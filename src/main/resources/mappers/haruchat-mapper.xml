@@ -28,4 +28,46 @@
         VALUES (#{chatRoomNo},#{haruNo})
     </insert>
 
+    <!-- 하루 채팅방 전체 조회-->
+    <select id="selectAllharuChatRoom" parameterType="HaruChatRoom" resultType="HaruChatRoom">
+        select *
+        from haru_chat_room_tb
+    </select>
+
+    <!-- 하루 채팅방 개별 조회-->
+    <select id="selectOneharuChatRoom" parameterType="HaruChatRoom" resultType="HaruChatRoom">
+        select *
+        from haru_chat_room_tb
+        where chat_room_no = #{userNo}
+    </select>
+
+    <!-- 하루 채팅방 메세지 생성-->
+    <insert id="insertHaruChatMsg" parameterType="HaruChat">
+        insert into haru_chat_message_tb (`chat_room_no`,
+        `chat_send_user_no`,
+        `chat_send_haru_no`, `
+        chat_msg_content`, `
+        chat_create_at`)
+        values (#{haruChatMessageDetail.HaruChatMessage.chatRoomNo},
+                #{haruChatMessageDetail.HaruChatMessage.chatSendUserNo},
+                #{haruChatMessageDetail.HaruChatMessage.chatSendHaruNo},
+                #{haruChatMessageDetail.HaruChatMessage.chatMsgContent}, now())
+    </insert>
+
+    <!-- 하루 채팅방 마지막 메세지 조회-->
+    <select id="selectLastMessage" parameterType="HaruChatRoom" resultType="HaruChatMessage">
+        SELECT chat_send_user_no, chat_msg_content, chat_create_at
+        FROM haru_chat_message_tb
+        WHERE chat_room_no = #{chatRoomNo}
+        ORDER BY chat_create_at DESC
+        LIMIT 1
+    </select>
+
+    <!-- 하루 채팅방 나가기 -->
+    <update id="updateHaruChatRoomClosed" parameterType="HaruChatRoom">
+        UPDATE haru_chat_room_tb
+        SET is_close='y'
+        WHERE chat_room_no = #{chatRoomNo}
+    </update>
+
 </mapper>

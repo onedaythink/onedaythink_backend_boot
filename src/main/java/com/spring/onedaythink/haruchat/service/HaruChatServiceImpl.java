@@ -2,6 +2,7 @@ package com.spring.onedaythink.haruchat.service;
 
 import com.spring.onedaythink.haruchat.mapper.HaruChatMapper;
 import com.spring.onedaythink.haruchat.vo.HaruChat;
+import com.spring.onedaythink.haruchat.vo.HaruChatMessage;
 import com.spring.onedaythink.haruchat.vo.HaruChatRoom;
 import com.spring.onedaythink.haruchat.vo.HaruChatRoomDetail;
 import com.spring.onedaythink.user.vo.User;
@@ -50,4 +51,37 @@ public class HaruChatServiceImpl implements HaruChatService{
         }
         return resultSum;
     }
+
+    // 하루봇 채팅방 전체 조회
+    @Override
+    public List<HaruChatRoom> selectAllharuChatRoom() {
+        return haruChatMapper.selectAllharuChatRoom();
+    }
+
+    // 하루봇 채팅방 개별 조회
+    @Override
+    public HaruChatRoom selectOneHaruChatRoom(HaruChatRoom haruChatRoom) {
+        return haruChatMapper.selectOneharuChatRoom(haruChatRoom);
+    }
+
+    // 하루봇 채팅방 마지막 메세지 조회
+    @Override
+    public HaruChatMessage getLastMessage(HaruChatRoom haruChatRoom) {
+        log.debug("getLastMessage");
+        return haruChatMapper.selectLastMessage(haruChatRoom);
+    }
+
+    // 하루봇 채팅메세지 생성
+    @Override
+    public int insertHaruChatMsg(HaruChat haruChat){
+        return haruChatMapper.insertHaruChatMsg(haruChat);
+    }
+
+    // 하루봇 채팅방 나가기
+    @Override
+    public int closeHaruChatRoom(HaruChatRoom haruChatRoom) {
+        log.debug("closeHaruChatRoom");
+        return haruChatMapper.updateHaruChatRoomClosed(haruChatRoom);
+    }
+
 }

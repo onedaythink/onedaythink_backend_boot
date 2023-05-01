@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("chatting/report")
+@RequestMapping(value="api/v1/chatting/report")
 public class ReportController {
 
     private Logger log = LogManager.getLogger("case3");
@@ -26,7 +26,7 @@ public class ReportController {
         int result = reportService.reportInsertUser(report);
         return ResponseEntity.ok(result);
     }
-
+    // 신고하기 전체 조회
     @GetMapping(value = "/reportAll")
     public ResponseEntity<Object> reportSelectAll(){
         List<Report> result = reportService.reportSelectAll();

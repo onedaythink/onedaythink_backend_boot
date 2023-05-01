@@ -1,6 +1,7 @@
 package com.spring.onedaythink.haruchat.service;
 
 import com.spring.onedaythink.haruchat.vo.HaruChat;
+import com.spring.onedaythink.haruchat.vo.HaruChatMessage;
 import com.spring.onedaythink.haruchat.vo.HaruChatRoom;
 import com.spring.onedaythink.user.vo.User;
 
@@ -20,11 +21,19 @@ public interface HaruChatService {
     int createHaruChatRoom(User user);
     int selectedHaruBot(HaruChat[] haruchats, HaruChatRoom haruChatRoom);
 
-    // 채탕벙 수정(대기에서 수락/거절/종료)
+    // 하루봇 채팅방 전체 조회
+    List<HaruChatRoom> selectAllharuChatRoom();
 
-    // 챠탕 메세지 전체 조회
+   // 하루봇 채팅방 개별 조회
+   HaruChatRoom selectOneHaruChatRoom(HaruChatRoom haruChatRoom);
 
-    // 채팅 메세지 생성
+    // 하루봇 채팅방 마지막 메세지 조회
+    HaruChatMessage getLastMessage(HaruChatRoom haruChatRoom);
 
-    // 채팅 마지막 메세지 조회
+    // 하루봇 채팅메세지 생성
+    int insertHaruChatMsg(HaruChat haruChat);
+
+    // 하루봇 채팅방 나가기
+    int closeHaruChatRoom(HaruChatRoom haruChatRoom);
+
 }
