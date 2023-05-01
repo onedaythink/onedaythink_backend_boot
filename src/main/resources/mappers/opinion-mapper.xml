@@ -31,6 +31,7 @@
         WHERE sub_no = #{subNo}
     </select>
 
+    <!--메인 - 나의의견 조회-->
     <select id="selectTodayOpinion" parameterType="Opinion" resultType="Opinion">
         <![CDATA[
                 select *
@@ -61,7 +62,7 @@
         where
         user_no = #{userNo} and user_opi_no = #{userOpiNo}
     </delete>
-    <!--메인 - 나의의견 조회-->
+
 
 </mapper>
 
