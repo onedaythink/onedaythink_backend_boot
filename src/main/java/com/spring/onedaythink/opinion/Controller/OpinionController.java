@@ -23,6 +23,7 @@ public class OpinionController {
     {
         log.debug("opinion test");
         opinion.setUserNo(userNo);
+        log.debug(opinion);
         int result = opinionService.addOpinions(opinion);
         return ResponseEntity.ok(result);
     }
@@ -31,6 +32,7 @@ public class OpinionController {
     public ResponseEntity<Object> getTodayOpinion(@PathVariable int userNo, @PathVariable String subDate) {
         log.debug("getOpinion");
         Opinion opinion = opinionService.getTodayOpinion(Opinion.builder().userNo(userNo).createAt(subDate).build());
+        log.debug(opinion);
         return ResponseEntity.ok(opinion);
     }
 }

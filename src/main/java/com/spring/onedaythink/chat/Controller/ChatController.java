@@ -55,7 +55,7 @@ public class ChatController {
 
         return ResponseEntity.ok(null);
     }
-2
+
     //    채팅방 요청 승인/거절 관리
     @PostMapping(value = "chat/room/status/{roomNo}")
     public ResponseEntity<Object> editRoomStatus(@PathVariable int roomNo) {

@@ -2,6 +2,7 @@ package com.spring.onedaythink.chat.Controller;
 
 
 import com.spring.onedaythink.chat.vo.ChatMessage;
+import com.spring.onedaythink.chat.vo.ChatMessageDetail;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,9 +20,15 @@ public class WebSocketController {
 
     private Logger log = LogManager.getLogger("case3");
 
+    @MessageMapping(value = "/chat/enter")
+    public void enter(ChatMessageDetail chatMessageDetail){
+        log.debug("연결");
+        chatMessageDetail.setChatMsgContent(chatMessageDetail.getSendNickname() + "님이 채팅방에 참여하였습니다.");
+        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageDetail.getChatRoomNo(), chatMessageDetail);
+    }
+
     @MessageMapping("/chat/{chatRoomNo}")
     public void sendMessage(@DestinationVariable String chatRoomNo, ChatMessage chatMessage, SimpMessageHeaderAccessor accessor) {
-        log.debug("연결");
         simpMessagingTemplate.convertAndSend("/sub/chat/" + chatRoomNo, chatMessage);
     }
 
