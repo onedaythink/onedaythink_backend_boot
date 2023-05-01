@@ -73,10 +73,7 @@ public class HaruChatController {
     // 페르소나봇들과의 대화 - 메세지 생성
     @PostMapping
     public ResponseEntity<Object> insertHaruChatMsg(@RequestBody HaruChatMessage haruChatMessage) {
-        HaruChatMessageDetail haruChatMessageDetail = new HaruChatMessageDetail(haruChatMessage, haruChatMessage.getChatSendUserNo());
-        HaruChat haruChat = new HaruChat();
-        haruChat.setHaruChatMessageDetail(haruChatMessageDetail);
-        int result = haruChatService.insertHaruChatMsg(haruChat);
+        int result = haruChatService.insertHaruChatMsg(haruChatMessage);
         return ResponseEntity.ok(result);
     }
 

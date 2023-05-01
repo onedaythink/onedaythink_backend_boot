@@ -33,7 +33,8 @@ public interface HaruChatMapper {
     HaruChatMessage selectLastMessage(HaruChatRoom haruChatRoom);
 
     // 하루봇 채팅메세지 생성
-    public int insertHaruChatMsg(HaruChat haruChat);
+    public int insertHaruChatMsg(HaruChatMessage haruChatMessage);
+
 
     // 하루봇 채팅방 나가기
     int updateHaruChatRoomClosed(HaruChatRoom haruChatRoom);

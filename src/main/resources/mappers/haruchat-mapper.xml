@@ -42,16 +42,14 @@
     </select>
 
     <!-- 하루 채팅방 메세지 생성-->
-    <insert id="insertHaruChatMsg" parameterType="HaruChat">
-        insert into haru_chat_message_tb (`chat_room_no`,
-        `chat_send_user_no`,
-        `chat_send_haru_no`, `
-        chat_msg_content`, `
-        chat_create_at`)
-        values (#{haruChatMessageDetail.HaruChatMessage.chatRoomNo},
-                #{haruChatMessageDetail.HaruChatMessage.chatSendUserNo},
-                #{haruChatMessageDetail.HaruChatMessage.chatSendHaruNo},
-                #{haruChatMessageDetail.HaruChatMessage.chatMsgContent}, now())
+    <insert id="insertHaruChatMsg" parameterType="HaruChatMessage">
+        INSERT INTO haru_chat_message_tb (`chat_room_no` , `chat_msg_content`
+        <if test="chatSendUserNo !=0">,`chat_send_user_no`</if>
+        <if test="chatSendUserNo ==0">, `chat_send_haru_no`</if>
+        ) VALUES (#{chatRoomNo},#{chatMsgContent}
+        <if test="chatSendUserNo !=0">,#{chatSendUserNo}</if>
+        <if test="chatSendUserNo ==0">, (SELECT haru_no FROM HARU_CHAT_ROOM_HARU_TB WHERE chat_room_no = #{chatRoomNo} LIMIT 1)</if>
+        )
     </insert>
 
     <!-- 하루 채팅방 마지막 메세지 조회-->

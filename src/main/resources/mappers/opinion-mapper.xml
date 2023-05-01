@@ -4,20 +4,81 @@
 
 <mapper namespace="com.spring.onedaythink.opinion.mapper.OpinionMapper">
 
+    <!-- 의견 작성  -->
     <insert id="insertOpinion" parameterType="Opinion">
-        insert into `user_opinion_tb` (`user_no`,`sub_no`, `opinion`,`is_public`) VALUES
+        insert into `user_opinion_tb` (user_no,`sub_no`, `opinion`,`is_public`) VALUES
        (#{userNo},#{subNo},#{opinion},#{isPublic})
     </insert>
 
+    <!--의견 수정-->
+    <update id="updateOpinion" parameterType="Opinion">
+        UPDATE `user_opinion_tb`
+        SET opinion=#{opinion}, is_public=#{isPublic}
+        WHERE user_opi_no=#{userOpiNo}
+    </update>
+
+    <!-- 의견 삭제   -->
+    <update id="deleteOpinion" parameterType="Opinion">
+        UPDATE `user_opinion_tb`
+        SET `withdraw` = 'y'
+        WHERE user_no = #{userNo} AND sub_no = #{subNo}
+    </update>
+
+    <!-- 타인의 생각 전체조회 -->
+
+    <select id="selectAllOtherOpinion" parameterType="OpinionDetails" resultType="OpinionDetails">
+        SELECT B.nickname, B.user_origin_img, A.user_opi_no, A.user_no, A.opinion,
+        (SELECT COUNT(*) FROM like_opinion_tb WHERE user_opi_no = A.user_opi_no) AS count
+        FROM user_opinion_tb AS A
+        JOIN user_tb AS B ON A.user_no = B.user_no
+        JOIN like_opinion_tb AS C ON A.user_opi_no = C.user_opi_no AND B.user_no = C.user_no
+        WHERE A.sub_no = #{subNo}
+        AND A.user_no != #{userNo}
+        AND A.is_public = 'y'
+    </select>
+
+
+    <!--메인 - 나의의견 조회-->
     <select id="selectTodayOpinion" parameterType="Opinion" resultType="Opinion">
         <![CDATA[
                 select *
                 from user_opinion_tb
                 where user_no = #{userNo}
-                  and create_at >=  concat(#{createAt}, ' 00:00:00')
+                  and create_at >= concat(#{createAt}, ' 00:00:00')
                   and create_at < concat(#{createAt},' 23:59:59')
+                  and withdraw = 'n'
                 ]]>
     </select>
+
+    <!--나의 공간 - 의견 조회-->
+    <select id="selectAllMyOpinion" parameterType="Opinion" resultType="Opinion">
+        SELECT * FROM user_opinion_tb
+        WHERE user_no = #{userNo}
+    </select>
+
+    <!--좋아요 넣기-->
+    <insert id="insertLikeOpinion" parameterType="LikeOpinion">
+        INSERT INTO like_opinion_tb (user_no, user_opi_no) VALUES
+        (#{userNo}, #{userOpiNo})
+    </insert>
+
+    <!--좋아요 카운트 -->
+    <select id="getLikeOpinion" parameterType="LikeOpinion">
+        SELECT COUNT(*) AS count
+        FROM like_opinion_tb
+        WHERE user_opi_no = #{userOpiNo}
+        GROUP BY #{userOpiNo}
+    </select>
+
+    <!--좋아요 취소 -->
+    <delete id="deleteLikeOpinion" parameterType="LikeOpinion">
+        delete from
+        like_opinion_tb
+        where
+        user_no = #{userNo} and user_opi_no = #{userOpiNo}
+    </delete>
+
+
 </mapper>
 
 

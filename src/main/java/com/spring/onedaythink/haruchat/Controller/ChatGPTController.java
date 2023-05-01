@@ -22,7 +22,7 @@ public class ChatGPTController {
         log.debug("getChatGPTResponse");
         HaruChatMessage haruChatMessageResponse
                 = chatGPTService.getChatGPTResponse(haruChatMessage);
-        return ResponseEntity.ok(haruChatMessage);
+        return ResponseEntity.ok(haruChatMessageResponse);
     }
 
 
