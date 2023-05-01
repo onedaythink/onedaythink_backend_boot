@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ChatMapper {
 
     // 마지막 메세지 조회
-    public ChatMessage selectLastMessage(ChatRoom chatRoom);
+    ChatMessage selectLastMessage(ChatRoom chatRoom);
 }

@@ -1,5 +1,6 @@
 package com.spring.onedaythink.opinion.service;
 
+import com.spring.onedaythink.opinion.vo.LikeOpinion;
 import com.spring.onedaythink.opinion.vo.Opinion;
 
 import java.util.List;
@@ -13,11 +14,13 @@ public interface OpinionService {
     // 특정 의견 좋아요 조작(생성/삭제)
 
     // 나의 의견 전체 조회
-
+    List<Opinion> getMyOpinion(Opinion opinion);
     // 나의 의견 조회
 
     // 오늘의 나의 의견 조회
     Opinion getTodayOpinion(Opinion opinion);
+
+
 
     // 나의 의견 생성
     int addOpinions(Opinion opinion);
@@ -30,5 +33,7 @@ public interface OpinionService {
     List<Opinion> getOtherOpinions(Opinion opinion);
 
 
+    int addLikeOpinions(LikeOpinion likeOpinion);
 
+    int DeleteLikeOpinion(LikeOpinion likeOpinion);
 }

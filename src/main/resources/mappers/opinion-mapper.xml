@@ -10,7 +10,6 @@
        (#{userNo},#{subNo},#{opinion},#{isPublic})
     </insert>
 
-<<<<<<< HEAD
     <!--의견 수정-->
     <update id="updateOpinion" parameterType="Opinion">
         UPDATE `user_opinion_tb`
@@ -30,6 +29,7 @@
         SELECT *
         FROM user_opinion_tb
         WHERE sub_no = #{subNo}
+    </select>
 
     <select id="selectTodayOpinion" parameterType="Opinion" resultType="Opinion">
         <![CDATA[
@@ -41,6 +41,28 @@
                 ]]>
 
     </select>
+
+    <!--나의 공간 - 의견 조회-->
+    <select id="selectAllMyOpinion" parameterType="Opinion" resultType="Opinion">
+        SELECT * FROM user_opinion_tb
+        WHERE user_no = #{userNo}
+    </select>
+
+    <!--좋아요 -->
+    <insert id="insertLikeOpinion" parameterType="LikeOpinion">
+        INSERT INTO like_opinion_tb (user_no, user_opi_no) VALUES
+        (#{userNo}, #{userOpiNo})
+    </insert>
+
+    <!--좋아요 취소 -->
+    <delete id="deleteLikeOpinion" parameterType="LikeOpinion">
+        delete from
+        like_opinion_tb
+        where
+        user_no = #{userNo} and user_opi_no = #{userOpiNo}
+    </delete>
+    <!--메인 - 나의의견 조회-->
+
 </mapper>
 
 

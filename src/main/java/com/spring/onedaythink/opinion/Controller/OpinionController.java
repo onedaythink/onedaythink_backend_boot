@@ -1,6 +1,7 @@
 package com.spring.onedaythink.opinion.Controller;
 
 import com.spring.onedaythink.opinion.service.OpinionService;
+import com.spring.onedaythink.opinion.vo.LikeOpinion;
 import com.spring.onedaythink.opinion.vo.Opinion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,20 +56,30 @@ public class OpinionController {
     }
 
     //타인의 생각 좋아요
-  /*  @PostMapping(value ="/like/{userNo}/{userOpiNo}")
-    public ResponseEntity<Object> addLikeOpinion(@PathVariable int userNo,@PathVariable int userOpiNo)
+    @PostMapping(value ="/like")
+    public ResponseEntity<Object> addLikeOpinion(@RequestBody LikeOpinion likeOpinion)
     {
-        likeOpinion.set(userNo);
-        likeOpinion.set(userOpiNo);
         int result = opinionService.addLikeOpinions(likeOpinion);
         return ResponseEntity.ok(result);
-    }*/
+    }
     //타인의 생각 좋아요 취소
-
+    @DeleteMapping(value ="/like")
+    public ResponseEntity<Object> DeleteLikeOpinion(@RequestBody LikeOpinion likeOpinion)
+    {
+        int result = opinionService.DeleteLikeOpinion(likeOpinion);
+        return ResponseEntity.ok(result);
+    }
     //나의 공간 - 나의전체조회
+    @GetMapping(value ="/mypage/{userNo}")
+        public ResponseEntity<Object> getMyOpinion(@PathVariable int userNo) {
+        List<Opinion> opinionList;
+        opinionList  = opinionService.getMyOpinion(Opinion.builder().userNo(userNo).build());
+            return ResponseEntity.ok(opinionList);
+        }
+
+
 
     //메인 - 나의 생각 조회
-
     @GetMapping(value = "{userNo}/{subDate}")
     public ResponseEntity<Object> getTodayOpinion(@PathVariable int userNo, @PathVariable String subDate) {
         log.debug("getOpinion");
@@ -76,6 +87,7 @@ public class OpinionController {
         return ResponseEntity.ok(opinion);
     }
 
-    
+
 
 }
+

@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class LikeOpinion {
 
     private int userNo;
-    private int user_opi_no;
+    private int userOpiNo;
 }
