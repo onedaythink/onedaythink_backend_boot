@@ -220,3 +220,14 @@ http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect root: co
 http-nio-8080-exec-6 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
 http-nio-8080-exec-6 DEBUG case3 - [Opinion(userOpiNo=23, userNo=4, subNo=36, opinion=ë¦¬ë“¬íƒ€ ë¦¬ë“¬íƒ€, createAt=2023-05-01 15:02:32, isPublic=y, withdraw=n)]
 >>>>>>> 3fac6ff1de042c24c9fbe91c992bad2399dbb662
+http-nio-8080-exec-1 DEBUG case3 - getOtherOpinions
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.opinion.service.OpinionServiceImpl
+http-nio-8080-exec-1 DEBUG config.TransactionAspect - ======> logAspect Method : getOtherOpinions
+http-nio-8080-exec-4 DEBUG case3 - ÇØ´ç ¾ÆÀÌµðÀÇ À¯Àú°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.user.service.UserServiceImpl
+http-nio-8080-exec-4 DEBUG config.TransactionAspect - ======> logAspect Method : loginUser
+http-nio-8080-exec-4 DEBUG case3 - login test
+http-nio-8080-exec-5 DEBUG case3 - mainSubject
+http-nio-8080-exec-5 DEBUG case3 - getMainSubject
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect root: com.spring.onedaythink.subject.service.SubjectServiceImpl
+http-nio-8080-exec-5 DEBUG config.TransactionAspect - ======> logAspect Method : getMainSubject
