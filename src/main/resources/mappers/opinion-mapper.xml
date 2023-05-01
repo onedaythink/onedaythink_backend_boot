@@ -29,6 +29,7 @@
         SELECT *
         FROM user_opinion_tb
         WHERE sub_no = #{subNo}
+
     </select>
 
     <!--메인 - 나의의견 조회-->
@@ -40,7 +41,6 @@
                   and create_at >=  concat(#{createAt}, ' 00:00:00')
                   and create_at < concat(#{createAt},' 23:59:59')
                 ]]>
-
     </select>
 
     <!--나의 공간 - 의견 조회-->
