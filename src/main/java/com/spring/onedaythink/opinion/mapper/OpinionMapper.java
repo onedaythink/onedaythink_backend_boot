@@ -2,6 +2,7 @@ package com.spring.onedaythink.opinion.mapper;
 
 import com.spring.onedaythink.opinion.vo.LikeOpinion;
 import com.spring.onedaythink.opinion.vo.Opinion;
+import com.spring.onedaythink.opinion.vo.OpinionDetails;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface OpinionMapper {
     public int deleteOpinion(Opinion opinion);
 
     //타인의 의견 전체조회
-    public List<Opinion> selectAllOtherOpinion(Opinion opinion);
+    public List<OpinionDetails> selectAllOtherOpinion(OpinionDetails opinionDetails);
 
     Opinion selectTodayOpinion(Opinion opinion);
 
@@ -27,4 +28,6 @@ public interface OpinionMapper {
     public int insertLikeOpinion(LikeOpinion likeOpinion);
 
     int deleteLikeOpinion(LikeOpinion likeOpinion);
+
+    int getLikeOpinion(LikeOpinion likeOpinion);
 }

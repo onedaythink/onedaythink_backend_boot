@@ -3,6 +3,7 @@ package com.spring.onedaythink.opinion.service;
 import com.spring.onedaythink.opinion.mapper.OpinionMapper;
 import com.spring.onedaythink.opinion.vo.LikeOpinion;
 import com.spring.onedaythink.opinion.vo.Opinion;
+import com.spring.onedaythink.opinion.vo.OpinionDetails;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,15 +61,16 @@ public class OpinionServiceImpl implements OpinionService{
     }
 
     @Override
-    public List<Opinion> getOtherOpinions(Opinion opinion) {
-        List<Opinion> opinionList = opinionMapper.selectAllOtherOpinion(opinion);
-        return opinionList;
+    public List<OpinionDetails> getOtherOpinions(OpinionDetails opinionDetails) {
+        List<OpinionDetails> opinionDetailsListList = opinionMapper.selectAllOtherOpinion(opinionDetails);
+        return opinionDetailsListList;
     }
 
     @Override
     public int addLikeOpinions(LikeOpinion likeOpinion) {
         int result = opinionMapper.insertLikeOpinion(likeOpinion);
-        return result;
+        int count = opinionMapper.getLikeOpinion(likeOpinion);
+        return count;
     }
 
     @Override
