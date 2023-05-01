@@ -25,6 +25,7 @@
     </update>
 
     <!-- 타인의 생각 전체조회 -->
+
     <select id="selectAllOtherOpinion" parameterType="OpinionDetails" resultType="OpinionDetails">
         SELECT B.nickname, B.user_origin_img, A.user_opi_no, A.user_no, A.opinion,
         (SELECT COUNT(*) FROM like_opinion_tb WHERE user_opi_no = A.user_opi_no) AS count
@@ -35,7 +36,7 @@
         AND A.user_no != #{userNo}
         AND A.is_public = 'y'
 
-    </select>
+
 
     <!--메인 - 나의의견 조회-->
     <select id="selectTodayOpinion" parameterType="Opinion" resultType="Opinion">
