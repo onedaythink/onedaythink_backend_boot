@@ -35,4 +35,13 @@ public class OpinionController {
         log.debug(opinion);
         return ResponseEntity.ok(opinion);
     }
+
+    @GetMapping(value = "/{subDate}")
+    public ResponseEntity<Object> getOpinionByCreateAt(@PathVariable int userNo, @PathVariable String subDate) {
+        log.debug("getOpinion");
+        Opinion opinion = opinionService.getTodayOpinion(Opinion.builder().userNo(userNo).createAt(subDate).build());
+        log.debug(opinion);
+        return ResponseEntity.ok(opinion);
+    }
+
 }
