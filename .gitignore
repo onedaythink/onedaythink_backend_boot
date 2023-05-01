@@ -27,7 +27,6 @@
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
-log_test/**
 .idea/modules/misc.xml
 
 src/main/resources/application.properties
@@ -35,7 +34,7 @@ src/main/resources/application.properties
 .idea/**/gradle.xml
 .idea/**/libraries
 
-.log_test
+log_test
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
