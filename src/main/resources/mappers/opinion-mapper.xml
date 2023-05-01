@@ -35,7 +35,7 @@
         WHERE A.sub_no = #{subNo}
         AND A.user_no != #{userNo}
         AND A.is_public = 'y'
-
+    </select>
 
 
     <!--메인 - 나의의견 조회-->
