@@ -68,7 +68,8 @@ public class OpinionServiceImpl implements OpinionService{
     @Override
     public int addLikeOpinions(LikeOpinion likeOpinion) {
         int result = opinionMapper.insertLikeOpinion(likeOpinion);
-        return result;
+        int count = opinionMapper.getLikeOpinion(likeOpinion);
+        return count;
     }
 
     @Override

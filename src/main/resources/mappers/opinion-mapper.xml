@@ -49,11 +49,19 @@
         WHERE user_no = #{userNo}
     </select>
 
-    <!--좋아요 -->
+    <!--좋아요 넣기-->
     <insert id="insertLikeOpinion" parameterType="LikeOpinion">
         INSERT INTO like_opinion_tb (user_no, user_opi_no) VALUES
         (#{userNo}, #{userOpiNo})
     </insert>
+
+    <!--좋아요 카운트 -->
+    <select id="getLikeOpinion" parameterType="LikeOpinion">
+        SELECT COUNT(*) AS count
+        FROM like_opinion_tb
+        WHERE user_opi_no = #{userOpiNo}
+        GROUP BY #{userOpiNo}
+    </select>
 
     <!--좋아요 취소 -->
     <delete id="deleteLikeOpinion" parameterType="LikeOpinion">
