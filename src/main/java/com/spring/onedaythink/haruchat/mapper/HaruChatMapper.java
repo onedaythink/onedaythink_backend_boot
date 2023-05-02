@@ -1,5 +1,6 @@
 package com.spring.onedaythink.haruchat.mapper;
 
+import com.spring.onedaythink.chat.vo.ChatRoom;
 import com.spring.onedaythink.haruchat.vo.HaruChat;
 import com.spring.onedaythink.haruchat.vo.HaruChatMessage;
 import com.spring.onedaythink.haruchat.vo.HaruChatRoom;
@@ -32,7 +33,8 @@ public interface HaruChatMapper {
     HaruChatMessage selectLastMessage(HaruChatRoom haruChatRoom);
 
     // 하루봇 채팅메세지 생성
-    public int insertHaruChatMsg(HaruChatMessage haruChat);
+    public int insertHaruChatMsg(HaruChatMessage haruChatMessage);
+
 
     // 하루봇 채팅방 나가기
     int updateHaruChatRoomClosed(HaruChatRoom haruChatRoom);
