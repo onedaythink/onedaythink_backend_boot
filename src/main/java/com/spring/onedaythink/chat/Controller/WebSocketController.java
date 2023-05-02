@@ -20,18 +20,49 @@ public class WebSocketController {
 
     private Logger log = LogManager.getLogger("case3");
 
+
+    //Client가 SEND할 수 있는 경로
+    //stompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
+    //"/pub/chat/enter"
     @MessageMapping(value = "/chat/enter")
     public void enter(ChatMessageDetail chatMessageDetail){
         log.debug("연결");
+        log.debug(chatMessageDetail);
         chatMessageDetail.setChatMsgContent(chatMessageDetail.getSendNickname() + "님이 채팅방에 참여하였습니다.");
+        log.debug("/sub/chat/room/" + chatMessageDetail.getChatRoomNo());
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageDetail.getChatRoomNo(), chatMessageDetail);
     }
 
-    @MessageMapping("/chat/{chatRoomNo}")
-    public void sendMessage(@DestinationVariable String chatRoomNo, ChatMessage chatMessage, SimpMessageHeaderAccessor accessor) {
-        simpMessagingTemplate.convertAndSend("/sub/chat/" + chatRoomNo, chatMessage);
+    @MessageMapping("/chat/message")
+    public void sendMessage(ChatMessageDetail chatMessageDetail, SimpMessageHeaderAccessor accessor) {
+        log.debug("sub test");
+        log.debug(chatMessageDetail);
+        log.debug("/sub/chat/room/" + chatMessageDetail.getChatRoomNo());
+        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageDetail.getChatRoomNo(), chatMessageDetail);
     }
 
+//    @MessageMapping(value = "/chat/enter")
+//    public void enter(ChatMessage chatMessage){
+//        log.debug("연결");
+//        log.debug(chatMessage);
+//        chatMessage.setChatMsgContent(chatMessage.getChatSendUserNo() + "님이 채팅방에 참여하였습니다.");
+//        log.debug("/sub/chat/room/" + chatMessage.getChatRoomNo());
+//        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getChatRoomNo(), chatMessage);
+//    }
+
+//    @MessageMapping("/chat/message")
+//    public void sendMessage(ChatMessage chatMessage, SimpMessageHeaderAccessor accessor) {
+//        log.debug("sub test");
+//        log.debug(chatMessage);
+//        log.debug("/sub/chat/room/" + chatMessage.getChatRoomNo());
+//        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getChatRoomNo(), chatMessage);
+//    }
+
+//    @MessageMapping("/chat/message")
+//    public void sendMessage(@DestinationVariable String chatRoomNo, ChatMessage chatMessage, SimpMessageHeaderAccessor accessor) {
+//        log.debug("sub test");
+//        simpMessagingTemplate.convertAndSend("/sub/chat/" + chatRoomNo, chatMessage);
+//    }
     /*
     @MessageMapping annotation은 메시지의 destination이 /hello였다면 해당 sendMessage() method가 불리도록 해준다.
     sendMessage()에서는 simpMessagingTemplate.convertAndSend를 통해 /sub/chat/{channelId} 채널을 구독 중인 클라이언트에게 메시지를 전송한다.
