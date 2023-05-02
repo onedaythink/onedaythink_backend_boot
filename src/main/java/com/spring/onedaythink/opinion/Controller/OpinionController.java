@@ -22,7 +22,8 @@ public class OpinionController {
     @Autowired
     private OpinionService opinionService;
 
-    //나의 생각 입력'
+
+    //나의 생각 입력
     @PostMapping(value="/{userNo}")
     public ResponseEntity<Object> addOpinions(@PathVariable int userNo,@RequestBody Opinion opinion)
     {
