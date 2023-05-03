@@ -26,15 +26,16 @@ public interface OpinionService {
     // 나의 의견 생성
     int addOpinions(Opinion opinion);
     // 나의 의견 수정
-    int editOpinions(Opinion opinion);
+//    int editOpinions(Opinion opinion);
     // 나의 의견 삭제
     int deleteOpinions(Opinion opinion);
 
     //타인 의견 전체조회
     List<OpinionDetails> getOtherOpinions(OpinionDetails opinionDetails);
 
+    int likeOpinions(LikeOpinion likeOpinion);
 
-    int addLikeOpinions(LikeOpinion likeOpinion);
+//    int addLikeOpinions(LikeOpinion likeOpinion);
 
-    int DeleteLikeOpinion(LikeOpinion likeOpinion);
+//    int DeleteLikeOpinion(LikeOpinion likeOpinion);
 }

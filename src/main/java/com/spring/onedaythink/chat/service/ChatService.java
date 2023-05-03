@@ -3,6 +3,9 @@ package com.spring.onedaythink.chat.service;
 import com.spring.onedaythink.chat.vo.Chat;
 import com.spring.onedaythink.chat.vo.ChatMessage;
 import com.spring.onedaythink.chat.vo.ChatRoom;
+import com.spring.onedaythink.chat.vo.ChatRoomDetail;
+
+import java.util.List;
 
 public interface ChatService {
 
@@ -10,8 +13,10 @@ public interface ChatService {
      채팅방 리스트 조회
      => 채팅방 대기/활성화/종료 조회(동적쿼리?)
      */
+    List<ChatRoomDetail> getChatRooms(ChatRoomDetail chatRoomDetail);
 
     // 채탕방 생성(대화신청)
+    int addChatRoom(ChatRoom chatRoom);
 
     // 채탕벙 수정(대기에서 수락/거절/종료)
 

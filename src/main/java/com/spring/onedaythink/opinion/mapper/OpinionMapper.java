@@ -29,5 +29,7 @@ public interface OpinionMapper {
 
     int deleteLikeOpinion(LikeOpinion likeOpinion);
 
-    int getLikeOpinion(LikeOpinion likeOpinion);
+//    int getLikeOpinion(LikeOpinion likeOpinion);
+
+    int selectLikeOption(LikeOpinion likeOpinion);
 }
