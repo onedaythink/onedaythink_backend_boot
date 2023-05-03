@@ -8,7 +8,13 @@
         SELECT *
         FROM haru_tb
         WHERE haru_no >= (SELECT FLOOR(MAX(haru_no) * RAND()) FROM haru_tb)
-        LIMIT 4;
+        LIMIT 4
+    </select>
+
+    <select id="selectOneHarubotIdWithNo" parameterType="Integer" resultType="String">
+        SELECT chat_gpt_id
+        FROM haru_chat_room_haru_tb
+        WHERE haru_no = #{haruNo}
     </select>
 
     <insert id="insertHaruChatRoom" parameterType="User">

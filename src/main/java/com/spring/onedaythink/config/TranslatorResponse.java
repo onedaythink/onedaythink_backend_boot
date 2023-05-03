@@ -1,4 +1,4 @@
-package com.spring.onedaythink.haruchat.service;
+package com.spring.onedaythink.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

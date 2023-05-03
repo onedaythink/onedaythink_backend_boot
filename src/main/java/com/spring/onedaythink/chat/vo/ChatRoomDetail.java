@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ChatRoomDetail {
-
-    private ChatRoom chatRoom;
-    private int chatRoomNo, toUserOpiNo, fromUserNo;
-    private String toNickname, fromNickname, chatStatus, creatAt, isClose;
+    private int chatRoomNo, findUserNo, toUserOpiNo, fromUserNo;
+    private String toNickname, fromNickname, lastMessage,
+            chatStatus, creatAt, isClose;
 
 
 }

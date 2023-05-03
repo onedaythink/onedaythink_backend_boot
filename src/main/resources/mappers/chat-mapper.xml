@@ -4,6 +4,11 @@
 
 <mapper namespace="com.spring.onedaythink.chat.mapper.ChatMapper">
 
+    <insert id="insertChatRoom" parameterType="ChatRoom">
+        insert into chat_room_tb (to_user_opi_no, from_user_no)
+            values (#{toUserOpiNo}, #{fromUserNo})
+    </insert>
+
     <select id="selectLastMessage" parameterType="ChatRoom" resultType="ChatMessage">
         SELECT chat_send_user_no, chat_msg_content, chat_create_at
         FROM chat_message_tb
@@ -17,5 +22,36 @@
         SET is_close='y'
         WHERE chat_room_no = #{chatRoomNo}
     </update>
+
+    <select id="selectChatRoomByCreateAt" parameterType="ChatRoom" resultType="ChatRoomDetail">
+        <![CDATA[
+        select *
+        from CHAT_ROOM_TB as cr
+            join user_opinion_tb as uo
+            on uo.user_opi_no = cr.to_user_opi_no
+            join user_tb as to_u
+            on to_u.user_no = uo.user_no
+            join user_tb as from_u
+            on from_u.user_no = cr.from_user_no
+        where uo.user_no = #{findUserNo}
+            or cr.from_user_no = #{findUserNo}
+            and cr.create_at >= concat(#{creatAt}, ' 00:00:00')
+            and cr.create_at < concat(#{creatAt},' 23:59:59')
+            and is_close = 'n'
+        order by cr.create_at desc;
+        ]]>
+    </select>
+
+    <select id="selectChatRoomCountByUserNo" parameterType="ChatRoom" resultType="int">
+        select count(*)
+        from CHAT_ROOM_TB as cr
+                 join user_opinion_tb as uo
+                      on uo.user_opi_no = cr.to_user_opi_no
+                 join user_tb as u
+                      on u.user_no = uo.user_no
+        where (uo.user_no = #{toUserOpiNo} and cr.from_user_no = #{fromUserNo})
+            or (uo.user_no = #{fromUserNo} and cr.from_user_no = #{toUserOpiNo})
+            and is_close = 'n';
+    </select>
 
 </mapper>
