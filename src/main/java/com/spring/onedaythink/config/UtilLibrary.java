@@ -13,4 +13,15 @@ public class UtilLibrary {
         return new BCryptPasswordEncoder();
     }
 
+    public String convertCreateAt(String createAt) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < createAt.length(); i++) {
+            sb.append(createAt.charAt(i));
+            if (i == 3 || i == 5 ) {
+                sb.append("-");
+            }
+        }
+        return sb.toString();
+    }
+
 }

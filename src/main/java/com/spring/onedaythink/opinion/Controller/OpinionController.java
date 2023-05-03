@@ -22,24 +22,12 @@ public class OpinionController {
     @Autowired
     private OpinionService opinionService;
 
-
-    //나의 생각 입력
+    //나의 생각 등록 및 수정
     @PostMapping(value="/{userNo}")
-    public ResponseEntity<Object> addOpinions(@PathVariable int userNo,@RequestBody Opinion opinion)
-    {
+    public ResponseEntity<Object> addOpinions(@PathVariable int userNo,@RequestBody Opinion opinion) {
         opinion.setUserNo(userNo);
         log.debug("addOpinions");
         int result = opinionService.addOpinions(opinion);
-        return ResponseEntity.ok(result);
-    }
-
-    //나의 생각 수정
-    @PostMapping(value="/editopinion/{userNo}")
-    public ResponseEntity<Object> editOpinions(@PathVariable int userNo,@RequestBody Opinion opinion)
-    {
-        log.debug("editOpinions");
-        opinion.setUserNo(userNo);
-        int result = opinionService.editOpinions(opinion);
         return ResponseEntity.ok(result);
     }
     //나의 생각 삭제
@@ -62,20 +50,11 @@ public class OpinionController {
         return ResponseEntity.ok(opinionList);
     }
 
-    //타인의 생각 좋아요
+    //타인의 생각 좋아요 컨트롤
     @PostMapping(value ="/like")
-    public ResponseEntity<Object> addLikeOpinion(@RequestBody LikeOpinion likeOpinion)
-    {
-        log.debug("addLikeOpinion");
-        int result = opinionService.addLikeOpinions(likeOpinion);
-        return ResponseEntity.ok(result);
-    }
-    //타인의 생각 좋아요 취소
-    @GetMapping(value ="/like")
-    public ResponseEntity<Object> DeleteLikeOpinion(@RequestBody LikeOpinion likeOpinion)
-    {
-        log.debug("DeleteLikeOpinion");
-        int result = opinionService.DeleteLikeOpinion(likeOpinion);
+    public ResponseEntity<Object> likeOpinions(@RequestBody LikeOpinion likeOpinion) {
+        log.debug("like controll test");
+        int result = opinionService.likeOpinions(likeOpinion);
         return ResponseEntity.ok(result);
     }
     //나의 공간 - 나의전체조회
