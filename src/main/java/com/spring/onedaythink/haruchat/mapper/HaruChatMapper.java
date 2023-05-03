@@ -14,7 +14,7 @@ public interface HaruChatMapper {
     public List<HaruChat> selectHaruBot();
 
     // 하루봇 chatGPTID 조회
-    public String selectOneHarubotIdWithNo(int haruNo);
+    public String selectOneHarubotIdWithNo(ChatGPTId chatGPTId);
     // 채팅 시작 (사용자 하루봇 선택 반영)
     public int insertHaruChatRoom(User user);
 

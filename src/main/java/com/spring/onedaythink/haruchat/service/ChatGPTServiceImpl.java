@@ -21,10 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ChatGPTServiceImpl implements ChatGPTService{
@@ -45,16 +42,18 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         Map<String, String> prompt = generatePrompt(selectedHaruInfo);
         // Response 받아오기
         List<HaruChatMessage> responseList = new ArrayList<>();
-        for(Map.Entry<String,String> entry : prompt.entrySet()) {
-            String translatedPrompt= getTranslatedText(entry.getValue());
-            log.debug("getChatGPTResponse" + openaiApiKey);
+        Set<String> keySet = prompt.keySet();
+        for(String key : keySet) {
+            String translatedPrompt= getTranslatedTextKoToEn(prompt.get(key));
+            log.debug("@@@@@"+prompt.get(key));
+
             // API Request ; if(chatId is NUll), for(List<chatGPTId>)
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Authorization", "Bearer " + openaiApiKey);
 
             Map<String, Object> requestBody = new HashMap<>();
-            requestBody.put("id", entry.getKey());
+
             requestBody.put("model", "gpt-3.5-turbo");
             requestBody.put("temperature", 0.7);
             requestBody.put("max_tokens", 500);
@@ -67,7 +66,6 @@ public class ChatGPTServiceImpl implements ChatGPTService{
 
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-
             // RESPONSE
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Map> response = restTemplate.postForEntity(ENDPOINT, requestEntity, Map.class);
@@ -77,9 +75,8 @@ public class ChatGPTServiceImpl implements ChatGPTService{
             List<Map<String, Object>> completions = (List<Map<String, Object>>) responseBody.get("choices");
             Map<String, Object> firstCompletion = completions.get(0);
             String generatedText = (String) ((Map<String, Object>) firstCompletion.get("message")).get("content");
-
-            String answerFromGPT = getTranslatedText(generatedText);
-
+            log.debug(generatedText);
+            String answerFromGPT = getTranslatedTextEnToKo(generatedText);
             log.debug(answerFromGPT);
 
             // Received Message insert
@@ -102,19 +99,27 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         // HaruChatRoom_Haru TB && Haru TB ; HaruPrompt
         Map<String, String> map = new HashMap<>();
         String prompt="";
+        // previousMsg IS NULL && summary IS NULL
+        String summary =  (haruChatMapper.selectOneharuChatRoom
+            (HaruChatRoom.builder().chatRoomNo(chatRoomNo).build())).getSummary();
+
         for(int i=0; i<selectedHaruInfo.getHaruNo().size(); i++) {
             int haruNo = selectedHaruInfo.getHaruNo().get(i);
             String subject = selectedHaruInfo.getSubject();
-//            String summary =  (haruChatMapper.selectOneharuChatRoom
-//                (HaruChatRoom.builder().chatRoomNo(chatRoomNo).build())).getSummary();
             String haruPrompt = selectedHaruInfo.getHaruPrompt().get(String.valueOf(haruNo));
-            prompt = haruPrompt
-                    +" 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. 다음 논제에 대한 의견을 이 사람의 입장에서 완성하세요."
-                    +" [논제] "+subject;
-            String chatGptId = haruChatMapper.selectOneHarubotIdWithNo(haruNo);
-            map.put(chatGptId,prompt);
+            if(summary.isEmpty()) {
+                prompt = haruPrompt
+                        + " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. 다음 논제에 대한 의견을 이 사람의 입장에서 완성하세요."
+                        + " [논제] " + subject;
+            }
+            String chatGptId = haruChatMapper.selectOneHarubotIdWithNo
+                    (ChatGPTId.builder().haruNo(haruNo).chatRoomNo(selectedHaruInfo.getChatRoomNo()).build());
+            if (chatGptId == null) {
+                map.put(String.valueOf(i), prompt);
+            } else {
+                map.put(chatGptId,prompt);
+            }
         }
-
         // HaruChatMsg TB ; currentMsg, summarizedCount
 //        List<CurrentMsg> currentMsgList = haruChatMapper.selectCurrentMsgWithRoomNo();
 //        int summarizedCount = haruChatMapper.selectSummarizedWithRoomNo();
@@ -122,12 +127,14 @@ public class ChatGPTServiceImpl implements ChatGPTService{
 
         return map;
     }
+
     // NAVER PAPAGO translation test
-    private String getTranslatedText(String text) throws JsonProcessingException {
+    // 한국어 -> 영어
+    private String getTranslatedTextKoToEn(String text) throws JsonProcessingException {
 
         // Papago 에 문자열 넘겨줘서 번역된 내용 리턴받기
-        String clientId = "s8eK4gzT5u70EsNAfYPT";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "1im3PL2SN2";//애플리케이션 클라이언트 시크릿값";
+        String clientId = "gWkxBN_vvVKo_ODVp6cq";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "hYtFscMLqJ";//애플리케이션 클라이언트 시크릿값";
 
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
         String textTemp;
@@ -141,7 +148,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
 
-        String responseBody = papago_post(apiURL, requestHeaders, textTemp);
+        String responseBody = papago_post_ko_en(apiURL, requestHeaders, textTemp);
 
         TranslatorResponse translatorResponse = objectMapper.readValue(responseBody, TranslatorResponse.class);
         log.debug(translatorResponse.getTranslatedText());
@@ -149,10 +156,60 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         return translatorResponse.getTranslatedText();
     }
 
+    // 영어 -> 한국어
+    private String getTranslatedTextEnToKo(String text) throws JsonProcessingException {
 
-    private static String papago_post(String apiUrl, Map<String, String> requestHeaders, String text){
+        // Papago 에 문자열 넘겨줘서 번역된 내용 리턴받기
+        String clientId = "gWkxBN_vvVKo_ODVp6cq";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "hYtFscMLqJ";//애플리케이션 클라이언트 시크릿값";
+
+        String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
+
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("X-Naver-Client-Id", clientId);
+        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+
+        String responseBody = papago_post_en_ko(apiURL, requestHeaders, text);
+
+        TranslatorResponse translatorResponse = objectMapper.readValue(responseBody, TranslatorResponse.class);
+        log.debug(translatorResponse.getTranslatedText());
+
+        return translatorResponse.getTranslatedText();
+    }
+
+    // 한국어 -> 영어
+    private static String papago_post_ko_en(String apiUrl, Map<String, String> requestHeaders, String text){
         HttpURLConnection con = connect(apiUrl);
         String postParams = "source=ko&target=en&text=" + text; //원본언어: 한국어 (ko) -> 목적언어: 영어 (en)
+        try {
+            con.setRequestMethod("POST");
+            for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
+                con.setRequestProperty(header.getKey(), header.getValue());
+            }
+
+            con.setDoOutput(true);
+            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+                wr.write(postParams.getBytes());
+                wr.flush();
+            }
+
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 응답
+                return readBody(con.getInputStream());
+            } else {  // 에러 응답
+                return readBody(con.getErrorStream());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("API 요청과 응답 실패", e);
+        } finally {
+            con.disconnect();
+        }
+    }
+
+    // 영어 -> 한국어
+    private static String papago_post_en_ko(String apiUrl, Map<String, String> requestHeaders, String text){
+        HttpURLConnection con = connect(apiUrl);
+        String postParams = "source=en&target=ko&text=" + text; //원본언어: 한국어 (ko) -> 목적언어: 영어 (en)
         try {
             con.setRequestMethod("POST");
             for(Map.Entry<String, String> header :requestHeaders.entrySet()) {

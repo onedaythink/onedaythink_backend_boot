@@ -8,11 +8,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.7.10/2efce9b613cf87d0b5669db136950be15f8da7b9/spring-boot-configuration-processor-2.7.10.jar" />
         </processorPath>
-<<<<<<< HEAD
         <module name="com.spring.onedaythink.spring_boot_backend.main" />
-=======
-        <module name="spring_boot_backend.main" />
->>>>>>> e986172d2c8ca306047d2c384da9927da1e1b69a
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />

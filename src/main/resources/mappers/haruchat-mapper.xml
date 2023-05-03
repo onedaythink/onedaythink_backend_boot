@@ -11,10 +11,10 @@
         LIMIT 4
     </select>
 
-    <select id="selectOneHarubotIdWithNo" parameterType="Integer" resultType="String">
+    <select id="selectOneHarubotIdWithNo" parameterType="ChatGPTId" resultType="String">
         SELECT chat_gpt_id
         FROM haru_chat_room_haru_tb
-        WHERE haru_no = #{haruNo}
+        WHERE haru_no = #{haruNo} AND chat_room_no = #{chatRoomNo}
     </select>
 
     <insert id="insertHaruChatRoom" parameterType="User">
