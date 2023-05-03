@@ -47,35 +47,8 @@ public class ChatGPTServiceImpl implements ChatGPTService{
             String translatedPrompt= getTranslatedTextKoToEn(prompt.get(key));
             log.debug("@@@@@"+prompt.get(key));
 
-            // API Request ; if(chatId is NUll), for(List<chatGPTId>)
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Authorization", "Bearer " + openaiApiKey);
+            String generatedText = getChatGpt(translatedPrompt);
 
-            Map<String, Object> requestBody = new HashMap<>();
-
-            requestBody.put("model", "gpt-3.5-turbo");
-            requestBody.put("temperature", 0.7);
-            requestBody.put("max_tokens", 500);
-            ArrayList<Map<String, String>> messages = new ArrayList<>();
-            Map<String, String> message = new HashMap<>();
-            message.put("role", "assistant");
-            message.put("content", translatedPrompt);
-            messages.add(message);
-            requestBody.put("messages", messages);
-
-            HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
-
-            // RESPONSE
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Map> response = restTemplate.postForEntity(ENDPOINT, requestEntity, Map.class);
-
-            Map<String, Object> responseBody = response.getBody();
-
-            List<Map<String, Object>> completions = (List<Map<String, Object>>) responseBody.get("choices");
-            Map<String, Object> firstCompletion = completions.get(0);
-            String generatedText = (String) ((Map<String, Object>) firstCompletion.get("message")).get("content");
-            log.debug(generatedText);
             String answerFromGPT = getTranslatedTextEnToKo(generatedText);
             log.debug(answerFromGPT);
 
@@ -90,6 +63,41 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         return responseList;
     }
 
+    private String getChatGpt(String prompt){
+
+        // API Request ; if(chatId is NUll), for(List<chatGPTId>)
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + openaiApiKey);
+
+        Map<String, Object> requestBody = new HashMap<>();
+
+        requestBody.put("model", "gpt-3.5-turbo");
+        requestBody.put("temperature", 0.7);
+        requestBody.put("max_tokens", 500);
+        ArrayList<Map<String, String>> messages = new ArrayList<>();
+        Map<String, String> message = new HashMap<>();
+        message.put("role", "assistant");
+        message.put("content", prompt);
+        messages.add(message);
+        requestBody.put("messages", messages);
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // RESPONSE
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Map> response = restTemplate.postForEntity(ENDPOINT, requestEntity, Map.class);
+
+        Map<String, Object> responseBody = response.getBody();
+
+        List<Map<String, Object>> completions = (List<Map<String, Object>>) responseBody.get("choices");
+        Map<String, Object> firstCompletion = completions.get(0);
+        String generatedText = (String) ((Map<String, Object>) firstCompletion.get("message")).get("content");
+        log.debug(generatedText);
+
+        return generatedText;
+    }
+
     private Map<String,String> generatePrompt(SelectedHaruInfo selectedHaruInfo){
         // Generate Prompt
         /** prompt = (chatGPTID) + fixedStatement + (subject) + (haruPrompt) + (summary/summarizedCount) + currentMsg **/
@@ -99,19 +107,18 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         // HaruChatRoom_Haru TB && Haru TB ; HaruPrompt
         Map<String, String> map = new HashMap<>();
         String prompt="";
-        // previousMsg IS NULL && summary IS NULL
-        String summary =  (haruChatMapper.selectOneharuChatRoom
-            (HaruChatRoom.builder().chatRoomNo(chatRoomNo).build())).getSummary();
-
+        // previousMsg IS NULL && summary IS NULL && toHaruNo????( toHaruNo = 21 -> "ALL")
+//        String summary = summarizedCount<10 ; summarizeDialogue 호출
+//        chatRoomNo -> previous Summary  Y ? N ?
         for(int i=0; i<selectedHaruInfo.getHaruNo().size(); i++) {
             int haruNo = selectedHaruInfo.getHaruNo().get(i);
             String subject = selectedHaruInfo.getSubject();
             String haruPrompt = selectedHaruInfo.getHaruPrompt().get(String.valueOf(haruNo));
-            if(summary.isEmpty()) {
-                prompt = haruPrompt
-                        + " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. 다음 논제에 대한 의견을 이 사람의 입장에서 완성하세요."
-                        + " [논제] " + subject;
-            }
+
+            prompt = haruPrompt
+                    + " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. 다음 논제에 대한 의견을 이 사람의 입장에서 완성하세요."
+                    + " [논제] " + subject;
+
             String chatGptId = haruChatMapper.selectOneHarubotIdWithNo
                     (ChatGPTId.builder().haruNo(haruNo).chatRoomNo(selectedHaruInfo.getChatRoomNo()).build());
             if (chatGptId == null) {
@@ -126,6 +133,33 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         //fixedStatement
 
         return map;
+    }
+
+    private String summmarizeDialogue(SelectedHaruInfo selectedHaruInfo){
+
+        // Data ;  sendUserNo, sendHaruNo(haruName), chatMsgContent (order ; MsgNo);
+        // Form ; [previousSummary] + [haruName/UserNo] : "chatMsgContent"
+
+        String prompt = "";
+
+        HaruChatRoom haruChatRoom
+                = haruChatMapper.selectOneharuChatRoom
+                ( HaruChatRoom.builder().userNo(selectedHaruInfo.getUserNo()).build());
+
+        String previousSummary = haruChatRoom.getSummary();
+        String currentMsg = "";
+        List<CurrentMsg> currentMsgList = haruChatMapper.selectPreviousMsg(haruChatRoom);
+        for(int i=0; i<currentMsgList.size(); i++){
+            String haruName = currentMsgList.get(i).getHaruName();
+            String message = currentMsgList.get(i).getChatMsgContent();
+            String fullMsg = "";
+            if(currentMsgList.get(i).getChatSendUserNo()=){
+                fullMsg = "[" + haruName + "]" + " : " + message + " ";
+            }
+            currentMsg = currentMsg.concat(fullMsg);
+        }
+
+        return null;
     }
 
     // NAVER PAPAGO translation test

@@ -67,6 +67,17 @@
         LIMIT 1
     </select>
 
+    <!-- 하루 채팅방 직전 대화 10개 조회-->
+    <select id="selectPreviousMsg" parameterType="HaruChatRoom" resultType="CurrentMsg">
+        SELECT chat_send_user_no, chat_send_haru_no, chat_msg_content, to_haru_no, haru_name
+        FROM haru_chat_message_tb
+        LEFT JOIN haru_tb
+        ON to_haru_no = haru_no
+        WHERE chat_room_no = #{chatRoomNo}
+        ORDER BY chat_msg_no DESC
+        LIMIT 10;
+    </select>
+
     <!-- 하루 채팅방 나가기 -->
     <update id="updateHaruChatRoomClosed" parameterType="HaruChatRoom">
         UPDATE haru_chat_room_tb
