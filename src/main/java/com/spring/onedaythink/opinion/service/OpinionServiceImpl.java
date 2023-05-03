@@ -43,6 +43,7 @@ public class OpinionServiceImpl implements OpinionService{
     @Override
     public int addOpinions(Opinion opinion) {
         int result = opinionMapper.insertOpinion(opinion);
+
         return result;
     }
 
