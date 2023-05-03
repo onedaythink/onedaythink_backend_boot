@@ -13,6 +13,6 @@ public class HaruChatRoom {
 
 
     private int chatRoomNo, userNo;
-    private String createAt, isClose;
+    private String createAt, isClose, summary;
 
 }
