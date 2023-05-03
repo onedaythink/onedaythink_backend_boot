@@ -1,9 +1,6 @@
 package com.spring.onedaythink.chat.service;
 
-import com.spring.onedaythink.chat.vo.Chat;
-import com.spring.onedaythink.chat.vo.ChatMessage;
-import com.spring.onedaythink.chat.vo.ChatRoom;
-import com.spring.onedaythink.chat.vo.ChatRoomDetail;
+import com.spring.onedaythink.chat.vo.*;
 
 import java.util.List;
 
@@ -18,14 +15,14 @@ public interface ChatService {
     // 채탕방 생성(대화신청)
     int addChatRoom(ChatRoom chatRoom);
 
-    // 채탕벙 수정(대기에서 수락/거절/종료)
-
     // 채팅방 종료
     int closeChatRoom(ChatRoom chatRoom);
 
     // 챠탕 메세지 전체 조회
+    List<ChatMessageDetail> getChatMessageDetails(ChatRoomDetail chatRoomDetail);
 
     // 채팅 메세지 생성
+    int addChatMessage(ChatMessageDetail chatMessageDetail);
 
     // 채팅 마지막 메세지 조회
     ChatMessage getLastMessage(ChatRoom chatRoom);

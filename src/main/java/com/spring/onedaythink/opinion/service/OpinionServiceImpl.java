@@ -48,7 +48,6 @@ public class OpinionServiceImpl implements OpinionService{
         else {
             result = opinionMapper.updateOpinion(opinion);
         }
-
         return result;
     }
 

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ChatRoomDetail {
     private int chatRoomNo, findUserNo, toUserOpiNo, fromUserNo;
-    private String toNickname, fromNickname, lastMessage,
-            chatStatus, creatAt, isClose;
+    private String toNickname, fromNickname, lastMessage, sendNickname,
+            creatAt, isClose;
 
 
 }
