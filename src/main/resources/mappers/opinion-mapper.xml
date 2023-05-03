@@ -13,7 +13,8 @@
     <!--의견 수정-->
     <update id="updateOpinion" parameterType="Opinion">
         UPDATE `user_opinion_tb`
-        SET opinion=#{opinion}, is_public=#{isPublic}
+        SET opinion=#{opinion},
+            is_public=#{isPublic}
         WHERE user_opi_no=#{userOpiNo}
     </update>
 
@@ -27,14 +28,21 @@
     <!-- 타인의 생각 전체조회 -->
 
     <select id="selectAllOtherOpinion" parameterType="OpinionDetails" resultType="OpinionDetails">
-        SELECT B.nickname, B.user_origin_img, A.user_opi_no, A.user_no, A.opinion,
-        (SELECT COUNT(*) FROM like_opinion_tb WHERE user_opi_no = A.user_opi_no) AS count
+         <![CDATA[
+        SELECT B.nickname, B.user_origin_img, A.user_opi_no, A.user_no, A.opinion, A.sub_no,
+               (SELECT COUNT(*)
+                FROM like_opinion_tb
+                WHERE user_opi_no = A.user_opi_no
+               ) AS like_count
         FROM user_opinion_tb AS A
-        JOIN user_tb AS B ON A.user_no = B.user_no
-        JOIN like_opinion_tb AS C ON A.user_opi_no = C.user_opi_no AND B.user_no = C.user_no
+            JOIN user_tb AS B
+        ON A.user_no = B.user_no
+            LEFT JOIN like_opinion_tb AS C
+            ON A.user_opi_no = C.user_opi_no
+            AND B.user_no = C.user_no
         WHERE A.sub_no = #{subNo}
-        AND A.user_no != #{userNo}
-        AND A.is_public = 'y'
+          AND A.is_public = 'y'
+        ]]>
     </select>
 
 
@@ -70,12 +78,20 @@
         GROUP BY #{userOpiNo}
     </select>
 
+    <!-- 내가 좋아요를 눌렀는지 확인 -->
+    <select id="selectLikeOption" parameterType="LikeOpinion" resultType="int">
+        SELECT COUNT(*) AS count
+        FROM like_opinion_tb
+        WHERE user_opi_no = #{userOpiNo}
+            and user_no = #{userNo}
+    </select>
+
     <!--좋아요 취소 -->
     <delete id="deleteLikeOpinion" parameterType="LikeOpinion">
         delete from
         like_opinion_tb
-        where
-        user_no = #{userNo} and user_opi_no = #{userOpiNo}
+        where  user_no = #{userNo}
+          and user_opi_no = #{userOpiNo}
     </delete>
 
 
