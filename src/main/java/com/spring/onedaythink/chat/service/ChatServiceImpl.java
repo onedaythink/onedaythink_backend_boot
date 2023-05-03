@@ -2,6 +2,7 @@ package com.spring.onedaythink.chat.service;
 
 import com.spring.onedaythink.chat.mapper.ChatMapper;
 import com.spring.onedaythink.chat.vo.ChatMessage;
+import com.spring.onedaythink.chat.vo.ChatMessageDetail;
 import com.spring.onedaythink.chat.vo.ChatRoom;
 import com.spring.onedaythink.chat.vo.ChatRoomDetail;
 import org.apache.logging.log4j.LogManager;
@@ -20,12 +21,10 @@ public class ChatServiceImpl implements ChatService{
     private ChatMapper chatMapper;
 
     // 채팅방 조회
-
     @Override
     public List<ChatRoomDetail> getChatRooms(ChatRoomDetail chatRoomDetail) {
-        return chatMapper.selectChatRoomByCreateAt(chatRoomDetail);
+        return chatMapper.selectChatRooms(chatRoomDetail);
     }
-
     @Override
     public int addChatRoom(ChatRoom chatRoom){
         log.debug("add ChatRoom");
@@ -38,6 +37,13 @@ public class ChatServiceImpl implements ChatService{
         return result;
     }
 
+    // 채팅방 종료
+    @Override
+    public int closeChatRoom(ChatRoom chatRoom) {
+        log.debug("closeChatRoom");
+        return chatMapper.updateChatRoomClosed(chatRoom);
+    }
+
     // 마지막 메세지 조회
     @Override
     public ChatMessage getLastMessage(ChatRoom chatRoom) {
@@ -45,11 +51,13 @@ public class ChatServiceImpl implements ChatService{
          return chatMapper.selectLastMessage(chatRoom);
     }
 
-    // 채팅방 종료
+    @Override
+    public List<ChatMessageDetail> getChatMessageDetails(ChatRoomDetail chatRoomDetail){
+        return chatMapper.selectChatMessageDetails(chatRoomDetail);
+    }
 
     @Override
-    public int closeChatRoom(ChatRoom chatRoom) {
-        log.debug("closeChatRoom");
-        return chatMapper.updateChatRoomClosed(chatRoom);
+    public int addChatMessage(ChatMessageDetail chatMessageDetail){
+        return chatMapper.insertChatMessage(chatMessageDetail);
     }
 }

@@ -6,13 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class HaruChatRoom {
+public class CurrentMsg {
 
+    private int chatSendUserNo, chatSendHaruNo, toHaruNo;
 
-    private int chatRoomNo, userNo;
-    private String createAt, isClose, summary;
+    private String chatMsgContent, HaruName;
 
 }
