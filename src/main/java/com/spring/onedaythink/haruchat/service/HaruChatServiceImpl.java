@@ -57,6 +57,7 @@ public class HaruChatServiceImpl implements HaruChatService{
     public List<HaruChatRoom> selectAllharuChatRoom() {
         return haruChatMapper.selectAllharuChatRoom();
     }
+
    // 하루봇 채팅방 개별 조회
     @Override
     public HaruChatRoom selectOneHaruChatRoom(HaruChatRoom haruChatRoom) {

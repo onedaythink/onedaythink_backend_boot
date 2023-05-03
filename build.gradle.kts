@@ -58,6 +58,10 @@ dependencies {
 
     /** AOP **/
     implementation("org.springframework.boot:spring-boot-starter-aop")
+
+    /** CHAT GPT API**/
+    implementation ("io.github.flashvayne:chatgpt-spring-boot-starter:1.0.0")
+    annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<Test> {
