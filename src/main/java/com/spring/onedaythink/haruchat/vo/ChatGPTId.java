@@ -6,13 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class HaruChatRoom {
+public class ChatGPTId {
 
-
-    private int chatRoomNo, userNo;
-    private String createAt, isClose, summary;
+    private int haruNo, chatRoomNo;
+    private String chatGptId;
 
 }

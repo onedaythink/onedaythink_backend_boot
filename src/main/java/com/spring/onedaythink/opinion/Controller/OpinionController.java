@@ -26,23 +26,15 @@ public class OpinionController {
     @PostMapping(value="/{userNo}")
     public ResponseEntity<Object> addOpinions(@PathVariable int userNo,@RequestBody Opinion opinion) {
         opinion.setUserNo(userNo);
-        log.debug(opinion);
+        log.debug("addOpinions");
         int result = opinionService.addOpinions(opinion);
         return ResponseEntity.ok(result);
     }
-
-    //나의 생각 수정
-//    @PostMapping(value="/editopinion/{userNo}")
-//    public ResponseEntity<Object> editOpinions(@PathVariable int userNo,@RequestBody Opinion opinion)
-//    {
-//        opinion.setUserNo(userNo);
-//        int result = opinionService.editOpinions(opinion);
-//        return ResponseEntity.ok(result);
-//    }
     //나의 생각 삭제
    @PostMapping(value="/deleteopinion/{userNo}")
     public ResponseEntity<Object> deleteOpinions(@PathVariable int userNo, @RequestBody Opinion opinion)
     {
+        log.debug("deleteOpinions");
         opinion.setUserNo(userNo);
         int result = opinionService.deleteOpinions(opinion);
         return ResponseEntity.ok(result);
@@ -51,9 +43,10 @@ public class OpinionController {
     //타인의 생각조회
     @GetMapping(value = "create-at/{subNo}/{userNo}")
     public ResponseEntity<List<OpinionDetails>> getOtherOpinions(@PathVariable int subNo, @PathVariable int userNo) {
+
+        log.debug("getOtherOpinions");
         List<OpinionDetails> opinionList;
         opinionList = opinionService.getOtherOpinions(OpinionDetails.builder().userNo(userNo).subNo(subNo).build());
-        log.debug(opinionList);
         return ResponseEntity.ok(opinionList);
     }
 
@@ -67,9 +60,10 @@ public class OpinionController {
     //나의 공간 - 나의전체조회
     @GetMapping(value ="/mypage/{userNo}")
         public ResponseEntity<Object> getMyOpinion(@PathVariable int userNo) {
+        log.debug("getMyOpinion");
         List<Opinion> opinionList;
         opinionList  = opinionService.getMyOpinion(Opinion.builder().userNo(userNo).build());
-            return ResponseEntity.ok(opinionList);
+        return ResponseEntity.ok(opinionList);
         }
 
     //메인 - 나의 생각 조회

@@ -28,6 +28,7 @@
 .idea/**/dbnavigator.xml
 
 .idea/modules/misc.xml
+
 log_test
 
 src/main/resources/application.properties
