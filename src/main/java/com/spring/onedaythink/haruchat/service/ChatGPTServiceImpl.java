@@ -30,8 +30,6 @@ import java.util.Map;
 public class ChatGPTServiceImpl implements ChatGPTService{
 
     private Logger log = LogManager.getLogger("case3");
-
-    @Value("")
     private ObjectMapper objectMapper = new ObjectMapper();
     @Value("${openai.api-key}")
     private String openaiApiKey;
