@@ -15,6 +15,7 @@ public class HaruChat {
 
     private HaruChatRoomDetail haruChatRoomDetail;
     private HaruChatMessageDetail haruChatMessageDetail;
+
     private int haruNo;
     private String haruName, haruPrompt, haruOriginImg,
             haruImgPath, status;
