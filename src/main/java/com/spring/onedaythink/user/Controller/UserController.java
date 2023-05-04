@@ -33,8 +33,21 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
+    @PostMapping(value ="auth/signup/id-check" )
+    public ResponseEntity<Object> idCheckUser(@RequestBody User user) {
+        log.debug("id check");
+        return ResponseEntity.ok(userService.userIdCheck(user));
+    }
+
+    @PostMapping(value ="auth/signup/nickname-check" )
+    public ResponseEntity<Object> nicknameCheckUser(@RequestBody User user) {
+        log.debug("nickname check");
+        return ResponseEntity.ok(userService.nicknameCheck(user));
+    }
+
     @PostMapping(value = "auth/signup")
     public ResponseEntity<Object> registerUser(@RequestBody User user){
+        log.debug(user);
         int result = userService.registerUser(user);
         return ResponseEntity.ok(result);
     }
