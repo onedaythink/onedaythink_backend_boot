@@ -2,6 +2,7 @@ package com.spring.onedaythink.subject.Controller;
 
 import com.spring.onedaythink.subject.service.SubjectService;
 import com.spring.onedaythink.subject.vo.Subject;
+import com.spring.onedaythink.subject.vo.SubjectDetail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,11 @@ public class SubjectController {
     }
 
     // 논제 삭제
-    @PostMapping(value="subjects/delete/{subNo}")
-    public ResponseEntity deleteSubject(@PathVariable int subNo){
+    @PostMapping(value="subjects/delete")
+    public ResponseEntity deleteSubject(@RequestBody List<Integer> subNoList){
         log.debug("deleteSubject");
-        Subject subject = Subject.builder().subNo(subNo).build();
-        int result = subjectService.deleteSubject(subject);
+        log.debug(subNoList);
+        int result = subjectService.deleteSubject(SubjectDetail.builder().subNoList(subNoList).build());
         return ResponseEntity.ok(result);
 
     }
