@@ -60,6 +60,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
             responseList.add(haruChatMessageResponse);
         }
+
         return responseList;
     }
 
@@ -107,30 +108,37 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         // HaruChatRoom_Haru TB && Haru TB ; HaruPrompt
         Map<String, String> map = new HashMap<>();
         String prompt="";
+
         // previousMsg IS NULL && summary IS NULL && toHaruNo????( toHaruNo = 21 -> "ALL")
 //        String summary = summarizedCount<10 ; summarizeDialogue 호출
 //        chatRoomNo -> previous Summary  Y ? N ?
-        for(int i=0; i<selectedHaruInfo.getHaruNo().size(); i++) {
-            int haruNo = selectedHaruInfo.getHaruNo().get(i);
-            String subject = selectedHaruInfo.getSubject();
-            String haruPrompt = selectedHaruInfo.getHaruPrompt().get(String.valueOf(haruNo));
 
-            prompt = haruPrompt
-                    + " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. 다음 논제에 대한 의견을 이 사람의 입장에서 완성하세요."
-                    + " [논제] " + subject;
+        String previousSummary = haruChatMapper.selectOneharuChatRoom( HaruChatRoom.builder().chatRoomNo(chatRoomNo).build()).getSummary();
 
-            String chatGptId = haruChatMapper.selectOneHarubotIdWithNo
-                    (ChatGPTId.builder().haruNo(haruNo).chatRoomNo(selectedHaruInfo.getChatRoomNo()).build());
-            if (chatGptId == null) {
-                map.put(String.valueOf(i), prompt);
-            } else {
-                map.put(chatGptId,prompt);
+        if(previousSummary.isEmpty() && ) {
+            // First Answer From GPT( No Summary, No PreviousDialogue)
+            for (int i = 0; i < selectedHaruInfo.getHaruNo().size(); i++) {
+                int haruNo = selectedHaruInfo.getHaruNo().get(i);
+                String subject = selectedHaruInfo.getSubject();
+                String haruPrompt = selectedHaruInfo.getHaruPrompt().get(String.valueOf(haruNo));
+
+                prompt = haruPrompt
+                        + " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. 다음 논제에 대한 의견을 이 사람의 입장에서 완성하세요."
+                        + " [논제] " + subject;
+
+                String chatGptId = haruChatMapper.selectOneHarubotIdWithNo
+                        (ChatGPTId.builder().haruNo(haruNo).chatRoomNo(selectedHaruInfo.getChatRoomNo()).build());
+                if (chatGptId == null) {
+                    map.put(String.valueOf(i), prompt);
+                } else {
+                    map.put(chatGptId, prompt);
+                }
             }
         }
         // HaruChatMsg TB ; currentMsg, summarizedCount
 //        List<CurrentMsg> currentMsgList = haruChatMapper.selectCurrentMsgWithRoomNo();
 //        int summarizedCount = haruChatMapper.selectSummarizedWithRoomNo();
-        //fixedStatement
+        //fixed statement
 
         return map;
     }
@@ -139,8 +147,6 @@ public class ChatGPTServiceImpl implements ChatGPTService{
 
         // Data ;  sendUserNo, sendHaruNo(haruName), chatMsgContent (order ; MsgNo);
         // Form ; [previousSummary] + [haruName/UserNo] : "chatMsgContent"
-
-        String prompt = "";
 
         HaruChatRoom haruChatRoom
                 = haruChatMapper.selectOneharuChatRoom
@@ -153,13 +159,20 @@ public class ChatGPTServiceImpl implements ChatGPTService{
             String haruName = currentMsgList.get(i).getHaruName();
             String message = currentMsgList.get(i).getChatMsgContent();
             String fullMsg = "";
-            if(currentMsgList.get(i).getChatSendUserNo()=){
+            if(currentMsgList.get(i).getChatSendUserNo()==0){
                 fullMsg = "[" + haruName + "]" + " : " + message + " ";
+            } else if(currentMsgList.get(i).getChatSendHaruNo()==0){
+                fullMsg = "[ 사용자 ] : " + message+ " ";
             }
             currentMsg = currentMsg.concat(fullMsg);
         }
 
-        return null;
+        String prompt = "[이전 대화 요약문]과 [이어진 대화]를 참고해서 전체 대화를 이해할 수 있는 요약문을 만들어줘. "+
+        "[이전 대화 요약문] : " + previousSummary + "[이어진 대화] " + currentMsg;
+
+        String summarizedText = getChatGpt(prompt);
+
+        return summarizedText;
     }
 
     // NAVER PAPAGO translation test
