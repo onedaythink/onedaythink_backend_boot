@@ -1,20 +1,28 @@
 package com.spring.onedaythink.chat.Controller;
 
 
+import com.spring.onedaythink.chat.service.ChatService;
 import com.spring.onedaythink.chat.vo.ChatMessage;
 import com.spring.onedaythink.chat.vo.ChatMessageDetail;
+import com.spring.onedaythink.chat.vo.ChatRoomDetail;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class WebSocketController {
+
+    @Autowired
+    private ChatService chatService;
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
@@ -28,15 +36,20 @@ public class WebSocketController {
     public void enter(ChatMessageDetail chatMessageDetail){
         log.debug("연결");
         log.debug(chatMessageDetail);
-        chatMessageDetail.setChatMsgContent(chatMessageDetail.getSendNickname() + "님이 채팅방에 참여하였습니다.");
-        log.debug("/sub/chat/room/" + chatMessageDetail.getChatRoomNo());
-        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageDetail.getChatRoomNo(), chatMessageDetail);
+        List<ChatMessageDetail> msgList = chatService.getChatMessageDetails(ChatRoomDetail.builder().chatRoomNo(chatMessageDetail.getChatRoomNo()).build());
+        if (msgList.size() > 0 ) {
+//            msgList.forEach(msg -> simpMessagingTemplate.convertAndSend("/sub/chat/room/" + msg.getChatRoomNo(), msg));
+        } else {
+            chatMessageDetail.setChatMsgContent(chatMessageDetail.getSendNickname() + "님이 채팅방에 참여하였습니다.");
+            simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageDetail.getChatRoomNo(), chatMessageDetail);
+        }
     }
 
     @MessageMapping("/chat/message")
     public void sendMessage(ChatMessageDetail chatMessageDetail, SimpMessageHeaderAccessor accessor) {
         log.debug("sub test");
         log.debug(chatMessageDetail);
+        int result = chatService.addChatMessage(chatMessageDetail);
         log.debug("/sub/chat/room/" + chatMessageDetail.getChatRoomNo());
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageDetail.getChatRoomNo(), chatMessageDetail);
     }

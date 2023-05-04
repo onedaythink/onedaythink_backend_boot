@@ -2,6 +2,7 @@ package com.spring.onedaythink.subject.service;
 
 import com.spring.onedaythink.subject.mapper.SubjectMapper;
 import com.spring.onedaythink.subject.vo.Subject;
+import com.spring.onedaythink.subject.vo.SubjectDetail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +65,16 @@ public class SubjectServiceImpl implements SubjectService {
 
     // 논제 삭제
     @Override
-    public int deleteSubject(Subject subject) {
+    public int deleteSubject(SubjectDetail subjectDetail) {
         log.debug("deleteSubject");
-        return subjectMapper.deleteSubject(subject);
+        int result = 0;
+        for (int subNo : subjectDetail.getSubNoList()){
+             result = subjectMapper.deleteSubject(Subject.builder().subNo(subNo).build());
+             if (result == 0){
+                 return result;
+             }
+        };
+        return result;
     }
 
     // 논제 수정

@@ -1,6 +1,7 @@
 package com.spring.onedaythink.subject.service;
 
 import com.spring.onedaythink.subject.vo.Subject;
+import com.spring.onedaythink.subject.vo.SubjectDetail;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface SubjectService {
     int editSubject(Subject subject);
 
     // 논제 삭제
-    int deleteSubject(Subject subject);
+    int deleteSubject(SubjectDetail subjectDetail);
 
 
 

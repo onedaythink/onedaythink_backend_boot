@@ -2,6 +2,7 @@ package com.spring.onedaythink.chat.Controller;
 
 import com.spring.onedaythink.chat.service.ChatService;
 import com.spring.onedaythink.chat.vo.ChatMessage;
+import com.spring.onedaythink.chat.vo.ChatMessageDetail;
 import com.spring.onedaythink.chat.vo.ChatRoom;
 import com.spring.onedaythink.chat.vo.ChatRoomDetail;
 import org.apache.logging.log4j.LogManager;
@@ -64,5 +65,13 @@ public class ChatController {
         log.debug("room status");
 
         return ResponseEntity.ok(null);
+    }
+
+    // 해당 사용자가 가지고 있는 채팅방 목록 조회
+    @GetMapping(value = "chat/rooms/messages/{chatRoomNo}")
+    public ResponseEntity<Object> getCharMessageDetails(@PathVariable int chatRoomNo) {
+        log.debug("# All Chat Rooms message");
+        List<ChatMessageDetail> msgList = chatService.getChatMessageDetails(ChatRoomDetail.builder().chatRoomNo(chatRoomNo).build());
+        return ResponseEntity.ok(msgList);
     }
 }
