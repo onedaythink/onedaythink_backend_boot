@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface ChatGPTService {
 
+    String testAPIAutoCall();
+
     List<HaruChatMessage> getChatGPTResponse(SelectedHaruInfo selectedHaruInfo) throws JsonProcessingException;
+
 
 }
