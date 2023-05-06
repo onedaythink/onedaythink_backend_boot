@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -35,12 +34,29 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     @Autowired
     private HaruChatMapper haruChatMapper;
 
+
+    /** api auto call test **/
+    @Override
+    public String testAPIAutoCall() {
+        // API Request
+        String text = "how are you?";
+        String generatedText = getChatGpt(text);
+        log.debug(generatedText);
+
+        return generatedText;
+    }
+
+
+    /** receive chatbot Response from papago API & chatGPT API.**/
     @Override
     public List<HaruChatMessage> getChatGPTResponse(SelectedHaruInfo selectedHaruInfo) throws JsonProcessingException {
 
         // Translate Generated Prompt
         Map<String, String> prompt = generatePrompt(selectedHaruInfo);
-        // Response 받아오기
+        for(Map.Entry<String, String> entry : prompt.entrySet()){
+            log.debug("prompt" + entry.getKey() +" : "+ entry.getValue() );
+        }
+        // Response
         List<HaruChatMessage> responseList = new ArrayList<>();
         Set<String> keySet = prompt.keySet();
         for(String key : keySet) {
@@ -64,9 +80,10 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         return responseList;
     }
 
+    // ChatGPT API call
     private String getChatGpt(String prompt){
 
-        // API Request ; if(chatId is NUll), for(List<chatGPTId>)
+        // API Request
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + openaiApiKey);
@@ -85,7 +102,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        // RESPONSE
+        // API response
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Map> response = restTemplate.postForEntity(ENDPOINT, requestEntity, Map.class);
 
@@ -99,50 +116,89 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         return generatedText;
     }
 
-    private Map<String,String> generatePrompt(SelectedHaruInfo selectedHaruInfo){
-        // Generate Prompt
-        /** prompt = (chatGPTID) + fixedStatement + (subject) + (haruPrompt) + (summary/summarizedCount) + currentMsg **/
-        // DB 에서 문자열 데이터 가져오기
+    // Generate Prompt
+    /** prompt = (chatGPTID) + fixedStatement + (subject) + (haruPrompt) + (summary/summarizedCount) + currentMsg **/
+    private Map<String,String> generatePrompt(SelectedHaruInfo selectedHaruInfo) {
+
+        // Data
         int chatRoomNo = selectedHaruInfo.getChatRoomNo();
-        // HaruChatRoom TB ; summary
-        // HaruChatRoom_Haru TB && Haru TB ; HaruPrompt
-        Map<String, String> map = new HashMap<>();
-        String prompt="";
 
-        // previousMsg IS NULL && summary IS NULL && toHaruNo????( toHaruNo = 21 -> "ALL")
-//        String summary = summarizedCount<10 ; summarizeDialogue 호출
-//        chatRoomNo -> previous Summary  Y ? N ?
+        String prompt = "";
+        String fixedStatementForPersona = " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. ";
+        String direction = "[이전 대화 요약문]과 [직접 대화]를 참고해서 [사용자]의 마지막 말에 대한 적절한 대답을 이 사람의 입장에서 할 수 있는 대답을 완성하세요. ";
 
-        String previousSummary = haruChatMapper.selectOneharuChatRoom( HaruChatRoom.builder().chatRoomNo(chatRoomNo).build()).getSummary();
+        HaruChatRoom haruChatRoom = HaruChatRoom.builder().chatRoomNo(chatRoomNo).build();
+        int notSummarized = haruChatMapper.selectSummerized(haruChatRoom);
+        String summary = "";
+        if(notSummarized>=10){
+          summary = summmarizeDialogue(selectedHaruInfo);
+        }
 
-        if(previousSummary.isEmpty() && ) {
-            // First Answer From GPT( No Summary, No PreviousDialogue)
-            for (int i = 0; i < selectedHaruInfo.getHaruNo().size(); i++) {
-                int haruNo = selectedHaruInfo.getHaruNo().get(i);
-                String subject = selectedHaruInfo.getSubject();
-                String haruPrompt = selectedHaruInfo.getHaruPrompt().get(String.valueOf(haruNo));
+        String currentMsg = "";
+        List<CurrentMsg> currentMsgList = haruChatMapper.selectPreviousMsg(haruChatRoom);
+        for(int i=0; i<currentMsgList.size(); i++){
+            String haruName = currentMsgList.get(i).getHaruName();
+            String message = currentMsgList.get(i).getChatMsgContent();
+            String fullMsg = "";
+            if(currentMsgList.get(i).getChatSendUserNo()==0){
+                fullMsg = "[" + haruName + "]" + " : " + message + " ";
+            } else if(currentMsgList.get(i).getChatSendHaruNo()==0){
+                fullMsg = "[ 사용자 ] : " + message+ " ";
+            }
+            currentMsg = currentMsg.concat(fullMsg);
+        }
 
-                prompt = haruPrompt
-                        + " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. 다음 논제에 대한 의견을 이 사람의 입장에서 완성하세요."
-                        + " [논제] " + subject;
+        // Prompt
+        Map<String, String> promptMap = new HashMap<>();
+        for (int i = 0; i < selectedHaruInfo.getHaruNo().size(); i++) {
+            // DATA
+            int haruNo = selectedHaruInfo.getHaruNo().get(i);
+            String subject = selectedHaruInfo.getSubject();
+            String haruPrompt = selectedHaruInfo.getHaruPrompt().get(String.valueOf(haruNo));
+            String prefix = haruPrompt + fixedStatementForPersona;
 
-                String chatGptId = haruChatMapper.selectOneHarubotIdWithNo
-                        (ChatGPTId.builder().haruNo(haruNo).chatRoomNo(selectedHaruInfo.getChatRoomNo()).build());
-                if (chatGptId == null) {
-                    map.put(String.valueOf(i), prompt);
+            // Generate Prompt
+
+            if (haruChatMapper.selectOneSummary(haruChatRoom).getSummary() == null ) {
+                if (notSummarized == 0) {
+                    // First Answer From GPT( No Summary, No PreviousDialogue )
+                    prompt = prefix +" [논제]에 대해 이 사람의 입장에서 할 수 있는 대답을 완성하세요." + " [논제] " + subject ;
+                } else if (notSummarized < 10) {
+                    // No Summary & small amount of previousDialogue data
+                    prompt = prefix + direction + " [논제] " + subject + " [이전 대화 기록] " + currentMsg;
                 } else {
-                    map.put(chatGptId, prompt);
+                    // No Summary & full amount of previousDialogue data
+                    prompt = prefix + direction + " [요약문] " + summary + " [이전 대화 기록] " + currentMsg ;
+                }
+            } else if (haruChatMapper.selectOneharuChatRoom(haruChatRoom).getSummary()!=null) {
+                String previousSummary = haruChatMapper.selectOneharuChatRoom(haruChatRoom).getSummary();
+                if (notSummarized < 10) {
+                    // Summary existed & small amount of previousDialogue data
+                    prompt = prefix + direction + " [요약문] " + previousSummary + " [이전 대화 기록] " + currentMsg ;
+                } else {
+                    // Summary existed & full amount of previousDialogue data
+                    prompt = prefix + direction + " [요약문] " + previousSummary + " [이전 대화 기록] " + currentMsg ;
+
                 }
             }
-        }
-        // HaruChatMsg TB ; currentMsg, summarizedCount
-//        List<CurrentMsg> currentMsgList = haruChatMapper.selectCurrentMsgWithRoomNo();
-//        int summarizedCount = haruChatMapper.selectSummarizedWithRoomNo();
-        //fixed statement
 
-        return map;
+//                    String chatGptId = haruChatMapper.selectOneHarubotIdWithNo
+//                            (ChatGPTId.builder().haruNo(haruNo).chatRoomNo(selectedHaruInfo.getChatRoomNo()).build());
+//                    if (chatGptId == null) {
+//                        map.put(String.valueOf(i), prompt);
+//                    } else {
+//                        map.put(chatGptId, prompt);
+//                    }
+
+            String haruName = selectedHaruInfo.getHaruName().get(String.valueOf(haruNo));
+            promptMap.put(haruName, prompt);
+
+        }
+
+        return promptMap;
     }
 
+    // generate summary from ChatGPT API
     private String summmarizeDialogue(SelectedHaruInfo selectedHaruInfo){
 
         // Data ;  sendUserNo, sendHaruNo(haruName), chatMsgContent (order ; MsgNo);
@@ -180,8 +236,8 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     private String getTranslatedTextKoToEn(String text) throws JsonProcessingException {
 
         // Papago 에 문자열 넘겨줘서 번역된 내용 리턴받기
-        String clientId = "gWkxBN_vvVKo_ODVp6cq";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "hYtFscMLqJ";//애플리케이션 클라이언트 시크릿값";
+        String clientId = "xnT47tpDHBjrpfmRxGzO";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "iH_0PB2f51";//애플리케이션 클라이언트 시크릿값";
 
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
         String textTemp;
@@ -207,8 +263,8 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     private String getTranslatedTextEnToKo(String text) throws JsonProcessingException {
 
         // Papago 에 문자열 넘겨줘서 번역된 내용 리턴받기
-        String clientId = "gWkxBN_vvVKo_ODVp6cq";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "hYtFscMLqJ";//애플리케이션 클라이언트 시크릿값";
+        String clientId = "xnT47tpDHBjrpfmRxGzO";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "iH_0PB2f51";//애플리케이션 클라이언트 시크릿값";
 
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
 
@@ -282,6 +338,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         }
     }
 
+    // HTTP Connection
     private static HttpURLConnection connect(String apiUrl){
         try {
             URL url = new URL(apiUrl);
@@ -293,6 +350,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         }
     }
 
+    // Response Reading
     private static String readBody(InputStream body){
         InputStreamReader streamReader = new InputStreamReader(body);
 

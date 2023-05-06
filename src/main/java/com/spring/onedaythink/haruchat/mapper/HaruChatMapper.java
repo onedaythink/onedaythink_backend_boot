@@ -28,8 +28,13 @@ public interface HaruChatMapper {
     // 하루봇 채팅방 개별 조회
     public HaruChatRoom selectOneharuChatRoom(HaruChatRoom haruChatRoom);
 
+    // 하루봇 채팅방 요약문 조회
+    public HaruChatRoom selectOneSummary(HaruChatRoom haruChatRoom);
     // 하루봇 채팅방 직전 대화 10개 조회
     public List<CurrentMsg> selectPreviousMsg(HaruChatRoom haruChatRoom);
+
+    // 하루봇 채팅방 요약되지 않은 대화 수 조회
+    public int selectSummerized(HaruChatRoom haruChatRoom);
 
     // 하루봇 채팅방 마지막 메세지 조회
     HaruChatMessage selectLastMessage(HaruChatRoom haruChatRoom);

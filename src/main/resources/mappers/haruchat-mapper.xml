@@ -47,6 +47,13 @@
         where chat_room_no = #{userNo}
     </select>
 
+    <!-- 하루 채팅방 요약문 조회-->
+    <select id="selectOneSummary" parameterType="HaruChatRoom" resultType="HaruChatRoom">
+        select *
+        from haru_chat_room_tb
+        where chat_room_no = #{chatRoomNo}
+    </select>
+
     <!-- 하루 채팅방 메세지 생성-->
     <insert id="insertHaruChatMsg" parameterType="HaruChatMessage">
         INSERT INTO haru_chat_message_tb (`chat_room_no` , `chat_msg_content`
@@ -76,6 +83,14 @@
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_msg_no DESC
         LIMIT 10;
+    </select>
+
+    <!-- 하루 채팅방 요약되지 않은 대화 수 조회-->
+    <select id="selectSummerized" parameterType="HaruChatRoom" resultType="Integer">
+        SELECT COUNT(*)
+        FROM haru_chat_message_tb
+        WHERE chat_room_no = #{chatRoomNo}
+        AND summarized = 'n'
     </select>
 
     <!-- 하루 채팅방 나가기 -->
