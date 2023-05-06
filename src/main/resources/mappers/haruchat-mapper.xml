@@ -11,10 +11,10 @@
         LIMIT 4
     </select>
 
-    <select id="selectOneHarubotIdWithNo" parameterType="Integer" resultType="String">
+    <select id="selectOneHarubotIdWithNo" parameterType="ChatGPTId" resultType="String">
         SELECT chat_gpt_id
         FROM haru_chat_room_haru_tb
-        WHERE haru_no = #{haruNo}
+        WHERE haru_no = #{haruNo} AND chat_room_no = #{chatRoomNo}
     </select>
 
     <insert id="insertHaruChatRoom" parameterType="User">
@@ -47,6 +47,13 @@
         where chat_room_no = #{userNo}
     </select>
 
+    <!-- 하루 채팅방 요약문 조회-->
+    <select id="selectOneSummary" parameterType="HaruChatRoom" resultType="HaruChatRoom">
+        select *
+        from haru_chat_room_tb
+        where chat_room_no = #{chatRoomNo}
+    </select>
+
     <!-- 하루 채팅방 메세지 생성-->
     <insert id="insertHaruChatMsg" parameterType="HaruChatMessage">
         INSERT INTO haru_chat_message_tb (`chat_room_no` , `chat_msg_content`
@@ -65,6 +72,25 @@
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_create_at DESC
         LIMIT 1
+    </select>
+
+    <!-- 하루 채팅방 직전 대화 10개 조회-->
+    <select id="selectPreviousMsg" parameterType="HaruChatRoom" resultType="CurrentMsg">
+        SELECT chat_send_user_no, chat_send_haru_no, chat_msg_content, to_haru_no, haru_name
+        FROM haru_chat_message_tb
+        LEFT JOIN haru_tb
+        ON to_haru_no = haru_no
+        WHERE chat_room_no = #{chatRoomNo}
+        ORDER BY chat_msg_no DESC
+        LIMIT 10;
+    </select>
+
+    <!-- 하루 채팅방 요약되지 않은 대화 수 조회-->
+    <select id="selectSummerized" parameterType="HaruChatRoom" resultType="Integer">
+        SELECT COUNT(*)
+        FROM haru_chat_message_tb
+        WHERE chat_room_no = #{chatRoomNo}
+        AND summarized = 'n'
     </select>
 
     <!-- 하루 채팅방 나가기 -->
