@@ -52,4 +52,18 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping(value = "users/{userNo}")
+    public ResponseEntity<Object> getUser(@PathVariable int userNo){
+        log.debug(userNo);
+        User user = userService.getUser(User.builder().userNo(userNo).build());
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping(value = "users")
+    public ResponseEntity<Object> editUser(@RequestBody User user){
+        log.debug(user);
+        User updateUser = userService.editUser(user);
+        return ResponseEntity.ok(updateUser);
+    }
+
 }

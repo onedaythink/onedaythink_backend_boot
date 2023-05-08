@@ -2,6 +2,7 @@ package com.spring.onedaythink.subject.service;
 
 import com.spring.onedaythink.subject.vo.Subject;
 import com.spring.onedaythink.subject.vo.SubjectDetail;
+import com.spring.onedaythink.user.vo.User;
 
 import java.util.List;
 
