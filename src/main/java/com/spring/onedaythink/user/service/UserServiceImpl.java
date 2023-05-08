@@ -76,6 +76,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectListUsers(user);
     }
 
+    // admin 전체 회원 조회
+    @Override
+    public List<User> getUsersAdmin(User user) {
+        return userMapper.selectListUsersAdmin(user);
+    }
+
     @Override
     public User editUser(User user) {
         user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
