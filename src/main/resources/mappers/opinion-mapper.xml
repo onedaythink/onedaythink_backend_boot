@@ -59,9 +59,14 @@
     </select>
 
     <!--나의 공간 - 의견 조회-->
-    <select id="selectAllMyOpinion" parameterType="Opinion" resultType="Opinion">
-        SELECT * FROM user_opinion_tb
-        WHERE user_no = #{userNo}
+    <select id="selectAllMyOpinion" parameterType="Opinion" resultType="OpinionDetails">
+        SELECT *
+        FROM user_opinion_tb as uo
+                 join user_tb as u
+                      on u.user_no = uo.user_no
+                 join subject_tb as s
+                      on uo.sub_no = s.sub_no
+        WHERE uo.user_no = #{userNo}
     </select>
 
     <!--좋아요 넣기-->
