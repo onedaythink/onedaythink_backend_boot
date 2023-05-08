@@ -20,6 +20,10 @@ public interface UserMapper {
 
     public List<User> selectListUsers(User user);
 
+    // Admin 전체회원 조회
+    public List<User> selectListUsersAdmin(User user);
+
+
     public User updateUser(User user);
 
     public int deleteUser(User user);

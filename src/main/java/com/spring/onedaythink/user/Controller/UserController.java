@@ -33,6 +33,13 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
+    // Admin 전체회원 조회
+    @GetMapping(value = "admin/usersAdmin")
+    public ResponseEntity<Object> getUsersAdmin(){
+        List<User> userList = userService.getUsersAdmin(null);
+        return ResponseEntity.ok(userList);
+    }
+
     @PostMapping(value = "auth/signup")
     public ResponseEntity<Object> registerUser(@RequestBody User user){
         int result = userService.registerUser(user);
