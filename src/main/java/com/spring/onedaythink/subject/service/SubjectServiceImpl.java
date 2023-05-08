@@ -3,6 +3,7 @@ package com.spring.onedaythink.subject.service;
 import com.spring.onedaythink.subject.mapper.SubjectMapper;
 import com.spring.onedaythink.subject.vo.Subject;
 import com.spring.onedaythink.subject.vo.SubjectDetail;
+import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
