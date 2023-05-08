@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,11 @@ public class ChatGPTController {
     @Autowired
     private ChatGPTService chatGPTService;
 
+    /**
+     * receive chatbot Response from papago API & chatGPT API.
+     **/
     @PostMapping("/chatgpt/response")
-    public ResponseEntity<Object> receiveMsgFromChatGPT (@RequestBody SelectedHaruInfo selectedHaruInfo) throws JsonProcessingException {
+    public ResponseEntity<Object> receiveMsgFromChatGPT(@RequestBody SelectedHaruInfo selectedHaruInfo) throws JsonProcessingException {
         log.debug("getChatGPTResponse");
         List<HaruChatMessage> list
                 = chatGPTService.getChatGPTResponse(selectedHaruInfo);
@@ -30,13 +34,14 @@ public class ChatGPTController {
         return ResponseEntity.ok(list);
     }
 
-
-
-
-
-
-
-
-
-
+    /**
+     * api 자동 call test
+     **/
+    @PostMapping("/test")
+    @Scheduled(fixedRate = 2000)
+    public ResponseEntity<Object> testAPIAutoCall() {
+        log.debug("testAPIAutoCall");
+        String response = chatGPTService.testAPIAutoCall();
+        return ResponseEntity.ok(response);
+    }
 }

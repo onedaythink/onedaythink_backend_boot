@@ -33,17 +33,31 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
-    // Admin 전체회원 조회
-    @GetMapping(value = "admin/usersAdmin")
-    public ResponseEntity<Object> getUsersAdmin(){
-        List<User> userList = userService.getUsersAdmin(null);
-        return ResponseEntity.ok(userList);
+    @PostMapping(value ="auth/signup/id-check" )
+    public ResponseEntity<Object> idCheckUser(@RequestBody User user) {
+        log.debug("id check");
+        return ResponseEntity.ok(userService.userIdCheck(user));
+    }
+
+    @PostMapping(value ="auth/signup/nickname-check" )
+    public ResponseEntity<Object> nicknameCheckUser(@RequestBody User user) {
+        log.debug("nickname check");
+        return ResponseEntity.ok(userService.nicknameCheck(user));
     }
 
     @PostMapping(value = "auth/signup")
     public ResponseEntity<Object> registerUser(@RequestBody User user){
+        log.debug(user);
         int result = userService.registerUser(user);
         return ResponseEntity.ok(result);
+    }
+
+    // 전체회원 조회 (관리자용)
+    @GetMapping(value = "admin/usersAdmin")
+    public ResponseEntity<Object> getUsersAdmin() {
+        List<User> userList = userService.getUsersAdmin(null);
+        return ResponseEntity.ok(userList);
+
     }
 
 }

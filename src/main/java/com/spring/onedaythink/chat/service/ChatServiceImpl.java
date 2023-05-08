@@ -5,6 +5,7 @@ import com.spring.onedaythink.chat.vo.ChatMessage;
 import com.spring.onedaythink.chat.vo.ChatMessageDetail;
 import com.spring.onedaythink.chat.vo.ChatRoom;
 import com.spring.onedaythink.chat.vo.ChatRoomDetail;
+import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,4 +61,11 @@ public class ChatServiceImpl implements ChatService{
     public int addChatMessage(ChatMessageDetail chatMessageDetail){
         return chatMapper.insertChatMessage(chatMessageDetail);
     }
+
+    // admin 전체 회원 조회
+    @Override
+    public List<ChatRoom> getChatRoomsAdmin(ChatRoom chatRoom) {
+        return chatMapper.selectListChatRoomsAdmin(chatRoom);
+    }
+
 }
