@@ -22,9 +22,11 @@ public class ChatGPTController {
     @Autowired
     private ChatGPTService chatGPTService;
 
-    /** receive chatbot Response from papago API & chatGPT API.**/
+    /**
+     * receive chatbot Response from papago API & chatGPT API.
+     **/
     @PostMapping("/chatgpt/response")
-    public ResponseEntity<Object> receiveMsgFromChatGPT (@RequestBody SelectedHaruInfo selectedHaruInfo) throws JsonProcessingException {
+    public ResponseEntity<Object> receiveMsgFromChatGPT(@RequestBody SelectedHaruInfo selectedHaruInfo) throws JsonProcessingException {
         log.debug("getChatGPTResponse");
         List<HaruChatMessage> list
                 = chatGPTService.getChatGPTResponse(selectedHaruInfo);
@@ -41,13 +43,5 @@ public class ChatGPTController {
 //        return ResponseEntity.ok(response);
 //    }
 
-
-
-
-
-
-
-
-
-
 }
+

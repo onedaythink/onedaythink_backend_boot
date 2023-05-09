@@ -52,6 +52,13 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
+    // 전체회원 조회 (관리자용)
+    @GetMapping(value = "admin/usersAdmin")
+    public ResponseEntity<Object> getUsersAdmin() {
+        List<User> userList = userService.getUsersAdmin(null);
+        return ResponseEntity.ok(userList);
+    }
+
     @GetMapping(value = "users/{userNo}")
     public ResponseEntity<Object> getUser(@PathVariable int userNo){
         log.debug(userNo);

@@ -1,0 +1,99 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.onedaythink.chat.mapper.ChatMapper">
+
+    <insert id="insertChatRoom" parameterType="ChatRoom">
+        insert into chat_room_tb (to_user_opi_no, from_user_no)
+            values (#{toUserOpiNo}, #{fromUserNo})
+    </insert>
+
+    <select id="selectLastMessage" parameterType="ChatRoom" resultType="ChatMessage">
+        SELECT chat_send_user_no, chat_msg_content, chat_create_at
+        FROM chat_message_tb
+        WHERE chat_room_no = #{chatRoomNo}
+        ORDER BY chat_create_at DESC
+        LIMIT 1
+    </select>
+
+    <update id="updateChatRoomClosed" parameterType="ChatRoom">
+        UPDATE chat_room_tb
+        SET is_close='y'
+        WHERE chat_room_no = #{chatRoomNo}
+    </update>
+
+    <select id="selectChatRooms" parameterType="ChatRoomDetail" resultType="ChatRoomDetail">
+        select cr.chat_room_no, to_u.user_no as to_user_no, to_u.nickname as to_nickname, from_u.user_no as from_user_no, from_u.nickname as from_nickname,
+               cr.create_at, cr.is_close, cm.chat_msg_content as last_message, cm.nickname as send_nickname
+        from CHAT_ROOM_TB as cr
+                 join user_opinion_tb as uo
+                      on uo.user_opi_no = cr.to_user_opi_no
+                 join user_tb as to_u
+                      on to_u.user_no = uo.user_no
+                 join user_tb as from_u
+                      on from_u.user_no = cr.from_user_no
+                 left join (SELECT t1.*, t3.nickname
+                            FROM chat_message_tb as t1
+                                     join user_tb as t3
+                                          on t1.chat_send_user_no = t3.user_no
+                            WHERE t1.chat_msg_no IN
+                                  (select max(t2.chat_msg_no) from chat_message_tb as t2 group by t2.chat_room_no)) as cm
+                           on cr.chat_room_no = cm.chat_room_no
+        where uo.user_no = #{findUserNo}
+           or cr.from_user_no = #{findUserNo}
+            and is_close = 'n'
+        order by cr.create_at desc
+    </select>
+
+<!--    <select id="selectChatRoomByCreateAt" parameterType="ChatRoom" resultType="ChatRoomDetail">-->
+<!--        <![CDATA[-->
+<!--        select *-->
+<!--        from CHAT_ROOM_TB as cr-->
+<!--            join user_opinion_tb as uo-->
+<!--            on uo.user_opi_no = cr.to_user_opi_no-->
+<!--            join user_tb as to_u-->
+<!--            on to_u.user_no = uo.user_no-->
+<!--            join user_tb as from_u-->
+<!--            on from_u.user_no = cr.from_user_no-->
+<!--        where uo.user_no = #{findUserNo}-->
+<!--            or cr.from_user_no = #{findUserNo}-->
+<!--            and cr.create_at >= concat(#{creatAt}, ' 00:00:00')-->
+<!--            and cr.create_at < concat(#{creatAt},' 23:59:59')-->
+<!--            and is_close = 'n'-->
+<!--        order by cr.create_at desc;-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <select id="selectChatRoomCountByUserNo" parameterType="ChatRoom" resultType="int">
+        select
+                (SELECT COUNT(*)
+                 FROM user_opinion_tb AS t1
+                          JOIN user_tb AS t2 ON t1.user_no = t2.user_no
+                 WHERE t1.user_opi_no = #{toUserOpiNo}
+                   AND t1.user_no = #{fromUserNo}) +
+                (SELECT COUNT(*)
+                 FROM chat_room_tb
+                 WHERE from_user_no = #{fromUserNo}
+                   AND is_close = 'n') as `count`
+    </select>
+
+    <select id="selectChatMessageDetails" parameterType="ChatRoomDetail" resultType="ChatMessageDetail">
+        select cm.*, u.nickname as send_nickname, u.user_img_path
+        from chat_message_tb cm
+                 join user_tb u
+                 on cm.chat_send_user_no = u.user_no
+        where chat_room_no = #{chatRoomNo}
+        order by 1
+    </select>
+
+    <insert id="insertChatMessage" parameterType="ChatMessageDetail">
+        insert into chat_message_tb (
+            `chat_room_no`,
+            `chat_send_user_no`,
+            `chat_msg_content`)
+        values (#{chatRoomNo},
+                #{chatSendUserNo},
+                #{chatMsgContent})
+    </insert>
+</mapper>

@@ -1,0 +1,103 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.onedaythink.haruchat.mapper.HaruChatMapper">
+
+    <select id="selectHaruBot" resultType="HaruChat">
+        SELECT *
+        FROM haru_tb
+        WHERE haru_no >= (SELECT FLOOR(MAX(haru_no) * RAND()) FROM haru_tb)
+        LIMIT 4
+    </select>
+
+    <select id="selectOneHarubotIdWithNo" parameterType="ChatGPTId" resultType="String">
+        SELECT chat_gpt_id
+        FROM haru_chat_room_haru_tb
+        WHERE haru_no = #{haruNo} AND chat_room_no = #{chatRoomNo}
+    </select>
+
+    <insert id="insertHaruChatRoom" parameterType="User">
+        INSERT INTO haru_chat_room_tb (user_no, create_at)
+        VALUES (#{userNo}, NOW())
+    </insert>
+
+    <select id="selectHaruChatRoomNo" resultType="HaruChatRoom">
+        SELECT chat_room_no
+        FROM haru_chat_room_tb
+        ORDER BY create_at DESC
+        LIMIT 1;
+    </select>
+
+    <insert id="insertHaruChatRoomHaru" parameterType="HaruChatRoomDetail">
+        INSERT INTO haru_chat_room_haru_tb
+        VALUES (#{chatRoomNo},#{haruNo})
+    </insert>
+
+    <!-- 하루 채팅방 전체 조회-->
+    <select id="selectAllharuChatRoom" parameterType="HaruChatRoom" resultType="HaruChatRoom">
+        select *
+        from haru_chat_room_tb
+    </select>
+
+    <!-- 하루 채팅방 개별 조회-->
+    <select id="selectOneharuChatRoom" parameterType="HaruChatRoom" resultType="HaruChatRoom">
+        select *
+        from haru_chat_room_tb
+        where chat_room_no = #{userNo}
+    </select>
+
+    <!-- 하루 채팅방 요약문 조회-->
+    <select id="selectOneSummary" parameterType="HaruChatRoom" resultType="HaruChatRoom">
+        select *
+        from haru_chat_room_tb
+        where chat_room_no = #{chatRoomNo}
+    </select>
+
+    <!-- 하루 채팅방 메세지 생성-->
+    <insert id="insertHaruChatMsg" parameterType="HaruChatMessage">
+        INSERT INTO haru_chat_message_tb (`chat_room_no` , `chat_msg_content`
+        <if test="chatSendUserNo !=0">,`chat_send_user_no`</if>
+        <if test="chatSendUserNo ==0">, `chat_send_haru_no`</if>
+        ) VALUES (#{chatRoomNo},#{chatMsgContent}
+        <if test="chatSendUserNo !=0">,#{chatSendUserNo}</if>
+        <if test="chatSendUserNo ==0">, (SELECT haru_no FROM HARU_CHAT_ROOM_HARU_TB WHERE chat_room_no = #{chatRoomNo} LIMIT 1)</if>
+        )
+    </insert>
+
+    <!-- 하루 채팅방 마지막 메세지 조회-->
+    <select id="selectLastMessage" parameterType="HaruChatRoom" resultType="HaruChatMessage">
+        SELECT chat_send_user_no, chat_msg_content, chat_create_at
+        FROM haru_chat_message_tb
+        WHERE chat_room_no = #{chatRoomNo}
+        ORDER BY chat_create_at DESC
+        LIMIT 1
+    </select>
+
+    <!-- 하루 채팅방 직전 대화 10개 조회-->
+    <select id="selectPreviousMsg" parameterType="HaruChatRoom" resultType="CurrentMsg">
+        SELECT chat_send_user_no, chat_send_haru_no, chat_msg_content, to_haru_no, haru_name
+        FROM haru_chat_message_tb
+        LEFT JOIN haru_tb
+        ON to_haru_no = haru_no
+        WHERE chat_room_no = #{chatRoomNo}
+        ORDER BY chat_msg_no DESC
+        LIMIT 10;
+    </select>
+
+    <!-- 하루 채팅방 요약되지 않은 대화 수 조회-->
+    <select id="selectSummerized" parameterType="HaruChatRoom" resultType="Integer">
+        SELECT COUNT(*)
+        FROM haru_chat_message_tb
+        WHERE chat_room_no = #{chatRoomNo}
+        AND summarized = 'n'
+    </select>
+
+    <!-- 하루 채팅방 나가기 -->
+    <update id="updateHaruChatRoomClosed" parameterType="HaruChatRoom">
+        UPDATE haru_chat_room_tb
+        SET is_close='y'
+        WHERE chat_room_no = #{chatRoomNo}
+    </update>
+
+</mapper>

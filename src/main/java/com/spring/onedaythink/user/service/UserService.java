@@ -35,6 +35,10 @@ public interface UserService {
     // 회원 정보 리스트 조회
     List<User> getUsers(User user);
 
+    // Admin 회원 정보 리스트 조회
+    List<User> getUsersAdmin(User user);
+
+
     // 회원 정보 변경
     User editUser(User user);
 
