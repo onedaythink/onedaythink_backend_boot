@@ -4,6 +4,7 @@ import com.spring.onedaythink.chat.vo.ChatMessage;
 import com.spring.onedaythink.chat.vo.ChatMessageDetail;
 import com.spring.onedaythink.chat.vo.ChatRoom;
 import com.spring.onedaythink.chat.vo.ChatRoomDetail;
+import com.spring.onedaythink.user.vo.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -30,5 +31,8 @@ public interface ChatMapper {
 
     // 채팅 메세지를 DB에 추가
     public int insertChatMessage(ChatMessageDetail chatMessageDetail);
+
+    // Admin 전체회원 조회
+    public List<ChatRoom> selectListChatRoomsAdmin(ChatRoom chatRoom);
 
 }

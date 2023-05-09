@@ -96,4 +96,10 @@
                 #{chatSendUserNo},
                 #{chatMsgContent})
     </insert>
+
+    <!-- 전체 채팅방 조회(admin용: status, close 무관)-->
+    <select id="selectListChatRoomsAdmin" parameterType="ChatRoom" resultType="ChatRoom">
+        select *
+        from chat_room_tb
+    </select>
 </mapper>
