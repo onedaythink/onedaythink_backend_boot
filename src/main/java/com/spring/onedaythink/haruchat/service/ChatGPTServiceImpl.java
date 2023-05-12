@@ -13,6 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.io.*;
@@ -21,10 +22,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.concurrent.*;
 
 @Service
 public class ChatGPTServiceImpl implements ChatGPTService{
 
+    private ScheduledFuture<?> scheduledFuture;
     private Logger log = LogManager.getLogger("case3");
     private ObjectMapper objectMapper = new ObjectMapper();
     @Value("${openai.api-key}")
@@ -32,51 +35,77 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     private static final String ENDPOINT = "https://api.openai.com/v1/chat/completions";
 
     @Autowired
+    private ScheduledExecutorService executorService;
+    @Autowired
     private HaruChatMapper haruChatMapper;
 
 
     /** api auto call test **/
-    @Override
-    public String testAPIAutoCall() {
-        // API Request
-        String text = "how are you?";
-        String generatedText = getChatGpt(text);
-        log.debug(generatedText);
+//    @Override
+//    public String testAPIAutoCall() {
+//        // API Request
+//        String text = "how are you?";
+//        String generatedText = getChatGpt(text);
+//        log.debug(generatedText);
+//
+//        return generatedText;
+//    }
 
-        return generatedText;
+    /**  async test **/
+    @Async
+    @Override
+    public Future<List<HaruChatMessage>> someMethod(SelectedHaruInfo selectedHaruInfo){
+
+        ScheduledFuture<List<HaruChatMessage>> future = executorService.schedule(() -> {
+            try {
+                List<HaruChatMessage> list = getChatGPTResponse(selectedHaruInfo);
+                HaruChatMessage haruChatMessage = list.get(0);
+                String response = haruChatMessage.getChatMsgContent();
+                log.debug("auto call test : " + response);
+                return list;
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }, 10, TimeUnit.SECONDS);
+
+        return future;
     }
 
-
     /** receive chatbot Response from papago API & chatGPT API.**/
+    @Async
     @Override
     public List<HaruChatMessage> getChatGPTResponse(SelectedHaruInfo selectedHaruInfo) throws JsonProcessingException {
 
+        // async test
+        if (scheduledFuture != null && !scheduledFuture.isDone()) {
+            scheduledFuture.cancel(true);
+        }
         // Translate Generated Prompt
         Map<String, String> prompt = generatePrompt(selectedHaruInfo);
         for(Map.Entry<String, String> entry : prompt.entrySet()){
-            log.debug("prompt" + entry.getKey() +" : "+ entry.getValue() );
+            log.debug("prompt : " + entry.getKey() +" : "+ entry.getValue() );
         }
         // Response
         List<HaruChatMessage> responseList = new ArrayList<>();
         Set<String> keySet = prompt.keySet();
         for(String key : keySet) {
             String translatedPrompt= getTranslatedTextKoToEn(prompt.get(key));
-            log.debug("@@@@@"+prompt.get(key));
 
             String generatedText = getChatGpt(translatedPrompt);
 
             String answerFromGPT = getTranslatedTextEnToKo(generatedText);
-            log.debug(answerFromGPT);
+            log.debug("answerFromGPT : " + answerFromGPT);
 
             // Received Message insert
             HaruChatMessage haruChatMessageResponse = new HaruChatMessage();
             haruChatMessageResponse.setChatRoomNo(selectedHaruInfo.getChatRoomNo());
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
-
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
             responseList.add(haruChatMessageResponse);
         }
 
+        // async test
+        scheduledFuture = executorService.schedule(() -> someMethod(selectedHaruInfo), 10, TimeUnit.SECONDS);
         return responseList;
     }
 
@@ -111,7 +140,6 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         List<Map<String, Object>> completions = (List<Map<String, Object>>) responseBody.get("choices");
         Map<String, Object> firstCompletion = completions.get(0);
         String generatedText = (String) ((Map<String, Object>) firstCompletion.get("message")).get("content");
-        log.debug(generatedText);
 
         return generatedText;
     }
@@ -122,10 +150,9 @@ public class ChatGPTServiceImpl implements ChatGPTService{
 
         // Data
         int chatRoomNo = selectedHaruInfo.getChatRoomNo();
-
         String prompt = "";
-        String fixedStatementForPersona = " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. ";
-        String direction = "[이전 대화 요약문]과 [직접 대화]를 참고해서 [사용자]의 마지막 말에 대한 적절한 대답을 이 사람의 입장에서 할 수 있는 대답을 완성하세요. ";
+        String fixedStatementForPersona = "자기소개를 하지 마십시오. 제한된 길이의 답변을 원하고, 최대 250자까지만 답변하십시오";
+        String direction = "[이전 대화 요약문]과 [직전 대화]를 참고해서 [사용자]의 마지막 말에 대한 적절한 대답을 이 사람의 입장에서 할 수 있는 대답을 완성하세요. 문장의 끝은 사용자에 대한 질문으로 마무리 하세요.";
 
         HaruChatRoom haruChatRoom = HaruChatRoom.builder().chatRoomNo(chatRoomNo).build();
         int notSummarized = haruChatMapper.selectSummerized(haruChatRoom);
@@ -182,13 +209,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
                 }
             }
 
-//                    String chatGptId = haruChatMapper.selectOneHarubotIdWithNo
-//                            (ChatGPTId.builder().haruNo(haruNo).chatRoomNo(selectedHaruInfo.getChatRoomNo()).build());
-//                    if (chatGptId == null) {
-//                        map.put(String.valueOf(i), prompt);
-//                    } else {
-//                        map.put(chatGptId, prompt);
-//                    }
+
 
             String haruName = selectedHaruInfo.getHaruName().get(String.valueOf(haruNo));
             promptMap.put(haruName, prompt);
@@ -197,7 +218,13 @@ public class ChatGPTServiceImpl implements ChatGPTService{
 
         return promptMap;
     }
-
+    //                    String chatGptId = haruChatMapper.selectOneHarubotIdWithNo
+//                            (ChatGPTId.builder().haruNo(haruNo).chatRoomNo(selectedHaruInfo.getChatRoomNo()).build());
+//                    if (chatGptId == null) {
+//                        map.put(String.valueOf(i), prompt);
+//                    } else {
+//                        map.put(chatGptId, prompt);
+//                    }
     // generate summary from ChatGPT API
     private String summmarizeDialogue(SelectedHaruInfo selectedHaruInfo){
 
@@ -254,7 +281,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         String responseBody = papago_post_ko_en(apiURL, requestHeaders, textTemp);
 
         TranslatorResponse translatorResponse = objectMapper.readValue(responseBody, TranslatorResponse.class);
-        log.debug(translatorResponse.getTranslatedText());
+        log.debug("translation : " +translatorResponse.getTranslatedText());
 
         return translatorResponse.getTranslatedText();
     }
@@ -275,7 +302,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         String responseBody = papago_post_en_ko(apiURL, requestHeaders, text);
 
         TranslatorResponse translatorResponse = objectMapper.readValue(responseBody, TranslatorResponse.class);
-        log.debug(translatorResponse.getTranslatedText());
+        log.debug("translation : " +translatorResponse.getTranslatedText());
 
         return translatorResponse.getTranslatedText();
     }

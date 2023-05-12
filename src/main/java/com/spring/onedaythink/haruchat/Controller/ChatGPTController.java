@@ -12,6 +12,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @RestController
 @RequestMapping(value="api/v1/haruchat")
@@ -34,14 +36,23 @@ public class ChatGPTController {
         return ResponseEntity.ok(list);
     }
 
-    /**
-     * api 자동 call test
-     **/
- /*   @PostMapping("/test")
-    @Scheduled(fixedRate = 2000)
-    public ResponseEntity<Object> testAPIAutoCall() {
+    @PostMapping("/test")
+    public ResponseEntity<Object> testAPIAutoCall(@RequestBody SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
         log.debug("testAPIAutoCall");
-        String response = chatGPTService.testAPIAutoCall();
-        return ResponseEntity.ok(response);
-    }*/
+        Future<List<HaruChatMessage>> future = chatGPTService.someMethod(selectedHaruInfo);
+        List<HaruChatMessage> list = future.get();
+        String msg = list.get(0).getChatMsgContent();
+        return ResponseEntity.ok("성공"+msg);
+    }
+
+    /** api 자동 call test **/
+//    @PostMapping("/test")
+//    @Scheduled(fixedRate=2000)
+//    public ResponseEntity<Object> testAPIAutoCall(){
+//        log.debug("testAPIAutoCall");
+//        String response = chatGPTService.testAPIAutoCall();
+//        return ResponseEntity.ok(response);
+//    }
+
 }
+
