@@ -7,8 +7,8 @@
     <select id="selectHaruBot" resultType="HaruChat">
         SELECT *
         FROM haru_tb
-        WHERE haru_no >= (SELECT FLOOR(MAX(haru_no) * RAND()) FROM haru_tb)
-        LIMIT 4
+     <!--   WHERE haru_no >= (SELECT FLOOR(MAX(haru_no) * RAND()) FROM haru_tb)
+        LIMIT 4-->
     </select>
 
     <select id="selectOneHarubotIdWithNo" parameterType="ChatGPTId" resultType="String">
