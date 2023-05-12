@@ -1,5 +1,6 @@
 package com.spring.onedaythink.subject.service;
 
+import com.spring.onedaythink.chat.vo.ChatRoomDetail;
 import com.spring.onedaythink.subject.mapper.SubjectMapper;
 import com.spring.onedaythink.subject.vo.Subject;
 import com.spring.onedaythink.subject.vo.SubjectDetail;
@@ -9,6 +10,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
@@ -24,8 +33,39 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public int addSubject(Subject subject) {
         log.debug(subject.getContent());
-        return subjectMapper.insertSubject(subject);
+        String imagePath = subject.getSubImgPath();
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new URL(imagePath));
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");
+            String fileNm = now.format(formatter);
+//            String fileNm = imagePath.substring(imagePath.lastIndexOf("/") + 1);
+//            String lastFiveChars = fileNm.substring(Math.max(0, fileNm.length() - 5)); // 변경된 코드
+            String fileName = fileNm + ".png"; // 파일명에 .png 확장자 추가
+            File file = new File("src/main/resources/static/images/" + fileName); // 경로와 파일명을 함께 지정
+            ImageIO.write(image, "png", file);
+
+            // Subject 객체의 SubImgPath 필드에 파일 경로 설정
+            subject.setSubImgPath(file.getPath());
+            log.debug(file.getPath());
+            log.debug("파일 형식 테스트트트" + file.getPath());
+            subject.setSubOriginImg(fileName);
+            return subjectMapper.insertSubject(subject);
+        } catch (MalformedURLException e) {
+            log.error("잘못된 URL입니다.", e);
+            throw new IllegalArgumentException("잘못된 URL입니다.", e);
+        } catch (IOException e) {
+            log.error("이미지 파일을 읽을 수 없습니다.", e);
+            throw new IllegalArgumentException("이미지 파일을 읽을 수 없습니다.", e);
+        } catch (Exception e) {
+            log.error("알 수 없는 오류가 발생했습니다.", e);
+            throw new RuntimeException("알 수 없는 오류가 발생했습니다.", e);
+        }
     }
+
+
+
 
     // 논제 전체 조회
     @Override

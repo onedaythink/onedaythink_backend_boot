@@ -37,11 +37,11 @@ public class ChatGPTController {
     /**
      * api 자동 call test
      **/
-    @PostMapping("/test")
+ /*   @PostMapping("/test")
     @Scheduled(fixedRate = 2000)
     public ResponseEntity<Object> testAPIAutoCall() {
         log.debug("testAPIAutoCall");
         String response = chatGPTService.testAPIAutoCall();
         return ResponseEntity.ok(response);
-    }
+    }*/
 }
