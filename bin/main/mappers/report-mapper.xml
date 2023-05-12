@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.onedaythink.report.mapper.ReportMapper">
+
+    <insert id="insertReport" parameterType="Report">
+        insert into chat_report_tb (`chat_room_no`, `r_t_no`, `report_result`, `accused_user_no`)
+        values
+        (#{chatRoomNo}, #{reportNo}, #{reportResult}, #{accusedUserNo})
+    </insert>
+
+    <select id="selectAllReport" parameterType="Report" resultType="Report">
+        select *
+        from chat_report_tb
+    </select>
+
+    <select id="selectOneReport" parameterType="Report" resultType="Report">
+        select *
+        from chat_report_tb
+        where c_r_no = #{chatReportNo}
+            and report_result = 'w'
+    </select>
+
+    <update id="updateReport" parameterType="Report">
+        update chat_report_tb
+        set report_result = 'w'
+        where c_r_no = #{chatReportNo}
+            and report_result = 'z'
+    </update>
+
+</mapper>
