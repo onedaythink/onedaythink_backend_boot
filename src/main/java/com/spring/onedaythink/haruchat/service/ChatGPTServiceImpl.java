@@ -14,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.io.*;
@@ -24,7 +23,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ChatGPTServiceImpl implements ChatGPTService{
@@ -57,7 +55,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     @Async
     @Override
     public Future<List<HaruChatMessage>> someMethod(SelectedHaruInfo selectedHaruInfo){
-        System.out.println("^^^^^^"+selectedHaruInfo.getChatRoomNo());
+
         ScheduledFuture<List<HaruChatMessage>> future = executorService.schedule(() -> {
             try {
                 List<HaruChatMessage> list = getChatGPTResponse(selectedHaruInfo);
@@ -85,25 +83,23 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         // Translate Generated Prompt
         Map<String, String> prompt = generatePrompt(selectedHaruInfo);
         for(Map.Entry<String, String> entry : prompt.entrySet()){
-            log.debug("prompt" + entry.getKey() +" : "+ entry.getValue() );
+            log.debug("prompt : " + entry.getKey() +" : "+ entry.getValue() );
         }
         // Response
         List<HaruChatMessage> responseList = new ArrayList<>();
         Set<String> keySet = prompt.keySet();
         for(String key : keySet) {
             String translatedPrompt= getTranslatedTextKoToEn(prompt.get(key));
-            log.debug("@@@@@"+prompt.get(key));
 
             String generatedText = getChatGpt(translatedPrompt);
 
             String answerFromGPT = getTranslatedTextEnToKo(generatedText);
-            log.debug(answerFromGPT);
+            log.debug("answerFromGPT : " + answerFromGPT);
 
             // Received Message insert
             HaruChatMessage haruChatMessageResponse = new HaruChatMessage();
             haruChatMessageResponse.setChatRoomNo(selectedHaruInfo.getChatRoomNo());
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
-
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
             responseList.add(haruChatMessageResponse);
         }
@@ -144,7 +140,6 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         List<Map<String, Object>> completions = (List<Map<String, Object>>) responseBody.get("choices");
         Map<String, Object> firstCompletion = completions.get(0);
         String generatedText = (String) ((Map<String, Object>) firstCompletion.get("message")).get("content");
-        log.debug(generatedText);
 
         return generatedText;
     }
@@ -155,10 +150,9 @@ public class ChatGPTServiceImpl implements ChatGPTService{
 
         // Data
         int chatRoomNo = selectedHaruInfo.getChatRoomNo();
-        System.out.println("+++++" + chatRoomNo);
         String prompt = "";
-        String fixedStatementForPersona = " 나는 당신이 이 사람의 업적, 생애, 가치관을 기준으로 이 사람의 직업에 맞는 어조와 태도로 응답하고 대답하기를 바랍니다. 이 사람에 대한 어떤 설명도 쓰지 마십시오. 이사람처럼만 대답하세요. 이 사람에 대한 모든 지식을 알고 있어야 합니다. ";
-        String direction = "[이전 대화 요약문]과 [직접 대화]를 참고해서 [사용자]의 마지막 말에 대한 적절한 대답을 이 사람의 입장에서 할 수 있는 대답을 완성하세요. ";
+        String fixedStatementForPersona = "자기소개를 하지 마십시오. 제한된 길이의 답변을 원하고, 최대 250자까지만 답변하십시오";
+        String direction = "[이전 대화 요약문]과 [직전 대화]를 참고해서 [사용자]의 마지막 말에 대한 적절한 대답을 이 사람의 입장에서 할 수 있는 대답을 완성하세요. 문장의 끝은 사용자에 대한 질문으로 마무리 하세요.";
 
         HaruChatRoom haruChatRoom = HaruChatRoom.builder().chatRoomNo(chatRoomNo).build();
         int notSummarized = haruChatMapper.selectSummerized(haruChatRoom);
@@ -269,8 +263,8 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     private String getTranslatedTextKoToEn(String text) throws JsonProcessingException {
 
         // Papago 에 문자열 넘겨줘서 번역된 내용 리턴받기
-        String clientId = "s8eK4gzT5u70EsNAfYPT";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "1im3PL2SN2";//애플리케이션 클라이언트 시크릿값";
+        String clientId = "xnT47tpDHBjrpfmRxGzO";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "iH_0PB2f51";//애플리케이션 클라이언트 시크릿값";
 
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
         String textTemp;
@@ -287,7 +281,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         String responseBody = papago_post_ko_en(apiURL, requestHeaders, textTemp);
 
         TranslatorResponse translatorResponse = objectMapper.readValue(responseBody, TranslatorResponse.class);
-        log.debug(translatorResponse.getTranslatedText());
+        log.debug("translation : " +translatorResponse.getTranslatedText());
 
         return translatorResponse.getTranslatedText();
     }
@@ -296,8 +290,8 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     private String getTranslatedTextEnToKo(String text) throws JsonProcessingException {
 
         // Papago 에 문자열 넘겨줘서 번역된 내용 리턴받기
-        String clientId = "s8eK4gzT5u70EsNAfYPT";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "1im3PL2SN2";//애플리케이션 클라이언트 시크릿값";
+        String clientId = "xnT47tpDHBjrpfmRxGzO";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "iH_0PB2f51";//애플리케이션 클라이언트 시크릿값";
 
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
 
@@ -308,7 +302,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         String responseBody = papago_post_en_ko(apiURL, requestHeaders, text);
 
         TranslatorResponse translatorResponse = objectMapper.readValue(responseBody, TranslatorResponse.class);
-        log.debug(translatorResponse.getTranslatedText());
+        log.debug("translation : " +translatorResponse.getTranslatedText());
 
         return translatorResponse.getTranslatedText();
     }
