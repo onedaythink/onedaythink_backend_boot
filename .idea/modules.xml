@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
+=======
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.spring.onedaythink.spring_boot_backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.spring.onedaythink.spring_boot_backend.main.iml" />
+>>>>>>> 7958e4974b75c47e0f6915be2559950f5e3d3958
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring_boot_backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/spring_boot_backend.main.iml" />
     </modules>
   </component>

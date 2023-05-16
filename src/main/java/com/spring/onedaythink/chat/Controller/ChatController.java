@@ -81,6 +81,5 @@ public class ChatController {
     public ResponseEntity<Object> getChatRoomsAdmin() {
         List<ChatRoom> chatRoom = chatService.getChatRoomsAdmin(null);
         return ResponseEntity.ok(chatRoom);
-
     }
 }
