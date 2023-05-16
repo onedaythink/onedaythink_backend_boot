@@ -54,7 +54,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     /**  async test **/
     @Async
     @Override
-    public Future<List<HaruChatMessage>> someMethod(SelectedHaruInfo selectedHaruInfo){
+    public List<HaruChatMessage> someMethod(SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
 
         ScheduledFuture<List<HaruChatMessage>> future = executorService.schedule(() -> {
             try {
@@ -68,7 +68,9 @@ public class ChatGPTServiceImpl implements ChatGPTService{
             }
         }, 10, TimeUnit.SECONDS);
 
-        return future;
+        List<HaruChatMessage> msgList = future.get();
+
+        return msgList;
     }
 
     /** receive chatbot Response from papago API & chatGPT API.**/
