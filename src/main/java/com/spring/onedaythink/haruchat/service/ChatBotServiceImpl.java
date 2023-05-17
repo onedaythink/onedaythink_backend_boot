@@ -96,16 +96,18 @@ public class ChatBotServiceImpl implements ChatBotService{
 
             Map<String, String> map1 = new HashMap<>();
             map1.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruName().get(String.valueOf(randomHaruNo)));
-            System.out.println("####" + selectedHaruInfoDetail.getHaruName().get(String.valueOf(randomHaruNo)));
+            log.debug("####" + selectedHaruInfoDetail.getHaruName().get(String.valueOf(randomHaruNo)));
             selectedHaruInfoDetail.setHaruName(map1);
+
             Map<String, String> map2 = new HashMap<>();
             map2.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
-            System.out.println("####" + selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
-            selectedHaruInfoDetail.setHaruName(map2);
+            log.debug("####" + selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
+            selectedHaruInfoDetail.setHaruPrompt(map2);
+
             Map<String, String> map3 = new HashMap<>();
             map3.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
             selectedHaruInfoDetail.setHaruOpinion(map3);
-            System.out.println("####" + selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
+            log.debug("####" + selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
 
             // response
             Map<String, String> prompt = generatePrompt(selectedHaruInfoDetail);
@@ -154,9 +156,17 @@ public class ChatBotServiceImpl implements ChatBotService{
         if (scheduledFuture != null && !scheduledFuture.isDone()) {
             scheduledFuture.cancel(true);
         }
+        log.debug("================================================");
+        log.debug("getHaruPrompt : " + selectedHaruInfoDetail.getHaruPrompt());
+        log.debug("================================================");
 
         // response
         Map<String, String> prompt = generatePrompt(selectedHaruInfoDetail);
+        log.debug("================================================");
+        log.debug("getHaruPrompt : " + selectedHaruInfoDetail.getHaruPrompt());
+        log.debug("================================================");
+
+
         List<HaruChatMessage> responseList = new ArrayList<>();
         for(Map.Entry<String, String> entry : prompt.entrySet()){
             log.debug("prompt : [" + entry.getKey() +"] : "+ entry.getValue() );
@@ -222,6 +232,11 @@ public class ChatBotServiceImpl implements ChatBotService{
           prompt = [persona explanation] + [direction] + [subject] + [persona's opinion] + [previous dialogue]
          **/
 
+        log.debug("================================================");
+        log.debug("getHaruPrompt : " + selectedHaruInfoDetail.getHaruPrompt());
+        log.debug("================================================");
+
+
         int chatRoomNo = selectedHaruInfoDetail.getChatRoomNo();
         HaruChatRoom haruChatRoom = HaruChatRoom.builder().chatRoomNo(chatRoomNo).build();
 
@@ -245,6 +260,9 @@ public class ChatBotServiceImpl implements ChatBotService{
 
         // Prompt
         Map<String, String> promptMap = selectedHaruInfoDetail.getHaruPrompt();
+
+        log.debug("promptMap : " + promptMap);
+        log.debug("================================================");
         for (int i = 0; i < selectedHaruInfoDetail.getHaruNo().size(); i++) {
 
             int haruNo = selectedHaruInfoDetail.getHaruNo().get(i);
@@ -274,6 +292,11 @@ public class ChatBotServiceImpl implements ChatBotService{
             promptMap.put(String.valueOf(haruNo), generatedPrompt);
 
         }
+        log.debug("promptMap : " + promptMap);
+        log.debug("================================================");
+        log.debug("================================================");
+        log.debug("getHaruPrompt : " + selectedHaruInfoDetail.getHaruPrompt());
+        log.debug("================================================");
 
         return promptMap;
     }
