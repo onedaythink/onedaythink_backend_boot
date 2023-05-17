@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -56,8 +57,8 @@ public class ChatController {
     @PostMapping(value = "chat/rooms")
     public ResponseEntity<Object> addChatRoom(@RequestBody ChatRoom chatRoom){
         log.debug("# Create Chat Room , name: " + chatRoom.toString());
-        int result = chatService.addChatRoom(chatRoom);
-        return ResponseEntity.ok(result);
+        Map<String, Object> map = chatService.addChatRoom(chatRoom);
+        return ResponseEntity.ok(map);
     }
 
     // 채팅방 요청 승인/거절 관리

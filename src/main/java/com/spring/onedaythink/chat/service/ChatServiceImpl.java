@@ -11,7 +11,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ChatServiceImpl implements ChatService{
@@ -27,15 +29,20 @@ public class ChatServiceImpl implements ChatService{
         return chatMapper.selectChatRooms(chatRoomDetail);
     }
     @Override
-    public int addChatRoom(ChatRoom chatRoom){
+    public Map<String, Object> addChatRoom(ChatRoom chatRoom){
         log.debug("add ChatRoom");
+        Map<String, Object> map = new HashMap<>();
+
         // 기존에 채팅룸이 열려있는지 확인
         int result = chatMapper.selectChatRoomCountByUserNo(chatRoom);
         // 채팅룸이 없다면 추가
         if (result == 0) {
             result = chatMapper.insertChatRoom(chatRoom);
+            map.put("msg", "채팅창을 개설했습니다.");
+        } else {
+            map.put("msg", "이미 개설된 채팅방이 존재합니다.");
         }
-        return result;
+        return map;
     }
 
     // 채팅방 종료
