@@ -28,6 +28,22 @@
         VALUES (#{chatRoomNo},#{haruNo})
     </insert>
 
+    <!-- 하루봇 채팅방 입장시 하루봇들 의견 저장-->
+    <update id="updateHaruOpinion" parameterType="HaruChatMessage">
+        UPDATE haru_chat_room_haru_tb
+        SET haru_opinion = #{chatMsgContent}
+        WHERE haru_no = #{chatSendHaruNo}
+        AND chat_room_no = #{chatRoomNo}
+    </update>
+
+    <!-- 채팅방 내 하루봇 의견 -->
+    <select id="selectHaruOpinion" parameterType="HaruChatRoomDetail" resultType="String">
+        SELECT haru_opinion
+        FROM haru_chat_room_haru_tb
+        WHERE haru_no = #{haruNo}
+        AND chat_room_no = #{chatRoomNo}
+    </select>
+
     <!-- 하루 채팅방 전체 조회-->
     <select id="selectAllharuChatRoom" parameterType="HaruChatRoom" resultType="HaruChatRoom">
         select *
@@ -55,7 +71,7 @@
         <if test="chatSendUserNo ==0">, `chat_send_haru_no`</if>
         ) VALUES (#{chatRoomNo},#{chatMsgContent}
         <if test="chatSendUserNo !=0">,#{chatSendUserNo}</if>
-        <if test="chatSendUserNo ==0">, #{chatSendHaruNo})</if>
+        <if test="chatSendUserNo ==0">, #{chatSendHaruNo}</if>
         )
     </insert>
 
