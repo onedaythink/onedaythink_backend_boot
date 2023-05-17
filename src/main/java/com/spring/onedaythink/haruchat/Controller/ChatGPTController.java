@@ -24,6 +24,11 @@ public class ChatGPTController {
     @Autowired
     private ChatGPTService chatGPTService;
 
+//    @GetMapping(value = "/test")
+//    public ResponseEntity<Object> socketApiTest() {
+//        log.debug("socketApiTest");
+//        return ResponseEntity.ok("hi");
+//    }
     /**
      * receive chatbot Response from papago API & chatGPT API.
      **/

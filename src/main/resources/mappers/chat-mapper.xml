@@ -26,7 +26,7 @@
     <select id="selectChatRooms" parameterType="ChatRoomDetail" resultType="ChatRoomDetail">
         select cr.chat_room_no, to_u.user_no as to_user_no, to_u.nickname as to_nickname, from_u.user_no as from_user_no, from_u.nickname as from_nickname,
                cr.create_at, cr.is_close, cm.chat_msg_content as last_message, cm.nickname as send_nickname
-        from CHAT_ROOM_TB as cr
+        from chat_room_tb as cr
                  join user_opinion_tb as uo
                       on uo.user_opi_no = cr.to_user_opi_no
                  join user_tb as to_u
