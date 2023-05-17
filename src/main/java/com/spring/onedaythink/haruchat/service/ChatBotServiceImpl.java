@@ -77,7 +77,6 @@ public class ChatBotServiceImpl implements ChatBotService{
     }
 
     /** chatGPT API Auto call **/
-    @Async
     @Override
     public List<HaruChatMessage> receiveMsgIfNoRequest(SelectedHaruInfoDetail selectedHaruInfoDetail) throws ExecutionException, InterruptedException {
 
@@ -91,32 +90,28 @@ public class ChatBotServiceImpl implements ChatBotService{
 
             System.out.println(randomHaruNo);
 
-            SelectedHaruInfoDetail selectedHaruRandom = new SelectedHaruInfoDetail();
             List<Integer> randomHaru = new ArrayList<>();
             randomHaru.add(randomHaruNo);
-            selectedHaruRandom.setHaruNo(randomHaru);
-            selectedHaruRandom.setSubject(selectedHaruRandom.getSubject());
-            selectedHaruRandom.setUserNo(selectedHaruRandom.getUserNo());
-            selectedHaruRandom.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
-            selectedHaruRandom.setUserMsg(selectedHaruInfoDetail.getUserMsg());
+            selectedHaruInfoDetail.setHaruNo(randomHaru);
+
             Map<String, String> map1 = new HashMap<>();
             map1.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruName().get(String.valueOf(randomHaruNo)));
             System.out.println("####" + selectedHaruInfoDetail.getHaruName().get(String.valueOf(randomHaruNo)));
-            selectedHaruRandom.setHaruName(map1);
+            selectedHaruInfoDetail.setHaruName(map1);
             Map<String, String> map2 = new HashMap<>();
             map2.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
             System.out.println("####" + selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
-            selectedHaruRandom.setHaruName(map2);
+            selectedHaruInfoDetail.setHaruName(map2);
             Map<String, String> map3 = new HashMap<>();
             map3.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
-            selectedHaruRandom.setHaruOpinion(map3);
+            selectedHaruInfoDetail.setHaruOpinion(map3);
             System.out.println("####" + selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
 
             // response
-            Map<String, String> prompt = generatePrompt(selectedHaruRandom);
+            Map<String, String> prompt = generatePrompt(selectedHaruInfoDetail);
             List<HaruChatMessage> responseList = new ArrayList<>();
             for(Map.Entry<String, String> entry : prompt.entrySet()){
-                log.debug("prompt : [" + entry.getKey() +"] : "+ entry.getValue() );
+                log.debug("+++prompt : [" + entry.getKey() +"] : "+ entry.getValue() );
                 String promptToGPT = entry.getValue();
                 String answerFromGPT = getChatGptResponse(promptToGPT);
                 log.debug("answerFromGPT : " + answerFromGPT);
@@ -126,7 +121,7 @@ public class ChatBotServiceImpl implements ChatBotService{
                 haruChatMessageResponse.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
                 haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
                 haruChatMessageResponse.setChatMsgContent(answerFromGPT);
-//            haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
+//              haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
                 responseList.add(haruChatMessageResponse);
 
             }
@@ -254,6 +249,7 @@ public class ChatBotServiceImpl implements ChatBotService{
 
             int haruNo = selectedHaruInfoDetail.getHaruNo().get(i);
             String subject = selectedHaruInfoDetail.getSubject();
+            String haruName = selectedHaruInfoDetail.getHaruName().get(haruNo);
             String haruPrompt = selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(haruNo));
             String haruOpinion = selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(haruNo));
 
@@ -269,7 +265,9 @@ public class ChatBotServiceImpl implements ChatBotService{
               .append(haruOpinion)
               .append(System.lineSeparator())
               .append(" [직전 대화] ")
-              .append(currentMsg);
+              .append(currentMsg)
+              .append(System.lineSeparator())
+              .append(" [대답] : " );
 
             String generatedPrompt = sb.toString();
 
