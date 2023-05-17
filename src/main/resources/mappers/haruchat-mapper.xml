@@ -11,12 +11,6 @@
         LIMIT 4-->
     </select>
 
-    <select id="selectOneHarubotIdWithNo" parameterType="ChatGPTId" resultType="String">
-        SELECT chat_gpt_id
-        FROM haru_chat_room_haru_tb
-        WHERE haru_no = #{haruNo} AND chat_room_no = #{chatRoomNo}
-    </select>
-
     <insert id="insertHaruChatRoom" parameterType="User">
         INSERT INTO haru_chat_room_tb (user_no, create_at)
         VALUES (#{userNo}, NOW())
@@ -61,7 +55,7 @@
         <if test="chatSendUserNo ==0">, `chat_send_haru_no`</if>
         ) VALUES (#{chatRoomNo},#{chatMsgContent}
         <if test="chatSendUserNo !=0">,#{chatSendUserNo}</if>
-        <if test="chatSendUserNo ==0">, (SELECT haru_no FROM HARU_CHAT_ROOM_HARU_TB WHERE chat_room_no = #{chatRoomNo} LIMIT 1)</if>
+        <if test="chatSendUserNo ==0">, #{chatSendHaruNo})</if>
         )
     </insert>
 
@@ -74,15 +68,15 @@
         LIMIT 1
     </select>
 
-    <!-- 하루 채팅방 직전 대화 10개 조회-->
+    <!-- 하루 채팅방 직전 대화 7개 조회-->
     <select id="selectPreviousMsg" parameterType="HaruChatRoom" resultType="CurrentMsg">
-        SELECT chat_send_user_no, chat_send_haru_no, chat_msg_content, to_haru_no, haru_name
+        SELECT chat_msg_no, chat_send_user_no, chat_send_haru_no, chat_msg_content, to_haru_no, haru_name
         FROM haru_chat_message_tb
         LEFT JOIN haru_tb
-        ON to_haru_no = haru_no
+        ON chat_send_haru_no = haru_no
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_msg_no DESC
-        LIMIT 10;
+        LIMIT 7;
     </select>
 
     <!-- 하루 채팅방 요약되지 않은 대화 수 조회-->

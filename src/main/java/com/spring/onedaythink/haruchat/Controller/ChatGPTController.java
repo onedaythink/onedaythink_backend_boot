@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @RestController
-@RequestMapping(value="api/v1/haruchat")
+@RequestMapping(value="api/v1/haruchat/test/")
 public class ChatGPTController {
 
     private Logger log = LogManager.getLogger("case3");
@@ -30,7 +30,7 @@ public class ChatGPTController {
 //        return ResponseEntity.ok("hi");
 //    }
     /**
-     * receive chatbot Response from papago API & chatGPT API.
+      receive chatbot Response from chatGPT API.
      **/
     @PostMapping("/chatgpt/response")
     public ResponseEntity<Object> receiveMsgFromChatGPT(@RequestBody SelectedHaruInfo selectedHaruInfo) throws JsonProcessingException {
@@ -44,8 +44,7 @@ public class ChatGPTController {
     @PostMapping("/test")
     public ResponseEntity<Object> testAPIAutoCall(@RequestBody SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
         log.debug("testAPIAutoCall");
-        Future<List<HaruChatMessage>> future = chatGPTService.someMethod(selectedHaruInfo);
-        List<HaruChatMessage> list = future.get();
+        List<HaruChatMessage> list = chatGPTService.someMethod(selectedHaruInfo);
         String msg = list.get(0).getChatMsgContent();
         return ResponseEntity.ok("성공"+msg);
     }
