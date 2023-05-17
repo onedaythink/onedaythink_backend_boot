@@ -11,7 +11,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,7 +28,7 @@ public class ChatBotServiceImpl implements ChatBotService{
     @Value("${openai.api-key}")
     private String openaiApiKey;
     private static final String ENDPOINT = "https://api.openai.com/v1/chat/completions";
-    private volatile boolean hasScheduledTaskExecuted = false;
+    private boolean hasScheduledTaskExecuted = false;
     @Autowired
     private ScheduledExecutorService executorService;
     @Autowired
@@ -39,7 +38,7 @@ public class ChatBotServiceImpl implements ChatBotService{
     @Override
     public List<HaruChatMessage> getFirstMsgFromChatGPT(SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
 
-        String direction = "[논제]에 대한 당신의 의견을 오로지 당신에게 주어진 입장과 특징에 따라 두 문장으로 완성하세요. [논제]에서 벗어나지 않아야합니다.";
+        String direction = "[논제]에 대한 [당신의 주장]을 오로지 당신에게 주어진 입장과 특징에 따라 한 문장으로 짧게 완성하세요. [논제]에서 벗어나지 않아야합니다. 대화체로 대답하세요.";
         String subject = selectedHaruInfo.getSubject();
 
         Map<String, String> harubotMap = selectedHaruInfo.getHaruPrompt();
@@ -55,20 +54,24 @@ public class ChatBotServiceImpl implements ChatBotService{
                 .append(direction)
                 .append(System.lineSeparator())
                 .append(" [논제] ")
-                .append(subject);
+                .append(subject)
+                .append(System.lineSeparator())
+                .append(" [당신의 주장] ");
             String promptToGPT = sb.toString();
 
             String answerFromGPT = getChatGptResponse(promptToGPT);
+            log.debug("promptToGPT : " + promptToGPT);
             log.debug("answerFromGPT : " + answerFromGPT);
 
-            // Received Message insert : chat room haru table
 
+            // Received Message insert : chat room haru table
             // Received Message insert : msg table
             HaruChatMessage haruChatMessageResponse = new HaruChatMessage();
             haruChatMessageResponse.setChatRoomNo(selectedHaruInfo.getChatRoomNo());
             haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
+            haruChatMapper.updateHaruOpinion(haruChatMessageResponse);
 
             responseList.add(haruChatMessageResponse);
         }
@@ -102,12 +105,11 @@ public class ChatBotServiceImpl implements ChatBotService{
             Map<String, String> map2 = new HashMap<>();
             map2.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
             log.debug("####" + selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
-            selectedHaruInfoDetail.setHaruPrompt(map2);
 
+            selectedHaruInfoDetail.setHaruPrompt(map2);
             Map<String, String> map3 = new HashMap<>();
             map3.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
             selectedHaruInfoDetail.setHaruOpinion(map3);
-            log.debug("####" + selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
 
             // response
             Map<String, String> prompt = generatePrompt(selectedHaruInfoDetail);
@@ -123,7 +125,7 @@ public class ChatBotServiceImpl implements ChatBotService{
                 haruChatMessageResponse.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
                 haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
                 haruChatMessageResponse.setChatMsgContent(answerFromGPT);
-//              haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
+                haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
                 responseList.add(haruChatMessageResponse);
 
             }
@@ -139,7 +141,7 @@ public class ChatBotServiceImpl implements ChatBotService{
 
 
     /** receive chatbot Response from chatGPT API.**/
-    @Async
+
     @Override
     public List<HaruChatMessage> getMsgFromChatGPT(SelectedHaruInfoDetail selectedHaruInfoDetail) {
 
@@ -179,7 +181,7 @@ public class ChatBotServiceImpl implements ChatBotService{
             haruChatMessageResponse.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
             haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
-//            haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
+            haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
             responseList.add(haruChatMessageResponse);
         }
 
@@ -232,17 +234,12 @@ public class ChatBotServiceImpl implements ChatBotService{
           prompt = [persona explanation] + [direction] + [subject] + [persona's opinion] + [previous dialogue]
          **/
 
-        log.debug("================================================");
-        log.debug("getHaruPrompt : " + selectedHaruInfoDetail.getHaruPrompt());
-        log.debug("================================================");
-
-
         int chatRoomNo = selectedHaruInfoDetail.getChatRoomNo();
         HaruChatRoom haruChatRoom = HaruChatRoom.builder().chatRoomNo(chatRoomNo).build();
 
         // direction
         String direction
-                = "[논제]에 대한 [당신의 주장]과 [직전 대화]를 참고해서 마지막 말에 이어질 적절한 대답을 오로지 당신에게 주어진 입장과 특징에 따라 두 문장으로 완성하세요. [논제]와 [당신의 주장]에서 벗어나지 않아야하며 문장의 끝은 질문 형식으로 마무리 하세요.";
+                = "[논제]에 대한 [당신의 주장]과 [직전 대화]를 참고해서 마지막 말에 이어질 적절한 [대답]을 오로지 당신에게 주어진 입장과 특징에 따라 짧게 한 문장으로 최대 100자 이내로 완성하세요. [논제]와 [당신의 주장]에서 벗어나지 않아야하며 문장의 끝은 질문 형식으로 마무리 하세요.";
         // previous dialogue
         String currentMsg = "";
         List<CurrentMsg> currentMsgList = haruChatMapper.selectPreviousMsg(haruChatRoom);
@@ -259,17 +256,23 @@ public class ChatBotServiceImpl implements ChatBotService{
         }
 
         // Prompt
-        Map<String, String> promptMap = selectedHaruInfoDetail.getHaruPrompt();
+//        Map<String, String> promptMap = selectedHaruInfoDetail.getHaruPrompt();
+        Map<String, String> promptMap = new HashMap<>();
+        for(Map.Entry<String, String> entry : selectedHaruInfoDetail.getHaruPrompt().entrySet()) {
+            promptMap.put(entry.getKey(), entry.getValue());
+        }
 
-        log.debug("promptMap : " + promptMap);
-        log.debug("================================================");
         for (int i = 0; i < selectedHaruInfoDetail.getHaruNo().size(); i++) {
 
             int haruNo = selectedHaruInfoDetail.getHaruNo().get(i);
             String subject = selectedHaruInfoDetail.getSubject();
             String haruName = selectedHaruInfoDetail.getHaruName().get(haruNo);
             String haruPrompt = selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(haruNo));
-            String haruOpinion = selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(haruNo));
+
+            HaruChatRoomDetail haruChatRoomDetail = new HaruChatRoomDetail();
+            haruChatRoomDetail.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
+            haruChatRoomDetail.setHaruNo(haruNo);
+            String haruOpinion = haruChatMapper.selectHaruOpinion(haruChatRoomDetail);
 
             StringBuilder sb = new StringBuilder();
             sb.append(haruPrompt)
@@ -292,12 +295,6 @@ public class ChatBotServiceImpl implements ChatBotService{
             promptMap.put(String.valueOf(haruNo), generatedPrompt);
 
         }
-        log.debug("promptMap : " + promptMap);
-        log.debug("================================================");
-        log.debug("================================================");
-        log.debug("getHaruPrompt : " + selectedHaruInfoDetail.getHaruPrompt());
-        log.debug("================================================");
-
         return promptMap;
     }
 

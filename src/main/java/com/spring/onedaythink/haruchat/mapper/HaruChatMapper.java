@@ -21,6 +21,9 @@ public interface HaruChatMapper {
 
     public int insertHaruChatRoomHaru(HaruChatRoomDetail haruChatRoomDetail);
 
+    // 하루봇 채팅방 입장시 하루봇들 의견 저장
+    public int updateHaruOpinion(HaruChatMessage haruChatMessage);
+
     // 하루봇 채팅방 전체 조회
     public List<HaruChatRoom> selectAllharuChatRoom();
 
@@ -43,7 +46,9 @@ public interface HaruChatMapper {
 
 
     // 하루봇 채팅방 나가기
-    int updateHaruChatRoomClosed(HaruChatRoom haruChatRoom);
+    public int updateHaruChatRoomClosed(HaruChatRoom haruChatRoom);
 
+    // 채팅방 내 하루봇 의견 조회
+    public String selectHaruOpinion(HaruChatRoomDetail haruChatRoomDetail);
 }
 
