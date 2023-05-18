@@ -38,7 +38,7 @@ public class ChatBotServiceImpl implements ChatBotService{
     @Override
     public List<HaruChatMessage> getFirstMsgFromChatGPT(SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
 
-        String direction = "[논제]에 대한 [당신의 주장]을 오로지 당신에게 주어진 입장과 특징에 따라 한 문장으로 짧게 완성하세요. [논제]에서 벗어나지 않아야합니다. 대화체로 대답하세요.";
+        String direction = "[논제]에 대한 [당신의 주장]을 오로지 당신에게 주어진 입장과 특징에 따라 한 문장으로 간결하게 완성하세요. [논제]에서 벗어나지 않아야합니다. 대화체로 대답하세요.";
         String subject = selectedHaruInfo.getSubject();
 
         Map<String, String> harubotMap = selectedHaruInfo.getHaruPrompt();
@@ -228,7 +228,7 @@ public class ChatBotServiceImpl implements ChatBotService{
 
         // direction
         String direction
-                = "[논제]에 대한 [당신의 주장]과 [직전 대화]를 참고해서 마지막 말에 이어질 적절한 [대답]을 오로지 당신에게 주어진 입장과 특징에 따라 짧게 한 문장으로 최대 100자 이내로 완성하세요. [논제]와 [당신의 주장]에서 벗어나지 않아야하며 문장의 끝은 질문 형식으로 마무리 하세요.";
+                = "[논제]에 대한 [당신의 주장]과 [직전 대화]를 참고해서 마지막 말에 이어질 적절한 [대답]을 오로지 당신에게 주어진 입장과 특징에 따라 간결하게 한 문장으로 최대 100자 이내로 완성하세요. [논제]와 [당신의 주장]에서 벗어나지 않아야하며 문장의 끝은 질문 형식으로 마무리 하세요.";
         // previous dialogue
         String currentMsg = "";
         List<CurrentMsg> currentMsgList = haruChatMapper.selectPreviousMsg(haruChatRoom);

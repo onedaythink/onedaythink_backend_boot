@@ -23,13 +23,13 @@
 
     <select id="selectSubjectBySubNo" parameterType="Subject" resultType="Subject">
         SELECT *
-        FROM `SUBJECT_TB`
-        WHERE sub_no = #{subNo}
+        FROM subject_tb
+        WHERE sub_date = #{subNo}
     </select>
 
     <select id="selectSubjectBySubDate" parameterType="Subject" resultType="Subject">
         SELECT *
-        FROM `SUBJECT_TB`
+        FROM subject_tb
         WHERE sub_date = #{subDate}
     </select>
 
