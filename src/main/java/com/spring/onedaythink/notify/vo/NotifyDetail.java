@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Notify {
-    private int notiNo, userNo;
-    private String message, read_yn, create_at;
+public class NotifyDetail {
+    private List<Notify> notifyList;
+
 }
