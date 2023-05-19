@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,7 +15,8 @@ import lombok.NoArgsConstructor;
 public class HaruChatRoomDetail {
 
 
-    private int haruNo, chatRoomNo;
-    private String haruOpinion;
+    private int userNo, chatRoomNo, haruNo;
+    private String lastMessage, userNickname, haruName, userImg, haruImg;
+
 
 }

@@ -4,6 +4,7 @@
 
 <mapper namespace="com.spring.onedaythink.haruchat.mapper.HaruChatMapper">
 
+    <!--하루봇 전체 조회-->
     <select id="selectHaruBot" resultType="HaruChat">
         SELECT *
         FROM haru_tb
@@ -11,32 +12,34 @@
         LIMIT 4-->
     </select>
 
-    <insert id="insertHaruChatRoom" parameterType="User">
-        INSERT INTO haru_chat_room_tb (user_no, create_at)
-        VALUES (#{userNo}, NOW())
+    <!--하루봇 개별 조회-->
+    <select id="selectHaruBotByHaruNo" parameterType="HaruChat" resultType="HaruChat">
+        SELECT *
+        FROM haru_tb
+        WHERE haru_no = #{haruNo}
+    </select>
+
+    <!--하루봇 채팅방 생성-->
+    <insert id="insertHaruChatRoom" parameterType="SelectedHaruInfo">
+        INSERT INTO haru_chat_room_tb (user_no, sub_no, create_at)
+        VALUES (#{userNo}, #{subNo}, NOW())
     </insert>
 
-    <select id="selectHaruChatRoomNo" resultType="HaruChatRoom">
-        SELECT chat_room_no
+    <!--회원별 가장 최근 생성 채팅방 조회-->
+    <select id="selectRecentHaruChatRoomByUserNo" parameterType="HaruChatRoom" resultType="HaruChatRoom">
+        SELECT *
         FROM haru_chat_room_tb
         ORDER BY create_at DESC
         LIMIT 1;
     </select>
 
-    <insert id="insertHaruChatRoomHaru" parameterType="HaruChatRoomDetail">
-        INSERT INTO haru_chat_room_haru_tb
-        VALUES (#{chatRoomNo},#{haruNo})
-    </insert>
-
     <!-- 하루봇 채팅방 입장시 하루봇들 의견 저장-->
-    <update id="updateHaruOpinion" parameterType="HaruChatMessage">
-        UPDATE haru_chat_room_haru_tb
-        SET haru_opinion = #{chatMsgContent}
-        WHERE haru_no = #{chatSendHaruNo}
-        AND chat_room_no = #{chatRoomNo}
+    <update id="insertSelectedHaruOpinion" parameterType="HaruChatMessage">
+        INSERT INTO haru_chat_room_haru_tb (chat_room_no, haru_no, haru_opinion)
+        VALUES (#{chatRoomNo}, #{chatSendHaruNo}, #{chatMsgContent})
     </update>
 
-    <!-- 채팅방 내 하루봇 의견 -->
+    <!-- 채팅방 내 하루봇 의견 조회-->
     <select id="selectHaruOpinion" parameterType="HaruChatRoomDetail" resultType="String">
         SELECT haru_opinion
         FROM haru_chat_room_haru_tb
@@ -44,24 +47,20 @@
         AND chat_room_no = #{chatRoomNo}
     </select>
 
-    <!-- 하루 채팅방 전체 조회-->
-    <select id="selectAllharuChatRoom" parameterType="HaruChatRoom" resultType="HaruChatRoom">
-        select *
-        from haru_chat_room_tb
-    </select>
-
-    <!-- 하루 채팅방 개별 조회-->
-    <select id="selectOneharuChatRoom" parameterType="HaruChatRoom" resultType="HaruChatRoom">
-        select *
-        from haru_chat_room_tb
-        where chat_room_no = #{userNo}
-    </select>
-
-    <!-- 하루 채팅방 요약문 조회-->
-    <select id="selectOneSummary" parameterType="HaruChatRoom" resultType="HaruChatRoom">
-        select *
-        from haru_chat_room_tb
-        where chat_room_no = #{chatRoomNo}
+    <!-- 하루 채팅방 회원별 조회: 채팅방 정보, 마지막 메시지-->
+    <select id="selectHaruChatRoomByUserNo" parameterType="HaruChatRoom" resultType="HaruChatRoomDetail">
+        SELECT hcr.chat_room_no, hcr.creat_at,
+               COALESCE(chat_send_user_no, 0) AS chat_send_user_no,
+               COALESCE(chat_send_haru_no, 0) AS chat_send_haru_no,
+               hcm.chat_msg_content
+        FROM haru_chat_room_tb as hcr
+        LEFT JOIN haru_chat_message_tb as hcm
+        ON hcm.chat_room_no = hcr.chat_room_no
+        WHERE user_no = #{userNo}
+        AND hcm.chat_create_at = (
+            SELECT MAX(chat_create_at)
+            FROM haru_chat_message_tb
+            WHERE chat_room_no = hcr.chat_room_no)
     </select>
 
     <!-- 하루 채팅방 메세지 생성-->
@@ -93,14 +92,6 @@
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_msg_no DESC
         LIMIT 7;
-    </select>
-
-    <!-- 하루 채팅방 요약되지 않은 대화 수 조회-->
-    <select id="selectSummerized" parameterType="HaruChatRoom" resultType="Integer">
-        SELECT COUNT(*)
-        FROM haru_chat_message_tb
-        WHERE chat_room_no = #{chatRoomNo}
-        AND summarized = 'n'
     </select>
 
     <!-- 하루 채팅방 나가기 -->

@@ -3,6 +3,8 @@ package com.spring.onedaythink.haruchat.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.onedaythink.haruchat.mapper.HaruChatMapper;
 import com.spring.onedaythink.haruchat.vo.*;
+import com.spring.onedaythink.user.mapper.UserMapper;
+import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +35,24 @@ public class ChatBotServiceImpl implements ChatBotService{
     private ScheduledExecutorService executorService;
     @Autowired
     private HaruChatMapper haruChatMapper;
+    @Autowired
+    private UserMapper userMapper;
+
+    // 하루봇 선택
+    @Override
+    public List<HaruChat> getRandomHaruBot() {
+        log.debug("getRandomHaruBot");
+        return haruChatMapper.selectHaruBot();
+    }
 
     /** receive first chatbot Response from chatGPT API.**/
     @Override
     public List<HaruChatMessage> getFirstMsgFromChatGPT(SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
+
+        log.debug("createHaruChatRoom");
+        haruChatMapper.insertHaruChatRoom(selectedHaruInfo);
+        HaruChatRoom haruChatRoom = haruChatMapper.selectRecentHaruChatRoomByUserNo(HaruChatRoom.builder().userNo(selectedHaruInfo.getUserNo()).build());
+        selectedHaruInfo.setChatRoomNo(haruChatRoom.getChatRoomNo());
 
         String direction = "[논제]에 대한 [당신의 주장]을 오로지 당신에게 주어진 입장과 특징에 따라 한 문장으로 간결하게 완성하세요. [논제]에서 벗어나지 않아야합니다. 대화체로 대답하세요.";
         String subject = selectedHaruInfo.getSubject();
@@ -71,7 +87,7 @@ public class ChatBotServiceImpl implements ChatBotService{
             haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
-            haruChatMapper.updateHaruOpinion(haruChatMessageResponse);
+            haruChatMapper.insertSelectedHaruOpinion(haruChatMessageResponse);
 
             responseList.add(haruChatMessageResponse);
         }
@@ -138,7 +154,6 @@ public class ChatBotServiceImpl implements ChatBotService{
 
 
     /** receive chatbot Response from chatGPT API.**/
-
     @Override
     public List<HaruChatMessage> getMsgFromChatGPT(SelectedHaruInfoDetail selectedHaruInfoDetail) {
 
@@ -165,10 +180,14 @@ public class ChatBotServiceImpl implements ChatBotService{
             String answerFromGPT = getChatGptResponse(promptToGPT);
             log.debug("answerFromGPT : " + answerFromGPT);
 
+            // Select Haru Info
+            HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(Integer.parseInt(entry.getKey())).build());
             // Received Message insert
             HaruChatMessage haruChatMessageResponse = new HaruChatMessage();
             haruChatMessageResponse.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
-            haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
+            haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(entry.getKey()));
+            haruChatMessageResponse.setHaruName(haruChat.getHaruName());
+            haruChatMessageResponse.setHaruImgPath(haruChat.getHaruImgPath());
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
             responseList.add(haruChatMessageResponse);

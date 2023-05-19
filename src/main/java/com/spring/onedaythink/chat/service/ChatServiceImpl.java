@@ -72,6 +72,7 @@ public class ChatServiceImpl implements ChatService{
     // admin 전체 회원 조회
     @Override
     public List<ChatRoom> getChatRoomsAdmin(ChatRoom chatRoom) {
+
         return chatMapper.selectListChatRoomsAdmin(chatRoom);
     }
 

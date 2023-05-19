@@ -13,16 +13,10 @@ public interface HaruChatMapper {
     // 하루봇 랜덤 조회
     public List<HaruChat> selectHaruBot();
 
-
-    // 채팅 시작 (사용자 하루봇 선택 반영)
-    public int insertHaruChatRoom(User user);
+    // 채팅 시작
+    public int insertHaruChatRoom(SelectedHaruInfo selectedHaruInfo);
 
     public HaruChatRoom selectHaruChatRoomNo();
-
-    public int insertHaruChatRoomHaru(HaruChatRoomDetail haruChatRoomDetail);
-
-    // 하루봇 채팅방 입장시 하루봇들 의견 저장
-    public int updateHaruOpinion(HaruChatMessage haruChatMessage);
 
     // 하루봇 채팅방 전체 조회
     public List<HaruChatRoom> selectAllharuChatRoom();
@@ -30,25 +24,30 @@ public interface HaruChatMapper {
     // 하루봇 채팅방 개별 조회
     public HaruChatRoom selectOneharuChatRoom(HaruChatRoom haruChatRoom);
 
-    // 하루봇 채팅방 요약문 조회
-    public HaruChatRoom selectOneSummary(HaruChatRoom haruChatRoom);
     // 하루봇 채팅방 직전 대화 10개 조회
     public List<CurrentMsg> selectPreviousMsg(HaruChatRoom haruChatRoom);
 
-    // 하루봇 채팅방 요약되지 않은 대화 수 조회
-    public int selectSummerized(HaruChatRoom haruChatRoom);
-
     // 하루봇 채팅방 마지막 메세지 조회
-    HaruChatMessage selectLastMessage(HaruChatRoom haruChatRoom);
+    public HaruChatMessage selectLastMessage(HaruChatRoom haruChatRoom);
 
     // 하루봇 채팅메세지 생성
     public int insertHaruChatMsg(HaruChatMessage haruChatMessage);
-
 
     // 하루봇 채팅방 나가기
     public int updateHaruChatRoomClosed(HaruChatRoom haruChatRoom);
 
     // 채팅방 내 하루봇 의견 조회
     public String selectHaruOpinion(HaruChatRoomDetail haruChatRoomDetail);
+
+    // 하루봇 채팅방 입장시 하루봇들 의견 저장
+    public int insertSelectedHaruOpinion(HaruChatMessage haruChatMessageResponse);
+
+    // 하루봇 채팅방 회원별 조회
+    public List<HaruChatRoomDetail> selectChatRoomsByUserNo(HaruChatRoomDetail haruChatRoomDetail);
+
+    // 하루봇 개별 조회
+    public HaruChat selectHaruBotByHaruNo(HaruChat haruChat);
+
+    public HaruChatRoom selectRecentHaruChatRoomByUserNo(HaruChatRoom haruChatRoom);
 }
 
