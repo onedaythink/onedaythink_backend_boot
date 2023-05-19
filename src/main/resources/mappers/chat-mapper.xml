@@ -15,7 +15,7 @@
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_create_at DESC
         LIMIT 1
-    </select>
+gi    </select>
 
     <update id="updateChatRoomClosed" parameterType="ChatRoom">
         UPDATE chat_room_tb
