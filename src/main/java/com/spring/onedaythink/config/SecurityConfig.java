@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/flask/v1/**").permitAll()
                     .antMatchers("/api/v1/**").permitAll()
                     .antMatchers("/ws/**").permitAll() //
+                    .antMatchers("/stomp/notify/ws/**").permitAll()
                     .antMatchers("/stomp/ws/**").permitAll() // 모든 프리플라이트 요청 허용
                 .anyRequest().authenticated();
 //                .and()

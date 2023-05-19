@@ -3,6 +3,7 @@ package com.spring.onedaythink.haruchat.Controller;
 
 import com.spring.onedaythink.haruchat.mapper.HaruChatMapper;
 import com.spring.onedaythink.haruchat.service.ChatBotService;
+import com.spring.onedaythink.haruchat.vo.HaruChat;
 import com.spring.onedaythink.haruchat.vo.HaruChatMessage;
 import com.spring.onedaythink.haruchat.vo.SelectedHaruInfo;
 import com.spring.onedaythink.haruchat.vo.SelectedHaruInfoDetail;
@@ -10,10 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -47,4 +45,11 @@ public class ChatBotController {
         return ResponseEntity.ok(list);
     }
 
+    //하루봇 랜덤 조회
+    @GetMapping
+    public ResponseEntity getRandomHaruBot() {
+        List<HaruChat> haruBotList = chatBotService.getRandomHaruBot();
+        log.debug("getRandomHaruBot");
+        return ResponseEntity.ok(haruBotList);
+    }
 }

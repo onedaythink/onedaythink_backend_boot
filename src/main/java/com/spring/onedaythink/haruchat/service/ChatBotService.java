@@ -1,5 +1,6 @@
 package com.spring.onedaythink.haruchat.service;
 
+import com.spring.onedaythink.haruchat.vo.HaruChat;
 import com.spring.onedaythink.haruchat.vo.HaruChatMessage;
 import com.spring.onedaythink.haruchat.vo.SelectedHaruInfo;
 import com.spring.onedaythink.haruchat.vo.SelectedHaruInfoDetail;
@@ -17,4 +18,8 @@ public interface ChatBotService {
     List<HaruChatMessage> receiveMsgIfNoRequest(SelectedHaruInfoDetail selectedHaruInfoDetail) throws ExecutionException, InterruptedException;
 
     List<HaruChatMessage> getMsgFromChatGPT(SelectedHaruInfoDetail selectedHaruInfoDetail);
+
+    List<HaruChat> getRandomHaruBot();
+
+
 }

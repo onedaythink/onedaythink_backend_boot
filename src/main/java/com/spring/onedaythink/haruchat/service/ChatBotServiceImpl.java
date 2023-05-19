@@ -71,7 +71,7 @@ public class ChatBotServiceImpl implements ChatBotService{
             haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
-            haruChatMapper.updateHaruOpinion(haruChatMessageResponse);
+//            haruChatMapper.updateHaruOpinion(haruChatMessageResponse);
 
             responseList.add(haruChatMessageResponse);
         }
@@ -141,7 +141,6 @@ public class ChatBotServiceImpl implements ChatBotService{
 
 
     /** receive chatbot Response from chatGPT API.**/
-
     @Override
     public List<HaruChatMessage> getMsgFromChatGPT(SelectedHaruInfoDetail selectedHaruInfoDetail) {
 
@@ -158,17 +157,9 @@ public class ChatBotServiceImpl implements ChatBotService{
         if (scheduledFuture != null && !scheduledFuture.isDone()) {
             scheduledFuture.cancel(true);
         }
-        log.debug("================================================");
-        log.debug("getHaruPrompt : " + selectedHaruInfoDetail.getHaruPrompt());
-        log.debug("================================================");
 
         // response
         Map<String, String> prompt = generatePrompt(selectedHaruInfoDetail);
-        log.debug("================================================");
-        log.debug("getHaruPrompt : " + selectedHaruInfoDetail.getHaruPrompt());
-        log.debug("================================================");
-
-
         List<HaruChatMessage> responseList = new ArrayList<>();
         for(Map.Entry<String, String> entry : prompt.entrySet()){
             log.debug("prompt : [" + entry.getKey() +"] : "+ entry.getValue() );
@@ -176,10 +167,14 @@ public class ChatBotServiceImpl implements ChatBotService{
             String answerFromGPT = getChatGptResponse(promptToGPT);
             log.debug("answerFromGPT : " + answerFromGPT);
 
+            // Select Haru Info
+            HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(Integer.parseInt(entry.getKey())).build());
             // Received Message insert
             HaruChatMessage haruChatMessageResponse = new HaruChatMessage();
             haruChatMessageResponse.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
-            haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
+            haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(entry.getKey()));
+            haruChatMessageResponse.setHaruName(haruChat.getHaruName());
+            haruChatMessageResponse.setHaruImgPath(haruChat.getHaruImgPath());
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
             responseList.add(haruChatMessageResponse);
@@ -296,6 +291,13 @@ public class ChatBotServiceImpl implements ChatBotService{
 
         }
         return promptMap;
+    }
+
+    // 하루봇 선택
+    @Override
+    public List<HaruChat> getRandomHaruBot() {
+        log.debug("getRandomHaruBot");
+        return haruChatMapper.selectHaruBot();
     }
 
 }
