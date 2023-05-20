@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.onedaythink.notify.mapper.NotifyMapper">
+
+    <select id="selectNotifications" resultType="NotifyDetail">
+        select *
+        from notification_tb
+        where read_yn = 'n'
+        and user_no = #{userNo}
+        order by create_at desc
+    </select>
+
+    <insert id="insertNotify" parameterType="NotifyDetail">
+        insert into `notification_tb` ( user_no, message )
+        values ( #{userNo}, #{message})
+    </insert>
+
+    <update id="editNotify" parameterType="NotifyDetail">
+        update `notification_tb`
+        set read_yn = 'y'
+        where noti_no = #{notiNo}
+    </update>
+
+    <select id="selectBeforeNotifyInfo" parameterType="NotifyDetail" resultType="NotifyDetail">
+        select *
+        from user_opinion_tb as uo
+        join user_tb as u on u.user_no =uo.user_no
+        where uo.user_opi_no = #{userOpiNo}
+    </select>
+</mapper>

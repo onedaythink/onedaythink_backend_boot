@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
-//api auto call test
-//@EnableScheduling
-@EnableAsync
+@EnableScheduling
 public class OnedayThinkApplication {
     public static void main(String[] args) {
         SpringApplication.run(OnedayThinkApplication.class, args);

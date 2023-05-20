@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class HaruChatRoom {
 
 
-    private int chatRoomNo, userNo;
-    private String createAt, isClose, summary;
+    private int chatRoomNo, userNo, subNo;
+    private String createAt, isClose;
 
 }

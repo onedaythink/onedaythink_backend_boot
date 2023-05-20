@@ -6,15 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class HaruChatRoomDetail {
 
-    private ChatRoom chatRoom;
 
-    private int haruNo, chatRoomNo;
+    private int userNo, chatRoomNo, haruNo;
+    private String lastMessage, userNickname, haruName, userImg, haruImg;
 
 
 }

@@ -4,6 +4,7 @@ import com.spring.onedaythink.chat.vo.*;
 import com.spring.onedaythink.user.vo.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ChatService {
 
@@ -14,7 +15,7 @@ public interface ChatService {
     List<ChatRoomDetail> getChatRooms(ChatRoomDetail chatRoomDetail);
 
     // 채탕방 생성(대화신청)
-    int addChatRoom(ChatRoom chatRoom);
+    Map<String, Object> addChatRoom(ChatRoom chatRoom);
 
     // 채팅방 종료
     int closeChatRoom(ChatRoom chatRoom);
