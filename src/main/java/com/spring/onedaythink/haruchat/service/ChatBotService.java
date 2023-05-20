@@ -9,6 +9,12 @@ public interface ChatBotService {
 
     List<HaruChat> getRandomHaruBot();
 
+    // select All chat rooms by userNo
+    List<HaruChatRoomDetail> getChatRoomsByUserNo(HaruChatRoomDetail haruChatRoomDetail);
+
+    // close chat room
+    int closeChatRoom(HaruChatRoom haruChatRoom);
+
     List<HaruChatMessage> getFirstMsgFromChatGPT(SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException;
 
 
