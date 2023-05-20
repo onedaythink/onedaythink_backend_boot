@@ -53,11 +53,4 @@ public class ChatBotController {
         return ResponseEntity.ok(list);
     }
 
-    //하루봇 랜덤 조회
-    @GetMapping
-    public ResponseEntity getRandomHaruBot() {
-        List<HaruChat> haruBotList = chatBotService.getRandomHaruBot();
-        log.debug("getRandomHaruBot");
-        return ResponseEntity.ok(haruBotList);
-    }
 }

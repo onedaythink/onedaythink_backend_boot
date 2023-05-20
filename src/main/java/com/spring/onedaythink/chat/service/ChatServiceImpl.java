@@ -7,6 +7,7 @@ import com.spring.onedaythink.chat.vo.ChatRoom;
 import com.spring.onedaythink.chat.vo.ChatRoomDetail;
 import com.spring.onedaythink.notify.service.NotifyService;
 import com.spring.onedaythink.notify.vo.Notify;
+import com.spring.onedaythink.notify.vo.NotifyDetail;
 import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,12 +47,12 @@ public class ChatServiceImpl implements ChatService{
         if (result == 0) {
             result = chatMapper.insertChatRoom(chatRoom);
             map.put("msg", "채팅창을 개설했습니다.");
-            Notify notify = Notify.builder()
+            NotifyDetail notifyDetail = NotifyDetail.builder()
                             .userNo(chatRoom.getFromUserNo())
                             .message(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.")
                             .build();
-            int notifyResult = notifyService.addNotify(notify);
-            notifyService.sendMessage(notify);
+            int notifyResult = notifyService.addNotify(notifyDetail);
+            notifyService.sendMessage(notifyDetail);
         } else {
             map.put("msg", "이미 개설된 채팅방이 존재합니다.");
         }

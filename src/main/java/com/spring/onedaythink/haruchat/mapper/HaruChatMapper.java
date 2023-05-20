@@ -14,11 +14,7 @@ public interface HaruChatMapper {
     public List<HaruChat> selectHaruBot();
 
     // 채팅 시작
-<<<<<<< HEAD
-    public int insertHaruChatRoom(User user);
-=======
     public int insertHaruChatRoom(SelectedHaruInfo selectedHaruInfo);
->>>>>>> da4064ef4985098343654c32534d9eaf8da6b741
 
     public HaruChatRoom selectHaruChatRoomNo();
 
@@ -42,8 +38,6 @@ public interface HaruChatMapper {
 
     // 채팅방 내 하루봇 의견 조회
     public String selectHaruOpinion(HaruChatRoomDetail haruChatRoomDetail);
-<<<<<<< HEAD
-=======
 
     // 하루봇 채팅방 입장시 하루봇들 의견 저장
     public int insertSelectedHaruOpinion(HaruChatMessage haruChatMessageResponse);
@@ -55,15 +49,5 @@ public interface HaruChatMapper {
     public HaruChat selectHaruBotByHaruNo(HaruChat haruChat);
 
     public HaruChatRoom selectRecentHaruChatRoomByUserNo(HaruChatRoom haruChatRoom);
-}
->>>>>>> da4064ef4985098343654c32534d9eaf8da6b741
 
-    // 하루봇 채팅방 입장시 하루봇들 의견 저장
-    public int insertSelectedHaruOpinion(HaruChatMessage haruChatMessageResponse);
-
-    // 하루봇 채팅방 회원별 조회
-    public List<HaruChatRoomDetail> selectChatRoomsByUserNo(HaruChatRoomDetail haruChatRoomDetail);
-
-    // 하루봇 개별 조회
-    public HaruChat selectHaruBotByHaruNo(HaruChat haruChat);
 }

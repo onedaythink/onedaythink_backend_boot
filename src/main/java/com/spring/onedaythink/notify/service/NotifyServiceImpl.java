@@ -2,6 +2,7 @@ package com.spring.onedaythink.notify.service;
 
 import com.spring.onedaythink.notify.mapper.NotifyMapper;
 import com.spring.onedaythink.notify.vo.Notify;
+import com.spring.onedaythink.notify.vo.NotifyDetail;
 import com.spring.onedaythink.user.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -24,26 +25,26 @@ public class NotifyServiceImpl implements NotifyService{
     private NotifyMapper notifyMapper;
 
     @Override
-    public int addNotify(Notify notify) {
-        return notifyMapper.insertNotify(notify);
+    public int addNotify(NotifyDetail notifyDetail) {
+        return notifyMapper.insertNotify(notifyDetail);
     }
 
     @Override
-    public List<Notify> getNotifications(User user) {
+    public List<NotifyDetail> getNotifications(User user) {
         return notifyMapper.selectNotifications(user);
     }
 
     @Override
-    public int editNotify(Notify notify) {
-        return notifyMapper.editNotify(notify);
+    public int editNotify(NotifyDetail notifyDetail) {
+        return notifyMapper.editNotify(notifyDetail);
     }
 
     @Override
-    public void sendMessage(Notify notify) {
+    public void sendMessage(NotifyDetail notifyDetail) {
         log.debug("sub test");
-        log.debug(notify);
+        log.debug(notifyDetail);
         // 신규 노티스 생성 및 메세지 발송
-        log.debug("/sub/notify/user/" + notify.getUserNo());
-        simpMessagingTemplate.convertAndSend("/sub/notify/user/" + notify.getUserNo(), notify);
+        log.debug("/sub/notify/user/" + notifyDetail.getUserNo());
+        simpMessagingTemplate.convertAndSend("/sub/notify/users/" + notifyDetail.getUserNo(), notifyDetail);
     }
 }

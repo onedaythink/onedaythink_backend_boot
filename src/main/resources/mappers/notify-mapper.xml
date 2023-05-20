@@ -4,7 +4,7 @@
 
 <mapper namespace="com.spring.onedaythink.notify.mapper.NotifyMapper">
 
-    <select id="selectNotifications" resultType="Notify">
+    <select id="selectNotifications" resultType="NotifyDetail">
         select *
         from notification_tb
         where read_yn = 'n'
@@ -12,12 +12,12 @@
         order by create_at desc
     </select>
 
-    <insert id="insertNotify" parameterType="Notify">
+    <insert id="insertNotify" parameterType="NotifyDetail">
         insert into `notification_tb` ( user_no, message )
         values ( #{userNo}, #{message})
     </insert>
 
-    <update id="editNotify" parameterType="Notify">
+    <update id="editNotify" parameterType="NotifyDetail">
         update `notification_tb`
         set read_yn = 'y'
         where noti_no = #{notiNo}

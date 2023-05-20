@@ -1,11 +1,10 @@
 package com.spring.onedaythink.notify.Controller;
 
 
-import com.spring.onedaythink.chat.vo.ChatMessageDetail;
-import com.spring.onedaythink.chat.vo.ChatRoomDetail;
 import com.spring.onedaythink.notify.service.NotifyService;
 import com.spring.onedaythink.notify.vo.Notify;
 import com.spring.onedaythink.notify.vo.NotifyDetail;
+import com.spring.onedaythink.notify.vo.NotifyDetails;
 import com.spring.onedaythink.user.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -13,11 +12,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,23 +29,21 @@ public class NotifyController {
 
     @GetMapping(value = "api/v1/notify/users/{userNo}")
     public ResponseEntity<Object> getNotifies(@PathVariable int userNo) {
-        List<Notify> notifies = notifyService.getNotifications(User.builder().userNo(userNo).build());
+        List<NotifyDetail> notifies = notifyService.getNotifications(User.builder().userNo(userNo).build());
         return ResponseEntity.ok(notifies);
     }
 
     @PostMapping(value ="api/v1/notify/edit/users" )
-    public void editNotify(@RequestBody NotifyDetail notifyDetail) {
+    public void editNotify(@RequestBody NotifyDetails notifyDetail) {
         log.debug(notifyDetail);
     }
 
     @MessageMapping(value = "/notify/enter")
-    public void enter(int userNo){
-        log.debug(userNo);
+    public void enter(User user){
+        log.debug(user);
         log.debug("연결");
-        List<String> dd = new ArrayList<>();
-        dd.add("hello");
-        log.debug("/sub/notify/user/"+userNo);
-        simpMessagingTemplate.convertAndSend("/sub/notify/user/6", dd);
+        log.debug("/sub/notify/user/"+user.getUserNo());
+        simpMessagingTemplate.convertAndSend("/sub/notify/users/"+user.getUserNo(), user);
     }
 
 }
