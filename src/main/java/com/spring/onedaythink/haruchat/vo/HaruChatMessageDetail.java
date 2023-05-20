@@ -6,14 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class HaruChatMessageDetail {
 
-    private HaruChatMessage HaruChatMessage;
+    private String chatMsgContent, chatCreateAt ;
+    private int chatMsgNo, chatSendHaruNo, chatSendUserNo;
 
-    private int userNo;
+
+
 
 }

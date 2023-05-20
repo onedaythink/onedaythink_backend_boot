@@ -64,6 +64,34 @@ public class ChatBotServiceImpl implements ChatBotService{
         return haruChatRoomDetailList;
     }
 
+    // select All Messages in haruChatRoom by ChatRoomNo
+    @Override
+    public Map<String, Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom) {
+
+        List<HaruChatMessageDetail> haruChatMessageDetailList = haruChatMapper.selectAllMsgByChatRoomNo(haruChatRoom);
+        Map<String, Map<String, String>> msgMap = new HashMap<>();
+        for(HaruChatMessageDetail msg : haruChatMessageDetailList){
+            Map<String, String> nestedMap = new HashMap<>();
+            if(msg.getChatSendUserNo()==0){
+                HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(msg.getChatSendHaruNo()).build());
+                nestedMap.put("haruName", haruChat.getHaruName());
+                nestedMap.put("haruImgPath", haruChat.getHaruImgPath());
+                nestedMap.put("msgContent", msg.getChatMsgContent());
+                nestedMap.put("msgCreateAt", msg.getChatCreateAt());
+                msgMap.put(String.valueOf(msg.getChatSendHaruNo()),nestedMap);
+            } else if(msg.getChatSendHaruNo()==0){
+                User user = userMapper.selectUser(User.builder().userNo(haruChatRoom.getUserNo()).build());
+                nestedMap.put("nickname", user.getNickname());
+                nestedMap.put("userImgPath", user.getUserImgPath());
+                nestedMap.put("msgContent", msg.getChatMsgContent());
+                nestedMap.put("msgCreateAt", msg.getChatCreateAt());
+                msgMap.put(String.valueOf(msg.getChatSendUserNo()),nestedMap);
+            }
+        }
+        log.debug("getChatMessageByChatRoomNo" + msgMap);
+        return msgMap;
+    }
+
     // close chat room
     @Override
     public int closeChatRoom(HaruChatRoom haruChatRoom) {

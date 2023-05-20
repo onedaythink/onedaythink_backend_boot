@@ -4,6 +4,7 @@ import com.spring.onedaythink.haruchat.vo.*;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public interface ChatBotService {
@@ -23,4 +24,5 @@ public interface ChatBotService {
 
     List<HaruChatMessage> getMsgFromChatGPT(SelectedHaruInfoDetail selectedHaruInfoDetail);
 
+    Map<String, Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom);
 }

@@ -94,6 +94,15 @@
             LIMIT 7;
     </select>
 
+    <!-- 하루 채팅방 내부 이전 대화기록 모두 조회-->
+    <select id="selectAllMsgByChatRoomNo" parameterType="HaruChatRoom" resultType="HaruChatMessageDetail">
+        SELECT chat_msg_no, chat_msg_content, chat_create_at,
+               COALESCE(chat_send_user_no, 0) AS chat_send_user_no,
+               COALESCE(chat_send_haru_no, 0) AS chat_send_haru_no
+        FROM haru_chat_message_tb
+        WHERE chat_room_no = #{chatRoomNo}
+    </select>
+
     <!-- 하루 채팅방 나가기 -->
     <update id="updateHaruChatRoomClosed" parameterType="HaruChatRoom">
         UPDATE haru_chat_room_tb
