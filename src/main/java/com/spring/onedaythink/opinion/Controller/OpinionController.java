@@ -30,8 +30,18 @@ public class OpinionController {
         int result = opinionService.addOpinions(opinion);
         return ResponseEntity.ok(result);
     }
-    //나의 생각 삭제
-   @PostMapping(value="/deleteopinion/{userNo}")
+
+    //나의 공간 - 나의 생각 수정
+    @PostMapping(value="/mypage/update/{userNo}")
+    public ResponseEntity<Object> updateOpinions(@PathVariable int userNo,@RequestBody Opinion opinion) {
+        opinion.setUserNo(userNo);
+        log.debug("updateOpinions");
+        int result = opinionService.updateOpinions(opinion);
+        return ResponseEntity.ok(result);
+    }
+
+    //나의 생각 의견 삭제
+   @PostMapping(value="/mypage/delete/{userNo}")
     public ResponseEntity<Object> deleteOpinions(@PathVariable int userNo, @RequestBody Opinion opinion)
     {
         log.debug("deleteOpinions");

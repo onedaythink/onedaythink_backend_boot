@@ -1,5 +1,6 @@
 package com.spring.onedaythink.user.Controller;
 
+import com.spring.onedaythink.opinion.vo.Opinion;
 import com.spring.onedaythink.user.service.UserService;
 import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
@@ -71,6 +72,21 @@ public class UserController {
         log.debug(user);
         User updateUser = userService.editUser(user);
         return ResponseEntity.ok(updateUser);
+    }
+    // 회원 탈퇴(마이페이지)
+    @PostMapping(value = "users/{userNo}")
+    public ResponseEntity<Object> withdrawUser(@PathVariable int userNo, @RequestBody User user){
+        log.debug(user);
+        int deleteUser = userService.withdrawUser(user);
+        return ResponseEntity.ok(deleteUser);
+    }
+
+    //나의 공간 - 회원정보수정
+    @PostMapping(value="users/mypage/update")
+    public ResponseEntity<Object> mypageUpdateUser(@PathVariable User user) {
+        log.debug("updateOpinions");
+        int result = userService.mypageUpdateUser(user);
+        return ResponseEntity.ok(result);
     }
 
 }
