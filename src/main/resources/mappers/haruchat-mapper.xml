@@ -49,7 +49,7 @@
 
     <!-- 하루 채팅방 회원별 조회: 채팅방 정보, 마지막 메시지-->
     <select id="selectHaruChatRoomByUserNo" parameterType="HaruChatRoom" resultType="HaruChatRoomDetail">
-        SELECT hcr.chat_room_no, hcr.creat_at,
+        SELECT hcr.chat_room_no, hcr.create_at,
                COALESCE(chat_send_user_no, 0) AS chat_send_user_no,
                COALESCE(chat_send_haru_no, 0) AS chat_send_haru_no,
                hcm.chat_msg_content
