@@ -49,5 +49,7 @@ public interface HaruChatMapper {
     public HaruChat selectHaruBotByHaruNo(HaruChat haruChat);
 
     public HaruChatRoom selectRecentHaruChatRoomByUserNo(HaruChatRoom haruChatRoom);
+
+    public List<HaruChatMessageDetail> selectAllMsgByChatRoomNo(HaruChatRoom haruChatRoom);
 }
 

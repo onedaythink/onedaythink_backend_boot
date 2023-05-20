@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
@@ -40,6 +41,15 @@ public class ChatBotController {
         List<HaruChatRoomDetail> haruChatRoomDetails = chatBotService.getChatRoomsByUserNo(HaruChatRoomDetail.builder().userNo(userNo).build());
         return ResponseEntity.ok(haruChatRoomDetails);
     }
+
+    // 채팅방 재입장시 이전 대화 기록 조회
+    @GetMapping("/rooms/messages")
+    public ResponseEntity<Object> getChatMessagesByChatRoomNo(@RequestBody HaruChatRoom haruChatRoom){
+        log.debug("getChatMessageByChatRoomNo");
+        Map<String, Map<String, String>> haruChatMessageDetailMap = chatBotService.getChatMessagesByChatRoomNo(haruChatRoom);
+        return ResponseEntity.ok(haruChatMessageDetailMap);
+    }
+
 
     // 채팅 종료
     @PostMapping(value="/rooms/{chatRoomNo}/close")
