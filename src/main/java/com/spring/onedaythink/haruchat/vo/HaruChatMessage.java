@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HaruChatMessage {
 
-    private int chatMsgNo, chatRoomNo, chatSendUserNo, chatSendHaruNo, toHaruNo;
+    private int chatRoomNo, chatSendUserNo, chatSendHaruNo, toHaruNo;
 
-    private String chatMsgContent, chatCreateAt, haruImgPath, haruName;
+    private String chatMsgContent, haruImgPath, haruName;
 }

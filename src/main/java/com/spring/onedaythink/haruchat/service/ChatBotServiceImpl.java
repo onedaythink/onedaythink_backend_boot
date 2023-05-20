@@ -110,8 +110,11 @@ public class ChatBotServiceImpl implements ChatBotService{
             // Received Message insert : msg table
             HaruChatMessage haruChatMessageResponse = new HaruChatMessage();
             haruChatMessageResponse.setChatRoomNo(selectedHaruInfo.getChatRoomNo());
-            haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
+            haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(entry.getKey()));
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
+            HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(Integer.parseInt(entry.getKey())).build());
+            haruChatMessageResponse.setHaruImgPath(haruChat.getHaruImgPath());
+            haruChatMessageResponse.setHaruName(haruChat.getHaruName());
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
 
             haruChatMapper.insertSelectedHaruOpinion(haruChatMessageResponse);
