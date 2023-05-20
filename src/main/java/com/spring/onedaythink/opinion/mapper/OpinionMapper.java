@@ -21,8 +21,10 @@ public interface OpinionMapper {
     //타인의 의견 전체조회
     public List<OpinionDetails> selectAllOtherOpinion(OpinionDetails opinionDetails);
 
+    // 메인
     Opinion selectTodayOpinion(Opinion opinion);
 
+    // Mypage 의견 조회
     public List<Opinion> selectAllMyOpinion(Opinion opinion);
 
     public int insertLikeOpinion(LikeOpinion likeOpinion);

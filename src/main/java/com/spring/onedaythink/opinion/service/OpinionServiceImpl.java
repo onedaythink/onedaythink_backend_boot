@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.StringTokenizer;
 
 @Service
 public class OpinionServiceImpl implements OpinionService{
@@ -33,7 +32,7 @@ public class OpinionServiceImpl implements OpinionService{
         return opinionMapper.selectTodayOpinion(opinion);
     }
 
-    //유저 의견 입력
+    //Main - 유저 의견 입력
     @Override
     public int addOpinions(Opinion opinion) {
         int result = 0;
@@ -48,6 +47,21 @@ public class OpinionServiceImpl implements OpinionService{
         else {
             result = opinionMapper.updateOpinion(opinion);
         }
+        return result;
+    }
+
+    // Mypage Opinion
+    @Override
+    public int updateOpinions(Opinion opinion) {
+        int result = 0;
+        List<Opinion> myOpinion = opinionMapper.selectAllMyOpinion(opinion);
+        // 조회가 안되면 생성
+        if (myOpinion != null) {
+            result = opinionMapper.updateOpinion(opinion);
+        }
+//        if (myOpinion != null) {
+//            result = opinionMapper.deleteOpinion(opinion);
+//        }
         return result;
     }
 

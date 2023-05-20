@@ -21,12 +21,12 @@ public interface OpinionService {
     // 오늘의 나의 의견 조회
     Opinion getTodayOpinion(Opinion opinion);
 
-
-
     // 나의 의견 생성
     int addOpinions(Opinion opinion);
-    // 나의 의견 수정
-//    int editOpinions(Opinion opinion);
+
+     //나의 의견 수정
+    int updateOpinions(Opinion opinion);
+
     // 나의 의견 삭제
     int deleteOpinions(Opinion opinion);
 

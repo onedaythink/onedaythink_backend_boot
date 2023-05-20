@@ -28,4 +28,5 @@ public interface UserMapper {
 
     public int deleteUser(User user);
 
+    int mypageUpdateUser(User user);
 }
