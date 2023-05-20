@@ -37,6 +37,24 @@ public class ChatBotController {
         return ResponseEntity.ok(haruBotList);
     }
 
+    // 해당 사용자가 가지고 있는 채팅방 목록 조회
+    @GetMapping("/rooms/{userNo}")
+    public ResponseEntity<Object> getChatRoomsByUserNo(@PathVariable int userNo){
+        log.debug("getChatRoomsByUserNo");
+        List<HaruChatRoomDetail> haruChatRoomDetails = chatBotService.getChatRoomsByUserNo(HaruChatRoomDetail.builder().userNo(userNo).build());
+        return ResponseEntity.ok(haruChatRoomDetails);
+    }
+
+    // 채팅 종료
+    @PostMapping(value="/rooms/{chatRoomNo}/close")
+    public ResponseEntity<Object> closeChatRoom(@PathVariable int chatRoomNo){
+        log.debug("closeChatRoom");
+        int result = chatBotService.closeChatRoom(HaruChatRoom.builder().chatRoomNo(chatRoomNo).build());
+        return ResponseEntity.ok(result);
+    }
+
+
+
     // 채팅방 개설 : 채팅방 번호 부여, 페르소나 챗봇 첫 의견 받아오기
     @PostMapping(value = "/enter")
     public ResponseEntity<Object> receiveFirstMsgFromChatGPT(@RequestBody SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {

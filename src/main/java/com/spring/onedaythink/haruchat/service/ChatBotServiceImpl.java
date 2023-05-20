@@ -45,6 +45,32 @@ public class ChatBotServiceImpl implements ChatBotService{
         return haruChatMapper.selectHaruBot();
     }
 
+    // select All chat rooms by userNo
+    @Override
+    public List<HaruChatRoomDetail> getChatRoomsByUserNo(HaruChatRoomDetail haruChatRoomDetail) {
+        log.debug("getChatRoomsByUserNo");
+        List<HaruChatRoomDetail> haruChatRoomDetailList = haruChatMapper.selectChatRoomsByUserNo(haruChatRoomDetail);
+        for(HaruChatRoomDetail data : haruChatRoomDetailList) {
+            if (data.getUserNo() == 0) {
+                HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(data.getHaruNo()).build());
+                data.setHaruImg(haruChat.getHaruImgPath());
+                data.setHaruName(haruChat.getHaruName());
+            } else if (data.getHaruNo() == 0) {
+                User user = userMapper.selectUser(User.builder().userNo(data.getUserNo()).build());
+                data.setUserImg(user.getUserImgPath());
+                data.setUserNickname(user.getNickname());
+            }
+        }
+        return haruChatRoomDetailList;
+    }
+
+    // close chat room
+    @Override
+    public int closeChatRoom(HaruChatRoom haruChatRoom) {
+        log.debug("closeChatRoom");
+        return haruChatMapper.updateHaruChatRoomClosed(haruChatRoom);
+    }
+
     /** receive first chatbot Response from chatGPT API.**/
     @Override
     public List<HaruChatMessage> getFirstMsgFromChatGPT(SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
