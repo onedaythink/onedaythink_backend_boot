@@ -23,4 +23,10 @@
         where noti_no = #{notiNo}
     </update>
 
+    <select id="selectBeforeNotifyInfo" parameterType="NotifyDetail" resultType="NotifyDetail">
+        select *
+        from user_opinion_tb as uo
+        join user_tb as u on u.user_no =uo.user_no
+        where uo.user_opi_no = #{userOpiNo}
+    </select>
 </mapper>

@@ -47,10 +47,12 @@ public class ChatServiceImpl implements ChatService{
         if (result == 0) {
             result = chatMapper.insertChatRoom(chatRoom);
             map.put("msg", "채팅창을 개설했습니다.");
-            NotifyDetail notifyDetail = NotifyDetail.builder()
-                            .userNo(chatRoom.getFromUserNo())
-                            .message(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.")
-                            .build();
+            // userOpi 정보를 가지고 유저의 정보를 가지고 와야 한다.
+            NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
+                    userOpiNo(chatRoom.getToUserOpiNo()).
+                    inviteUserNo(chatRoom.getFromUserNo()).
+                    build());
+            notifyDetail.setMessage(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.");
             int notifyResult = notifyService.addNotify(notifyDetail);
             notifyService.sendMessage(notifyDetail);
         } else {

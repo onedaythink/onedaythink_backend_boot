@@ -47,4 +47,9 @@ public class NotifyServiceImpl implements NotifyService{
         log.debug("/sub/notify/user/" + notifyDetail.getUserNo());
         simpMessagingTemplate.convertAndSend("/sub/notify/users/" + notifyDetail.getUserNo(), notifyDetail);
     }
+
+    @Override
+    public NotifyDetail getBeforeNotifyInfo(NotifyDetail notifyDetail) {
+        return notifyMapper.selectBeforeNotifyInfo(notifyDetail);
+    }
 }

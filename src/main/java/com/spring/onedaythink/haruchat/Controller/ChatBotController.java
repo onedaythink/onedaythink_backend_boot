@@ -50,6 +50,7 @@ public class ChatBotController {
     public ResponseEntity<Object> receiveMsgFromChatGPT(@RequestBody SelectedHaruInfoDetail selectedHaruInfoDetail){
         log.debug("receiveMsgFromChatGPT");
         List<HaruChatMessage> list = chatBotService.getMsgFromChatGPT(selectedHaruInfoDetail);
+        log.debug(list);
         return ResponseEntity.ok(list);
     }
 

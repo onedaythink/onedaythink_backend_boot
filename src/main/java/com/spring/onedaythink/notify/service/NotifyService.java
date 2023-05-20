@@ -18,4 +18,7 @@ public interface NotifyService {
     int editNotify(NotifyDetail notifyDetail);
 
     void sendMessage(NotifyDetail notifyDetail);
+
+    NotifyDetail getBeforeNotifyInfo(NotifyDetail notifyDetail);
+
 }
