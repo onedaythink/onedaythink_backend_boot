@@ -24,5 +24,9 @@ public interface ChatBotService {
 
     List<HaruChatMessage> getMsgFromChatGPT(SelectedHaruInfoDetail selectedHaruInfoDetail);
 
-    Map<String, Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom);
+//    Map<String, Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom);
+
+    List<Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom);
+
+    public void sendMessage(List<HaruChatMessage> list);
 }

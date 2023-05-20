@@ -40,9 +40,9 @@ public class NotifyController {
 
     @MessageMapping(value = "/notify/enter")
     public void enter(User user){
-        log.debug(user);
-        log.debug("연결");
-        log.debug("/sub/notify/user/"+user.getUserNo());
+//        log.debug(user);
+//        log.debug("연결");
+//        log.debug("/sub/notify/user/"+user.getUserNo());
         simpMessagingTemplate.convertAndSend("/sub/notify/users/"+user.getUserNo(), user);
     }
 

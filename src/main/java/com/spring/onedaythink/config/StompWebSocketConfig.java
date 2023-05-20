@@ -22,6 +22,11 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/stomp/notify/ws")
                 .setAllowedOrigins("http://localhost:8080", "http://localhost:4000")
                 .withSockJS();
+
+        registry.addEndpoint("/stomp/haru/ws")
+                .setAllowedOrigins("http://localhost:8080", "http://localhost:4000")
+                .withSockJS();
+
     }
 
     /*어플리케이션 내부에서 사용할 path를 지정할 수 있음*/

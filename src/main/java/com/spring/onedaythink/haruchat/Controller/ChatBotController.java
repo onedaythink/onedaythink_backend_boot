@@ -24,8 +24,6 @@ public class ChatBotController {
     @Autowired
     private ChatBotService chatBotService;
 
-    @Autowired
-    private HaruChatMapper haruChatMapper;
 
     //하루봇 랜덤 조회
     @GetMapping
@@ -44,10 +42,13 @@ public class ChatBotController {
     }
 
     // 채팅방 재입장시 이전 대화 기록 조회
-    @GetMapping("/rooms/messages")
+    @PostMapping("/rooms/messages")
     public ResponseEntity<Object> getChatMessagesByChatRoomNo(@RequestBody HaruChatRoom haruChatRoom){
         log.debug("getChatMessageByChatRoomNo");
-        Map<String, Map<String, String>> haruChatMessageDetailMap = chatBotService.getChatMessagesByChatRoomNo(haruChatRoom);
+        log.debug(haruChatRoom);
+//        Map<String, Map<String, String>> haruChatMessageDetailMap = chatBotService.getChatMessagesByChatRoomNo(haruChatRoom);
+        List<Map<String, String>> haruChatMessageDetailMap = chatBotService.getChatMessagesByChatRoomNo(haruChatRoom);
+        log.debug(haruChatMessageDetailMap);
         return ResponseEntity.ok(haruChatMessageDetailMap);
     }
 
@@ -70,11 +71,11 @@ public class ChatBotController {
 
     // 채팅 진행 중 페르소나 챗봇 답변 받아오기
     @PostMapping(value = "/ongoingchat")
-    public ResponseEntity<Object> receiveMsgFromChatGPT(@RequestBody SelectedHaruInfoDetail selectedHaruInfoDetail){
+    public void receiveMsgFromChatGPT(@RequestBody SelectedHaruInfoDetail selectedHaruInfoDetail){
         log.debug("receiveMsgFromChatGPT");
         List<HaruChatMessage> list = chatBotService.getMsgFromChatGPT(selectedHaruInfoDetail);
         log.debug(list);
-        return ResponseEntity.ok(list);
+        chatBotService.sendMessage(list);
     }
 
 }
