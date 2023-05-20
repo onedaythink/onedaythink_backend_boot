@@ -2,10 +2,7 @@ package com.spring.onedaythink.haruchat.Controller;
 
 import com.spring.onedaythink.haruchat.mapper.HaruChatMapper;
 import com.spring.onedaythink.haruchat.service.ChatBotService;
-import com.spring.onedaythink.haruchat.vo.HaruChat;
-import com.spring.onedaythink.haruchat.vo.HaruChatMessage;
-import com.spring.onedaythink.haruchat.vo.SelectedHaruInfo;
-import com.spring.onedaythink.haruchat.vo.SelectedHaruInfoDetail;
+import com.spring.onedaythink.haruchat.vo.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,8 +49,6 @@ public class ChatBotController {
         int result = chatBotService.closeChatRoom(HaruChatRoom.builder().chatRoomNo(chatRoomNo).build());
         return ResponseEntity.ok(result);
     }
-
-
 
     // 채팅방 개설 : 채팅방 번호 부여, 페르소나 챗봇 첫 의견 받아오기
     @PostMapping(value = "/enter")
