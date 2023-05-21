@@ -43,13 +43,11 @@ public interface HaruChatMapper {
     public int insertSelectedHaruOpinion(HaruChatMessage haruChatMessageResponse);
 
     // 하루봇 채팅방 회원별 조회
-    public List<HaruChatRoomDetail> selectChatRoomsByUserNo(HaruChatRoomDetail haruChatRoomDetail);
+    public List<HaruChatRoomDetail> selectHaruChatRoomsByUserNo(HaruChatRoomDetail haruChatRoomDetail);
 
     // 하루봇 개별 조회
     public HaruChat selectHaruBotByHaruNo(HaruChat haruChat);
 
     public HaruChatRoom selectRecentHaruChatRoomByUserNo(HaruChatRoom haruChatRoom);
-
     public List<HaruChatMessageDetail> selectAllMsgByChatRoomNo(HaruChatRoom haruChatRoom);
 }
-

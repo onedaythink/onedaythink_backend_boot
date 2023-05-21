@@ -45,4 +45,6 @@ public interface UserService {
     // 회원 탈퇴
     int withdrawUser(User user);
 
+    // mypage 유저정보 업데이트
+    int mypageUpdateUser(User user);
 }

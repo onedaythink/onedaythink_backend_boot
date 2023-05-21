@@ -1,10 +1,12 @@
 package com.spring.onedaythink.haruchat.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.onedaythink.chat.vo.ChatMessageDetail;
 import com.spring.onedaythink.haruchat.mapper.HaruChatMapper;
 import com.spring.onedaythink.haruchat.vo.*;
 import com.spring.onedaythink.user.mapper.UserMapper;
 import com.spring.onedaythink.user.vo.User;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +27,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@RequiredArgsConstructor
 public class ChatBotServiceImpl implements ChatBotService{
     private ScheduledFuture<?> scheduledFuture;
     private Logger log = LogManager.getLogger("case3");
@@ -31,6 +36,8 @@ public class ChatBotServiceImpl implements ChatBotService{
     private String openaiApiKey;
     private static final String ENDPOINT = "https://api.openai.com/v1/chat/completions";
     private boolean hasScheduledTaskExecuted = false;
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
     @Autowired
     private ScheduledExecutorService executorService;
     @Autowired
@@ -48,8 +55,8 @@ public class ChatBotServiceImpl implements ChatBotService{
     // select All chat rooms by userNo
     @Override
     public List<HaruChatRoomDetail> getChatRoomsByUserNo(HaruChatRoomDetail haruChatRoomDetail) {
-        log.debug("getChatRoomsByUserNo");
-        List<HaruChatRoomDetail> haruChatRoomDetailList = haruChatMapper.selectChatRoomsByUserNo(haruChatRoomDetail);
+        log.debug("getChatRoomsByUserNo : " + haruChatRoomDetail.getUserNo() );
+        List<HaruChatRoomDetail> haruChatRoomDetailList = haruChatMapper.selectHaruChatRoomsByUserNo(haruChatRoomDetail);
         for(HaruChatRoomDetail data : haruChatRoomDetailList) {
             if (data.getUserNo() == 0) {
                 HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(data.getHaruNo()).build());
@@ -61,15 +68,43 @@ public class ChatBotServiceImpl implements ChatBotService{
                 data.setUserNickname(user.getNickname());
             }
         }
+
         return haruChatRoomDetailList;
     }
 
     // select All Messages in haruChatRoom by ChatRoomNo
+//    @Override
+//    public Map<String, Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom) {
+//
+//        List<HaruChatMessageDetail> haruChatMessageDetailList = haruChatMapper.selectAllMsgByChatRoomNo(haruChatRoom);
+//        Map<String, Map<String, String>> msgMap = new HashMap<>();
+//        for(HaruChatMessageDetail msg : haruChatMessageDetailList){
+//            Map<String, String> nestedMap = new HashMap<>();
+//            if(msg.getChatSendUserNo()==0){
+//                HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(msg.getChatSendHaruNo()).build());
+//                nestedMap.put("haruName", haruChat.getHaruName());
+//                nestedMap.put("haruImgPath", haruChat.getHaruImgPath());
+//                nestedMap.put("msgContent", msg.getChatMsgContent());
+//                nestedMap.put("msgCreateAt", msg.getChatCreateAt());
+//                msgMap.put(String.valueOf(msg.getChatSendHaruNo()),nestedMap);
+//            } else if(msg.getChatSendHaruNo()==0){
+//                User user = userMapper.selectUser(User.builder().userNo(haruChatRoom.getUserNo()).build());
+//                nestedMap.put("nickname", user.getNickname());
+//                nestedMap.put("userImgPath", user.getUserImgPath());
+//                nestedMap.put("msgContent", msg.getChatMsgContent());
+//                nestedMap.put("msgCreateAt", msg.getChatCreateAt());
+//                msgMap.put(String.valueOf(msg.getChatSendUserNo()),nestedMap);
+//            }
+//        }
+//        log.debug("getChatMessageByChatRoomNo" + msgMap);
+//        return msgMap;
+//    }
+
     @Override
-    public Map<String, Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom) {
+    public List<Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom) {
 
         List<HaruChatMessageDetail> haruChatMessageDetailList = haruChatMapper.selectAllMsgByChatRoomNo(haruChatRoom);
-        Map<String, Map<String, String>> msgMap = new HashMap<>();
+        List<Map<String, String>> msgMap = new ArrayList<>();
         for(HaruChatMessageDetail msg : haruChatMessageDetailList){
             Map<String, String> nestedMap = new HashMap<>();
             if(msg.getChatSendUserNo()==0){
@@ -78,14 +113,14 @@ public class ChatBotServiceImpl implements ChatBotService{
                 nestedMap.put("haruImgPath", haruChat.getHaruImgPath());
                 nestedMap.put("msgContent", msg.getChatMsgContent());
                 nestedMap.put("msgCreateAt", msg.getChatCreateAt());
-                msgMap.put(String.valueOf(msg.getChatSendHaruNo()),nestedMap);
+                msgMap.add(nestedMap);
             } else if(msg.getChatSendHaruNo()==0){
                 User user = userMapper.selectUser(User.builder().userNo(haruChatRoom.getUserNo()).build());
                 nestedMap.put("nickname", user.getNickname());
                 nestedMap.put("userImgPath", user.getUserImgPath());
                 nestedMap.put("msgContent", msg.getChatMsgContent());
                 nestedMap.put("msgCreateAt", msg.getChatCreateAt());
-                msgMap.put(String.valueOf(msg.getChatSendUserNo()),nestedMap);
+                msgMap.add(nestedMap);
             }
         }
         log.debug("getChatMessageByChatRoomNo" + msgMap);
@@ -144,6 +179,7 @@ public class ChatBotServiceImpl implements ChatBotService{
             haruChatMessageResponse.setHaruImgPath(haruChat.getHaruImgPath());
             haruChatMessageResponse.setHaruName(haruChat.getHaruName());
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
+
             haruChatMapper.insertSelectedHaruOpinion(haruChatMessageResponse);
 
             responseList.add(haruChatMessageResponse);
@@ -172,14 +208,17 @@ public class ChatBotServiceImpl implements ChatBotService{
 
             Map<String, String> map1 = new HashMap<>();
             map1.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruName().get(String.valueOf(randomHaruNo)));
+            log.debug("####" + selectedHaruInfoDetail.getHaruName().get(String.valueOf(randomHaruNo)));
             selectedHaruInfoDetail.setHaruName(map1);
+
             Map<String, String> map2 = new HashMap<>();
             map2.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
+            log.debug("####" + selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
+
             selectedHaruInfoDetail.setHaruPrompt(map2);
             Map<String, String> map3 = new HashMap<>();
             map3.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
             selectedHaruInfoDetail.setHaruOpinion(map3);
-
 
             // response
             Map<String, String> prompt = generatePrompt(selectedHaruInfoDetail);
@@ -201,6 +240,7 @@ public class ChatBotServiceImpl implements ChatBotService{
             }
 
             hasScheduledTaskExecuted = true;
+            sendMessage(responseList);
             return responseList;
         }, 10, TimeUnit.SECONDS);
 
@@ -218,6 +258,7 @@ public class ChatBotServiceImpl implements ChatBotService{
 
         // insert user message
         HaruChatMessage userMessage = new HaruChatMessage();
+        log.debug(selectedHaruInfoDetail.getChatRoomNo());
         userMessage.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
         userMessage.setChatSendUserNo(selectedHaruInfoDetail.getUserNo());
         userMessage.setChatMsgContent(selectedHaruInfoDetail.getUserMsg());
@@ -360,8 +401,13 @@ public class ChatBotServiceImpl implements ChatBotService{
             promptMap.put(String.valueOf(haruNo), generatedPrompt);
 
         }
-
         return promptMap;
     }
 
+    @Override
+    public void sendMessage(List<HaruChatMessage> list) {
+        log.debug("sub test");
+        log.debug(list);
+        simpMessagingTemplate.convertAndSend("/sub/chat/haru/room/" + list.get(0).getChatRoomNo(), list);
+    }
 }

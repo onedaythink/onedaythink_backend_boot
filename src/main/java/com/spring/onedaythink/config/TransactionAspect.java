@@ -29,13 +29,13 @@ public class TransactionAspect {
         try {
             Object result = joinPoint.proceed();
             transactionManager.commit(status);
-            log.debug("======> logAspect root: "+ joinPoint.getSignature().getDeclaringTypeName());
-            log.debug("======> logAspect Method : " + joinPoint.getSignature().getName());
+//            log.debug("======> logAspect root: "+ joinPoint.getSignature().getDeclaringTypeName());
+//            log.debug("======> logAspect Method : " + joinPoint.getSignature().getName());
             return result;
         } catch (Exception e) {
             transactionManager.rollback(status);
-            log.debug("======> logAspect root: " + joinPoint.getSignature().getDeclaringTypeName());
-            log.debug("======> logAspect Method : " + joinPoint.getSignature().getName());
+//            log.debug("======> logAspect root: " + joinPoint.getSignature().getDeclaringTypeName());
+//            log.debug("======> logAspect Method : " + joinPoint.getSignature().getName());
             throw e;
         }
     }

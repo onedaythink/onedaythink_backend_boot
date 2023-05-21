@@ -3,6 +3,7 @@ package com.spring.onedaythink.haruchat.Controller;
 import com.spring.onedaythink.haruchat.mapper.HaruChatMapper;
 import com.spring.onedaythink.haruchat.service.ChatBotService;
 import com.spring.onedaythink.haruchat.vo.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,6 @@ public class ChatBotController {
     @Autowired
     private ChatBotService chatBotService;
 
-    @Autowired
-    private HaruChatMapper haruChatMapper;
 
     //하루봇 랜덤 조회
     @GetMapping
@@ -43,10 +42,13 @@ public class ChatBotController {
     }
 
     // 채팅방 재입장시 이전 대화 기록 조회
-    @GetMapping("/rooms/messages")
+    @PostMapping("/rooms/messages")
     public ResponseEntity<Object> getChatMessagesByChatRoomNo(@RequestBody HaruChatRoom haruChatRoom){
         log.debug("getChatMessageByChatRoomNo");
-        Map<String, Map<String, String>> haruChatMessageDetailMap = chatBotService.getChatMessagesByChatRoomNo(haruChatRoom);
+        log.debug(haruChatRoom);
+//        Map<String, Map<String, String>> haruChatMessageDetailMap = chatBotService.getChatMessagesByChatRoomNo(haruChatRoom);
+        List<Map<String, String>> haruChatMessageDetailMap = chatBotService.getChatMessagesByChatRoomNo(haruChatRoom);
+        log.debug(haruChatMessageDetailMap);
         return ResponseEntity.ok(haruChatMessageDetailMap);
     }
 
@@ -59,8 +61,6 @@ public class ChatBotController {
         return ResponseEntity.ok(result);
     }
 
-
-
     // 채팅방 개설 : 채팅방 번호 부여, 페르소나 챗봇 첫 의견 받아오기
     @PostMapping(value = "/enter")
     public ResponseEntity<Object> receiveFirstMsgFromChatGPT(@RequestBody SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
@@ -71,10 +71,11 @@ public class ChatBotController {
 
     // 채팅 진행 중 페르소나 챗봇 답변 받아오기
     @PostMapping(value = "/ongoingchat")
-    public ResponseEntity<Object> receiveMsgFromChatGPT(@RequestBody SelectedHaruInfoDetail selectedHaruInfoDetail){
+    public void receiveMsgFromChatGPT(@RequestBody SelectedHaruInfoDetail selectedHaruInfoDetail){
         log.debug("receiveMsgFromChatGPT");
         List<HaruChatMessage> list = chatBotService.getMsgFromChatGPT(selectedHaruInfoDetail);
-        return ResponseEntity.ok(list);
+        log.debug(list);
+        chatBotService.sendMessage(list);
     }
 
 }

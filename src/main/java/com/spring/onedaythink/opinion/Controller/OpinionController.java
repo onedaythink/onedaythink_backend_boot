@@ -26,12 +26,22 @@ public class OpinionController {
     @PostMapping(value="/{userNo}")
     public ResponseEntity<Object> addOpinions(@PathVariable int userNo,@RequestBody Opinion opinion) {
         opinion.setUserNo(userNo);
-        log.debug("addOpinions");
+//        log.debug("addOpinions");
         int result = opinionService.addOpinions(opinion);
         return ResponseEntity.ok(result);
     }
-    //나의 생각 삭제
-   @PostMapping(value="/deleteopinion/{userNo}")
+
+    //나의 공간 - 나의 생각 수정
+    @PostMapping(value="/mypage/update/{userNo}")
+    public ResponseEntity<Object> updateOpinions(@PathVariable int userNo,@RequestBody Opinion opinion) {
+        opinion.setUserNo(userNo);
+        log.debug("updateOpinions");
+        int result = opinionService.updateOpinions(opinion);
+        return ResponseEntity.ok(result);
+    }
+
+    //나의 생각 의견 삭제
+   @PostMapping(value="/mypage/delete/{userNo}")
     public ResponseEntity<Object> deleteOpinions(@PathVariable int userNo, @RequestBody Opinion opinion)
     {
         log.debug("deleteOpinions");
@@ -44,7 +54,7 @@ public class OpinionController {
     @GetMapping(value = "create-at/{subNo}/{userNo}")
     public ResponseEntity<List<OpinionDetails>> getOtherOpinions(@PathVariable int subNo, @PathVariable int userNo) {
 
-        log.debug("getOtherOpinions");
+//        log.debug("getOtherOpinions");
         List<OpinionDetails> opinionList;
         opinionList = opinionService.getOtherOpinions(OpinionDetails.builder().userNo(userNo).subNo(subNo).build());
         return ResponseEntity.ok(opinionList);
@@ -53,7 +63,7 @@ public class OpinionController {
     //타인의 생각 좋아요 컨트롤
     @PostMapping(value ="/like")
     public ResponseEntity<Object> likeOpinions(@RequestBody LikeOpinion likeOpinion) {
-        log.debug("like controll test");
+//        log.debug("like controll test");
         int result = opinionService.likeOpinions(likeOpinion);
         return ResponseEntity.ok(result);
     }
@@ -69,9 +79,9 @@ public class OpinionController {
     //메인 - 나의 생각 조회
     @GetMapping(value = "{userNo}/{subDate}")
     public ResponseEntity<Object> getTodayOpinion(@PathVariable int userNo, @PathVariable String subDate) {
-        log.debug("getOpinion");
+//        log.debug("getOpinion");
         Opinion opinion = opinionService.getTodayOpinion(Opinion.builder().userNo(userNo).createAt(subDate).build());
-        log.debug(opinion);
+//        log.debug(opinion);
         return ResponseEntity.ok(opinion);
     }
 

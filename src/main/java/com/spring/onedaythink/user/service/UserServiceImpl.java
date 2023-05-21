@@ -1,5 +1,6 @@
 package com.spring.onedaythink.user.service;
 
+import com.spring.onedaythink.opinion.vo.Opinion;
 import com.spring.onedaythink.user.mapper.UserMapper;
 import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
@@ -93,5 +94,11 @@ public class UserServiceImpl implements UserService {
     public int withdrawUser(User user) {
 
         return userMapper.deleteUser(user);
+    }
+
+    public int mypageUpdateUser(User user) {
+
+        int result = userMapper.mypageUpdateUser(user);
+        return result;
     }
 }

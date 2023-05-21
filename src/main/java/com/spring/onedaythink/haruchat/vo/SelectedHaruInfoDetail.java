@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Data
@@ -20,3 +21,7 @@ public class SelectedHaruInfoDetail {
     private List<Integer> haruNo;
 
 }
+
+//map<String, Object> randomHaru = new HashMap<>();
+//
+//randomHaru.put("haruName", dasdada)

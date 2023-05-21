@@ -13,10 +13,6 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class HaruChatRoomDetail {
-
-
     private int userNo, chatRoomNo, haruNo;
     private String lastMessage, userNickname, haruName, userImg, haruImg;
-
-
 }

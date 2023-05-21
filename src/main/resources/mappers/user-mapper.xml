@@ -78,4 +78,14 @@
         where user_no = #{userNo}
     </update>
 
+    <update id="mypageUpdateUser" parameterType="User">
+        update user_tb
+        <set>
+            <if test="userPwd != null and userPwd != ''">user_pwd = #{userPwd}</if>
+            <if test="userName != null and userName != ''">user_name = #{userName}</if>
+            <if test="nickname != null and nickname != ''">nickname = #{nickname}</if>
+        </set>
+        where user_no = #{userNo}
+    </update>
+
 </mapper>

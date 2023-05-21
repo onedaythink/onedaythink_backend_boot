@@ -1,6 +1,8 @@
 package com.spring.onedaythink.opinion.service;
 
 import com.spring.onedaythink.config.UtilLibrary;
+import com.spring.onedaythink.notify.service.NotifyService;
+import com.spring.onedaythink.notify.vo.NotifyDetail;
 import com.spring.onedaythink.opinion.mapper.OpinionMapper;
 import com.spring.onedaythink.opinion.vo.LikeOpinion;
 import com.spring.onedaythink.opinion.vo.Opinion;
@@ -10,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.StringTokenizer;
 
 @Service
 public class OpinionServiceImpl implements OpinionService{
@@ -18,6 +19,9 @@ public class OpinionServiceImpl implements OpinionService{
     private Logger log = LogManager.getLogger("case3");
     @Autowired
     private OpinionMapper opinionMapper;
+
+    @Autowired
+    private NotifyService notifyService;
 
     @Override
     public List<Opinion> getMyOpinion(Opinion opinion) {
@@ -33,7 +37,7 @@ public class OpinionServiceImpl implements OpinionService{
         return opinionMapper.selectTodayOpinion(opinion);
     }
 
-    //유저 의견 입력
+    //Main - 유저 의견 입력
     @Override
     public int addOpinions(Opinion opinion) {
         int result = 0;
@@ -48,6 +52,21 @@ public class OpinionServiceImpl implements OpinionService{
         else {
             result = opinionMapper.updateOpinion(opinion);
         }
+        return result;
+    }
+
+    // Mypage Opinion
+    @Override
+    public int updateOpinions(Opinion opinion) {
+        int result = 0;
+        List<Opinion> myOpinion = opinionMapper.selectAllMyOpinion(opinion);
+        // 조회가 안되면 생성
+        if (myOpinion != null) {
+            result = opinionMapper.updateOpinion(opinion);
+        }
+//        if (myOpinion != null) {
+//            result = opinionMapper.deleteOpinion(opinion);
+//        }
         return result;
     }
 
@@ -73,6 +92,13 @@ public class OpinionServiceImpl implements OpinionService{
         // 없다면, 좋아요를 생성
         if (cnt == 0) {
             result = opinionMapper.insertLikeOpinion(likeOpinion);
+            NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
+                    userOpiNo(likeOpinion.getUserOpiNo()).
+                    inviteUserNo(likeOpinion.getUserNo()).
+                    build());
+            notifyDetail.setMessage(likeOpinion.getNickname() + "님이 회원님의 의견에 좋아요를 눌렀습니다.");
+            int notifyResult = notifyService.addNotify(notifyDetail);
+            notifyService.sendMessage(notifyDetail);
         } else {
             // 있다면, 좋아요를 삭제
             result = opinionMapper.deleteLikeOpinion(likeOpinion);

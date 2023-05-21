@@ -8,8 +8,8 @@
     <select id="selectHaruBot" resultType="HaruChat">
         SELECT *
         FROM haru_tb
-     <!--   WHERE haru_no >= (SELECT FLOOR(MAX(haru_no) * RAND()) FROM haru_tb)
-        LIMIT 4-->
+        <!--   WHERE haru_no >= (SELECT FLOOR(MAX(haru_no) * RAND()) FROM haru_tb)
+           LIMIT 4-->
     </select>
 
     <!--하루봇 개별 조회-->
@@ -30,7 +30,7 @@
         SELECT *
         FROM haru_chat_room_tb
         ORDER BY create_at DESC
-        LIMIT 1;
+            LIMIT 1;
     </select>
 
     <!-- 하루봇 채팅방 입장시 하루봇들 의견 저장-->
@@ -44,24 +44,25 @@
         SELECT haru_opinion
         FROM haru_chat_room_haru_tb
         WHERE haru_no = #{haruNo}
-        AND chat_room_no = #{chatRoomNo}
+          AND chat_room_no = #{chatRoomNo}
     </select>
 
     <!-- 하루 채팅방 회원별 조회: 채팅방 정보, 마지막 메시지-->
-    <select id="selectHaruChatRoomByUserNo" parameterType="HaruChatRoom" resultType="HaruChatRoomDetail">
+    <select id="selectHaruChatRoomsByUserNo" parameterType="HaruChatRoomDetail" resultType="HaruChatRoomDetail">
         SELECT hcr.chat_room_no, hcr.create_at,
-               COALESCE(chat_send_user_no, 0) AS chat_send_user_no,
-               COALESCE(chat_send_haru_no, 0) AS chat_send_haru_no,
-               hcm.chat_msg_content
+               COALESCE(chat_send_user_no, 0) AS user_no,
+               COALESCE(chat_send_haru_no, 0) AS haru_no,
+               hcm.chat_msg_content AS last_message
         FROM haru_chat_room_tb as hcr
-        LEFT JOIN haru_chat_message_tb as hcm
-        ON hcm.chat_room_no = hcr.chat_room_no
+                 LEFT JOIN haru_chat_message_tb as hcm
+                           ON hcm.chat_room_no = hcr.chat_room_no
         WHERE user_no = #{userNo}
         AND hcr.is_close = 'n'
         AND hcm.chat_create_at = (
             SELECT MAX(chat_create_at)
             FROM haru_chat_message_tb
             WHERE chat_room_no = hcr.chat_room_no)
+        ORDER BY hcr.create_at DESC
     </select>
 
     <!-- 하루 채팅방 메세지 생성-->
@@ -81,18 +82,18 @@
         FROM haru_chat_message_tb
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_create_at DESC
-        LIMIT 1
+            LIMIT 1
     </select>
 
     <!-- 하루 채팅방 직전 대화 7개 조회-->
     <select id="selectPreviousMsg" parameterType="HaruChatRoom" resultType="CurrentMsg">
         SELECT chat_msg_no, chat_send_user_no, chat_send_haru_no, chat_msg_content, to_haru_no, haru_name
         FROM haru_chat_message_tb
-        LEFT JOIN haru_tb
-        ON chat_send_haru_no = haru_no
+                 LEFT JOIN haru_tb
+                           ON chat_send_haru_no = haru_no
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_msg_no DESC
-        LIMIT 7;
+            LIMIT 7;
     </select>
 
     <!-- 하루 채팅방 내부 이전 대화기록 모두 조회-->

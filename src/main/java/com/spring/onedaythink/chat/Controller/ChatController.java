@@ -46,7 +46,7 @@ public class ChatController {
     }
 
     // 채팅 종료
-    @PostMapping(value="chat/rooms/{chatRoomNo}/close")
+    @GetMapping(value="chat/rooms/{chatRoomNo}/close")
     public ResponseEntity closeChatRoom(@PathVariable int chatRoomNo){
         log.debug("closeChatRoom");
         int result = chatService.closeChatRoom(ChatRoom.builder().chatRoomNo(chatRoomNo).build());
@@ -59,14 +59,6 @@ public class ChatController {
         log.debug("# Create Chat Room , name: " + chatRoom.toString());
         Map<String, Object> map = chatService.addChatRoom(chatRoom);
         return ResponseEntity.ok(map);
-    }
-
-    // 채팅방 요청 승인/거절 관리
-    @PostMapping(value = "chat/rooms/status/{roomNo}")
-    public ResponseEntity<Object> editRoomStatus(@PathVariable int roomNo) {
-        log.debug("room status");
-
-        return ResponseEntity.ok(null);
     }
 
     // 해당 사용자가 가지고 있는 채팅방 목록 조회
