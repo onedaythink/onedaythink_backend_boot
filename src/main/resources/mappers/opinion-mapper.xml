@@ -7,27 +7,34 @@
     <!-- 의견 작성  -->
     <insert id="insertOpinion" parameterType="Opinion">
         insert into `user_opinion_tb` (user_no,`sub_no`, `opinion`,`is_public`) VALUES
-       (#{userNo},#{subNo},#{opinion},#{isPublic})
+        (#{userNo},#{subNo},#{opinion},#{isPublic})
     </insert>
 
     <!--의견 수정-->
     <update id="updateOpinion" parameterType="Opinion">
         UPDATE `user_opinion_tb`
         SET opinion=#{opinion},
-            is_public=#{isPublic}
+        is_public=#{isPublic}
         WHERE user_opi_no=#{userOpiNo}
     </update>
 
-    <!-- 의견 삭제   -->
+    <!-- 의견 삭제  -->
     <update id="deleteOpinion" parameterType="Opinion">
         UPDATE `user_opinion_tb`
-        SET `withdraw` = 'y'
+        SET withdraw=#{withdraw}
         WHERE user_no = #{userNo} AND sub_no = #{subNo}
     </update>
 
+<!--    &lt;!&ndash; 의견 삭제 (무조건n상태를 y로 변경하는 코드)  &ndash;&gt;-->
+<!--    <update id="deleteOpinion" parameterType="Opinion">-->
+<!--        UPDATE `user_opinion_tb`-->
+<!--        SET `withdraw` = 'y'-->
+<!--        WHERE user_no = #{userNo} AND sub_no = #{subNo}-->
+<!--    </update>-->
+
     <!-- 타인의 생각 전체조회 -->
     <select id="selectAllOtherOpinion" parameterType="OpinionDetails" resultType="OpinionDetails">
-         <![CDATA[
+        <![CDATA[
         SELECT B.nickname, B.user_origin_img, A.user_opi_no, A.user_no, A.opinion, A.sub_no,
                (SELECT COUNT(*)
                 FROM like_opinion_tb
@@ -62,11 +69,12 @@
     <select id="selectAllMyOpinion" parameterType="Opinion" resultType="OpinionDetails">
         SELECT *
         FROM user_opinion_tb as uo
-                 join user_tb as u
-                      on u.user_no = uo.user_no
-                 join subject_tb as s
-                      on uo.sub_no = s.sub_no
+        join user_tb as u
+        on u.user_no = uo.user_no
+        join subject_tb as s
+        on uo.sub_no = s.sub_no
         WHERE uo.user_no = #{userNo}
+        and uo.withdraw = 'n'
     </select>
 
     <!--좋아요 넣기-->
@@ -88,7 +96,7 @@
         SELECT COUNT(*) AS count
         FROM like_opinion_tb
         WHERE user_opi_no = #{userOpiNo}
-            and user_no = #{userNo}
+        and user_no = #{userNo}
     </select>
 
     <!--좋아요 취소 -->
@@ -96,20 +104,8 @@
         delete from
         like_opinion_tb
         where  user_no = #{userNo}
-          and user_opi_no = #{userOpiNo}
+        and user_opi_no = #{userOpiNo}
     </delete>
 
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
