@@ -53,6 +53,7 @@ public class ChatServiceImpl implements ChatService{
                     inviteUserNo(chatRoom.getFromUserNo()).
                     build());
             notifyDetail.setMessage(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.");
+            notifyDetail.setType("invite");
             int notifyResult = notifyService.addNotify(notifyDetail);
             notifyService.sendMessage(notifyDetail);
         } else {

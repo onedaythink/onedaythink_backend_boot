@@ -15,7 +15,7 @@ public class NotifyDetail {
     private String message, read_yn, create_at;
 
     private int userOpiNo, inviteUserNo, lastChatUserNo, chatRoomNo;
-    private String inviteNickname, lastChatUserNickname, lastChatMessage, lastChatUserImgPath;
+    private String type, inviteNickname, lastChatUserNickname, lastChatMessage, lastChatUserImgPath;
 
     /*
     알림
