@@ -48,15 +48,15 @@ public class ChatBotServiceImpl implements ChatBotService{
     // 하루봇 선택
     @Override
     public List<HaruChat> getRandomHaruBot() {
-//        log.debug("getRandomHaruBot");
+        log.debug("getRandomHaruBot");
         return haruChatMapper.selectHaruBot();
     }
 
     // select All chat rooms by userNo
     @Override
     public List<HaruChatRoomDetail> getChatRoomsByUserNo(HaruChatRoomDetail haruChatRoomDetail) {
-//        log.debug("getChatRoomsByUserNo");
-        List<HaruChatRoomDetail> haruChatRoomDetailList = haruChatMapper.selectChatRoomsByUserNo(haruChatRoomDetail);
+        log.debug("getChatRoomsByUserNo : " + haruChatRoomDetail.getUserNo() );
+        List<HaruChatRoomDetail> haruChatRoomDetailList = haruChatMapper.selectHaruChatRoomsByUserNo(haruChatRoomDetail);
         for(HaruChatRoomDetail data : haruChatRoomDetailList) {
             if (data.getUserNo() == 0) {
                 HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(data.getHaruNo()).build());
@@ -68,6 +68,7 @@ public class ChatBotServiceImpl implements ChatBotService{
                 data.setUserNickname(user.getNickname());
             }
         }
+
         return haruChatRoomDetailList;
     }
 

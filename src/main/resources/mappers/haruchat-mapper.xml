@@ -48,19 +48,21 @@
     </select>
 
     <!-- 하루 채팅방 회원별 조회: 채팅방 정보, 마지막 메시지-->
-    <select id="selectHaruChatRoomByUserNo" parameterType="HaruChatRoom" resultType="HaruChatRoomDetail">
+    <select id="selectHaruChatRoomsByUserNo" parameterType="HaruChatRoomDetail" resultType="HaruChatRoomDetail">
         SELECT hcr.chat_room_no, hcr.create_at,
-               COALESCE(chat_send_user_no, 0) AS chat_send_user_no,
-               COALESCE(chat_send_haru_no, 0) AS chat_send_haru_no,
-               hcm.chat_msg_content
+               COALESCE(chat_send_user_no, 0) AS user_no,
+               COALESCE(chat_send_haru_no, 0) AS haru_no,
+               hcm.chat_msg_content AS last_message
         FROM haru_chat_room_tb as hcr
                  LEFT JOIN haru_chat_message_tb as hcm
                            ON hcm.chat_room_no = hcr.chat_room_no
         WHERE user_no = #{userNo}
-          AND hcm.chat_create_at = (
+        AND hcr.is_close = 'n'
+        AND hcm.chat_create_at = (
             SELECT MAX(chat_create_at)
             FROM haru_chat_message_tb
             WHERE chat_room_no = hcr.chat_room_no)
+        ORDER BY hcr.create_at DESC
     </select>
 
     <!-- 하루 채팅방 메세지 생성-->
