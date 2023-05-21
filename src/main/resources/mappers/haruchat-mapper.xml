@@ -57,6 +57,7 @@
         LEFT JOIN haru_chat_message_tb as hcm
         ON hcm.chat_room_no = hcr.chat_room_no
         WHERE user_no = #{userNo}
+        AND hcr.is_close = 'n'
         AND hcm.chat_create_at = (
             SELECT MAX(chat_create_at)
             FROM haru_chat_message_tb
