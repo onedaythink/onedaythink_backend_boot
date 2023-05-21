@@ -15,7 +15,7 @@
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_create_at DESC
         LIMIT 1
-gi    </select>
+    </select>
 
     <update id="updateChatRoomClosed" parameterType="ChatRoom">
         UPDATE chat_room_tb
@@ -41,8 +41,8 @@ gi    </select>
                             WHERE t1.chat_msg_no IN
                                   (select max(t2.chat_msg_no) from chat_message_tb as t2 group by t2.chat_room_no)) as cm
                            on cr.chat_room_no = cm.chat_room_no
-        where uo.user_no = #{findUserNo}
-           or cr.from_user_no = #{findUserNo}
+        where (uo.user_no = #{findUserNo}
+           or cr.from_user_no = #{findUserNo})
             and is_close = 'n'
         order by cr.create_at desc
     </select>
@@ -66,10 +66,14 @@ gi    </select>
                 +
             -- 내가 채팅의 초대자이고, 의견번호를 기준으로 채팅방을 초대할 때
             (SELECT COUNT(*)
-             FROM chat_room_tb
-             WHERE to_user_opi_no = #{toUserOpiNo}
-                and from_user_no = #{fromUserNo}
-                AND is_close = 'n') as `count`
+            FROM chat_room_tb as cr
+                     join user_opinion_tb as uo on cr.`to_user_opi_no` = uo.`user_opi_no`
+            WHERE uo.user_no = (select t1.user_no
+                                from user_tb as t1
+                                         join user_opinion_tb as t2 on t1.user_no = t2.user_no
+                                where t2.user_opi_no = #{toUserOpiNo})
+              and cr.from_user_no = #{fromUserNo}
+              AND cr.is_close = 'n') as `count`
     </select>
 
     <select id="selectChatMessageDetails" parameterType="ChatRoomDetail" resultType="ChatMessageDetail">

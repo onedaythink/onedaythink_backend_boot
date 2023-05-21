@@ -3,6 +3,7 @@ package com.spring.onedaythink.notify.service;
 import com.spring.onedaythink.notify.mapper.NotifyMapper;
 import com.spring.onedaythink.notify.vo.Notify;
 import com.spring.onedaythink.notify.vo.NotifyDetail;
+import com.spring.onedaythink.notify.vo.NotifyDetails;
 import com.spring.onedaythink.user.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -35,8 +36,13 @@ public class NotifyServiceImpl implements NotifyService{
     }
 
     @Override
-    public int editNotify(NotifyDetail notifyDetail) {
-        return notifyMapper.editNotify(notifyDetail);
+    public int editNotify(NotifyDetails notifyDetails) {
+        int result = 0;
+        for(Notify n : notifyDetails.getNotifyList()) {
+            notifyMapper.editNotify(n);
+        }
+        result = 1;
+        return result;
     }
 
     @Override

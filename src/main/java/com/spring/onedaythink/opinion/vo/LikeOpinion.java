@@ -13,4 +13,5 @@ public class LikeOpinion {
 
     private int userNo;
     private int userOpiNo;
+    private String nickname;
 }

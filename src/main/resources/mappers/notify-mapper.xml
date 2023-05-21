@@ -17,7 +17,7 @@
         values ( #{userNo}, #{message})
     </insert>
 
-    <update id="editNotify" parameterType="NotifyDetail">
+    <update id="editNotify" parameterType="Notify">
         update `notification_tb`
         set read_yn = 'y'
         where noti_no = #{notiNo}
@@ -25,8 +25,10 @@
 
     <select id="selectBeforeNotifyInfo" parameterType="NotifyDetail" resultType="NotifyDetail">
         select *
+        <if test="userOpiNo != 0">
         from user_opinion_tb as uo
         join user_tb as u on u.user_no =uo.user_no
         where uo.user_opi_no = #{userOpiNo}
+        </if>
     </select>
 </mapper>

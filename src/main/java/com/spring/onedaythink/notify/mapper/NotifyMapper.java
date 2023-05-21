@@ -13,7 +13,7 @@ public interface NotifyMapper {
 
     List<NotifyDetail> selectNotifications(User user);
 
-    int editNotify(NotifyDetail notifyDetail);
+    int editNotify(Notify notify);
 
     NotifyDetail selectBeforeNotifyInfo(NotifyDetail notifyDetail);
 }

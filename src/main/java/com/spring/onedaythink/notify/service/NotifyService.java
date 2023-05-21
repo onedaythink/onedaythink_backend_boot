@@ -2,6 +2,7 @@ package com.spring.onedaythink.notify.service;
 
 import com.spring.onedaythink.notify.vo.Notify;
 import com.spring.onedaythink.notify.vo.NotifyDetail;
+import com.spring.onedaythink.notify.vo.NotifyDetails;
 import com.spring.onedaythink.user.vo.User;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface NotifyService {
     List<NotifyDetail> getNotifications(User user);
 
     // 알림 수정
-    int editNotify(NotifyDetail notifyDetail);
+    int editNotify(NotifyDetails notifyDetails);
 
     void sendMessage(NotifyDetail notifyDetail);
 
