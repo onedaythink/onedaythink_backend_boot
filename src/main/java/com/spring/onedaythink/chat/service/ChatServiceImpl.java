@@ -85,13 +85,13 @@ public class ChatServiceImpl implements ChatService{
         int result = chatMapper.insertChatMessage(chatMessageDetail);
 
         // 메세지 생성 후 대상에게 전송
-        NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
-                chatRoomNo(chatMessageDetail.getChatRoomNo()).
-                lastChatMessage(chatMessageDetail.getChatMsgContent()).
-                build());
-        notifyDetail.setMessage(chatMessageDetail.getSendNickname() + " : " + chatMessageDetail.getChatMessage());
-        int notifyResult = notifyService.addNotify(notifyDetail);
-        notifyService.sendMessage(notifyDetail);
+//        NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
+//                chatRoomNo(chatMessageDetail.getChatRoomNo()).
+//                lastChatMessage(chatMessageDetail.getChatMsgContent()).
+//                build());
+//        notifyDetail.setMessage(chatMessageDetail.getSendNickname() + " : " + chatMessageDetail.getChatMessage());
+//        int notifyResult = notifyService.addNotify(notifyDetail);
+//        notifyService.sendMessage(notifyDetail);
         return result;
     }
 
