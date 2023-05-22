@@ -50,7 +50,7 @@ public class SubjectServiceImpl implements SubjectService {
             // Subject 객체의 SubImgPath 필드에 파일 경로 설정
             subject.setSubImgPath(file.getPath());
             log.debug(file.getPath());
-            log.debug("파일 형식 테스트트트" + file.getPath());
+            log.debug("파일 형식 테스트" + file.getPath());
             subject.setSubOriginImg(fileName);
             subject.setSubDate(new UtilLibrary().createDateFormat("yyyy-MM-dd"));
             return subjectMapper.insertSubject(subject);
@@ -65,8 +65,6 @@ public class SubjectServiceImpl implements SubjectService {
             throw new RuntimeException("알 수 없는 오류가 발생했습니다.", e);
         }
     }
-
-
 
 
     // 논제 전체 조회
@@ -86,6 +84,8 @@ public class SubjectServiceImpl implements SubjectService {
         if (mainSubject != null) {
             return mainSubject;
         } else {
+            log.debug("-------- 오류 발생");
+            log.debug(subject);
             // 조회가 안될 경우
             // 1) subject list 중에서 subDate 가 null 인 리스트를 조회
             List<Subject> nullSubjectDateList = subjectMapper.selectNullSubjectDates();
