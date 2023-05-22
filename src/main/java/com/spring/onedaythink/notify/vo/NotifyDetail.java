@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class NotifyDetail {
 
     private int notiNo, userNo;
-    private String message, read_yn, create_at;
+    private String message, readYn, createAt;
 
     private int userOpiNo, inviteUserNo, lastChatUserNo, chatRoomNo;
     private String type, inviteNickname, lastChatUserNickname, lastChatMessage, lastChatUserImgPath;

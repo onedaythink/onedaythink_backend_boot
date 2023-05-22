@@ -1,5 +1,6 @@
 package com.spring.onedaythink.notify.service;
 
+import com.spring.onedaythink.config.UtilLibrary;
 import com.spring.onedaythink.notify.mapper.NotifyMapper;
 import com.spring.onedaythink.notify.vo.Notify;
 import com.spring.onedaythink.notify.vo.NotifyDetail;
@@ -27,6 +28,7 @@ public class NotifyServiceImpl implements NotifyService{
 
     @Override
     public int addNotify(NotifyDetail notifyDetail) {
+        notifyDetail.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
         return notifyMapper.insertNotify(notifyDetail);
     }
 

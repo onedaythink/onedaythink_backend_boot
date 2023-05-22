@@ -13,8 +13,8 @@
     </select>
 
     <insert id="insertNotify" parameterType="NotifyDetail">
-        insert into `notification_tb` ( user_no, message )
-        values ( #{userNo}, #{message})
+        insert into `notification_tb` ( user_no, message, create_at )
+        values ( #{userNo}, #{message}, #{createAt})
     </insert>
 
     <update id="editNotify" parameterType="Notify">
@@ -30,6 +30,7 @@
         join user_tb as u on u.user_no =uo.user_no
         join chat_room_tb as cr on uo.user_opi_no = cr.to_user_opi_no
         where uo.user_opi_no = #{userOpiNo}
+        and cr.is_close = 'n'
         </if>
     </select>
 </mapper>

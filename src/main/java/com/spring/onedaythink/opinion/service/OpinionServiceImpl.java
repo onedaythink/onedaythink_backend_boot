@@ -46,6 +46,7 @@ public class OpinionServiceImpl implements OpinionService{
         Opinion myOpinion = opinionMapper.selectTodayOpinion(opinion);
         // 조회가 안되면 생성
         if (myOpinion == null) {
+            opinion.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             result = opinionMapper.insertOpinion(opinion);
         }
         // 조회가 되면 업데이트
