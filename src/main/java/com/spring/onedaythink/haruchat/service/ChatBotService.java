@@ -29,4 +29,6 @@ public interface ChatBotService {
     List<Map<String, String>> getChatMessagesByChatRoomNo(HaruChatRoom haruChatRoom);
 
     public void sendMessage(List<HaruChatMessage> list);
+
+    public List<SelectedChar> getSelectedChar(SelectedChar selectedChar);
 }
