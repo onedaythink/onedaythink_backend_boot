@@ -47,7 +47,7 @@ public class ChatServiceImpl implements ChatService{
         int result = chatMapper.selectChatRoomCountByUserNo(chatRoom);
         // 채팅룸이 없다면 추가
         if (result == 0) {
-            chatRoom.setCreatAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
+            chatRoom.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             result = chatMapper.insertChatRoom(chatRoom);
             map.put("msg", "채팅창을 개설했습니다.");
             // userOpi 정보를 가지고 유저의 정보를 가지고 와야 한다.
@@ -58,6 +58,7 @@ public class ChatServiceImpl implements ChatService{
                     build());
             notifyDetail.setMessage(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.");
             notifyDetail.setType("invite");
+            notifyDetail.setInviteNickname(chatRoom.getFromNickname());
             int notifyResult = notifyService.addNotify(notifyDetail);
             notifyService.sendMessage(notifyDetail);
         } else {
