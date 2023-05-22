@@ -6,8 +6,10 @@ import com.spring.onedaythink.user.vo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -79,14 +81,6 @@ public class UserController {
         log.debug(user);
         int deleteUser = userService.withdrawUser(user);
         return ResponseEntity.ok(deleteUser);
-    }
-
-    //나의 공간 - 회원정보수정
-    @PostMapping(value="users/mypage/update")
-    public ResponseEntity<Object> mypageUpdateUser(@PathVariable User user) {
-        log.debug("updateOpinions");
-        int result = userService.mypageUpdateUser(user);
-        return ResponseEntity.ok(result);
     }
 
 }

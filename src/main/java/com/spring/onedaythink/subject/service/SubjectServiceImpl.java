@@ -48,8 +48,8 @@ public class SubjectServiceImpl implements SubjectService {
 
             // Subject 객체의 SubImgPath 필드에 파일 경로 설정
             subject.setSubImgPath(file.getPath());
-            log.debug(file.getPath());
-            log.debug("파일 형식 테스트트트" + file.getPath());
+//            log.debug(file.getPath());
+//            log.debug("파일 형식 테스트트" + file.getPath());
             subject.setSubOriginImg(fileName);
             return subjectMapper.insertSubject(subject);
         } catch (MalformedURLException e) {
