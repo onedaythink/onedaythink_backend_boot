@@ -12,9 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Report {
 
-    private int chatReportNo, chatRoomNo, accusedUserNo, reportNo;
-
-
+    private int chatReportNo, chatRoomNo, accusedUserNo, rTNo;
+    private String nickName;
     private String reportResult;
 
 
