@@ -415,4 +415,10 @@ public class ChatBotServiceImpl implements ChatBotService{
         log.debug(list);
         simpMessagingTemplate.convertAndSend("/sub/chat/haru/room/" + list.get(0).getChatRoomNo(), list);
     }
+
+    @Override
+    public List<SelectedChar> getSelectedChar(SelectedChar selectedChar) {
+        log.debug(selectedChar);
+        return haruChatMapper.selectSelectedChar(selectedChar);
+    }
 }

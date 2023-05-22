@@ -54,7 +54,7 @@ public class ChatBotController {
 
 
     // 채팅 종료
-    @PostMapping(value="/rooms/{chatRoomNo}/close")
+    @GetMapping(value="/rooms/{chatRoomNo}/close")
     public ResponseEntity<Object> closeChatRoom(@PathVariable int chatRoomNo){
         log.debug("closeChatRoom");
         int result = chatBotService.closeChatRoom(HaruChatRoom.builder().chatRoomNo(chatRoomNo).build());
@@ -78,4 +78,10 @@ public class ChatBotController {
         chatBotService.sendMessage(list);
     }
 
+    // 채팅방 입장 시 해당 채팅방에 속해 있는 하루의 정보를 조회
+    @GetMapping(value = "rooms/{chatRoomNo}/selected-haru")
+    public ResponseEntity<Object> getSelectedChar(@PathVariable int chatRoomNo) {
+        List<SelectedChar> selectedChars = chatBotService.getSelectedChar(SelectedChar.builder().chatRoomNo(chatRoomNo).build());
+        return ResponseEntity.ok(selectedChars);
+    }
 }

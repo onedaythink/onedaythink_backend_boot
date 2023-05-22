@@ -35,7 +35,7 @@
 
     <!-- 하루봇 채팅방 입장시 하루봇들 의견 저장-->
     <update id="insertSelectedHaruOpinion" parameterType="HaruChatMessage">
-        INSERT INTO haru_chat_room_haru_tb (chat_room_no, haru_no, haru_opinion, createAt)
+        INSERT INTO haru_chat_room_haru_tb (chat_room_no, haru_no, haru_opinion, create_at)
         VALUES (#{chatRoomNo}, #{chatSendHaruNo}, #{chatMsgContent}, #{createAt})
     </update>
 
@@ -112,5 +112,13 @@
         SET is_close='y'
         WHERE chat_room_no = #{chatRoomNo}
     </update>
+
+    <!-- 채빙탕 입장 시 해당 채팅방에 속해 있는 하루 정보에 대한 조회 -->
+    <select id="selectSelectedChar" parameterType="SelectedChar" resultType="SelectedChar">
+        select *
+        from haru_chat_room_haru_tb as hcrh
+        join haru_tb as h on hcrh.haru_no = h.haru_no
+        where chat_room_no = #{chatRoomNo}
+    </select>
 
 </mapper>
