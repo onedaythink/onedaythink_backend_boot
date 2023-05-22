@@ -13,8 +13,9 @@
     </insert>
 
     <select id="selectAllReport" parameterType="Report" resultType="Report">
-        select *
-        from chat_report_tb
+        SELECT chat_report_tb.*, user_tb.nickname
+        FROM chat_report_tb
+        LEFT JOIN user_tb ON chat_report_tb.accused_user_no = user_tb.user_no
     </select>
 
     <select id="selectOneReport" parameterType="Report" resultType="Report">
