@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 public class Report {
 
     private int chatReportNo, chatRoomNo, accusedUserNo, reportNo;
-
-
     private String reportResult;
 
 
