@@ -1,5 +1,7 @@
 package com.spring.onedaythink.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +13,7 @@ import java.util.Date;
 @Configuration
 public class UtilLibrary {
 
+    Logger log = LogManager.getLogger("case3");
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -31,7 +34,9 @@ public class UtilLibrary {
         Date date = new Date();
         // "yyyy-MM-dd" or "yyyy-MM-dd HH:mm:ss"
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        return sdf.format(date);
+        String formatDate = sdf.format(date);
+        log.debug(formatDate);
+        return formatDate;
     }
 
 }
