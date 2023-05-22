@@ -6,8 +6,8 @@
 
     <!-- 의견 작성  -->
     <insert id="insertOpinion" parameterType="Opinion">
-        insert into `user_opinion_tb` (user_no,`sub_no`, `opinion`,`is_public`) VALUES
-        (#{userNo},#{subNo},#{opinion},#{isPublic})
+        insert into `user_opinion_tb` (user_no,`sub_no`, `opinion`,`is_public`, create_ate) VALUES
+        (#{userNo},#{subNo},#{opinion},#{isPublic}, #{createAt})
     </insert>
 
     <!--의견 수정-->

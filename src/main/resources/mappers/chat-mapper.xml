@@ -89,10 +89,12 @@
         insert into chat_message_tb (
             `chat_room_no`,
             `chat_send_user_no`,
-            `chat_msg_content`)
+            `chat_msg_content`,
+             `create-at`)
         values (#{chatRoomNo},
                 #{chatSendUserNo},
-                #{chatMsgContent})
+                #{chatMsgContent},
+                #{createAt})
     </insert>
 
     <!-- 전체 채팅방 조회(admin용: status, close 무관)-->

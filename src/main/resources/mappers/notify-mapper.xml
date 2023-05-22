@@ -13,8 +13,8 @@
     </select>
 
     <insert id="insertNotify" parameterType="NotifyDetail">
-        insert into `notification_tb` ( user_no, message )
-        values ( #{userNo}, #{message})
+        insert into `notification_tb` ( user_no, message, create_at )
+        values ( #{userNo}, #{message}, #{createAt})
     </insert>
 
     <update id="editNotify" parameterType="Notify">

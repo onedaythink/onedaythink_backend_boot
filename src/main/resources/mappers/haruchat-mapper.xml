@@ -22,7 +22,7 @@
     <!--하루봇 채팅방 생성-->
     <insert id="insertHaruChatRoom" parameterType="SelectedHaruInfo">
         INSERT INTO haru_chat_room_tb (user_no, sub_no, create_at)
-        VALUES (#{userNo}, #{subNo}, NOW())
+        VALUES (#{userNo}, #{subNo}, #{createAt})
     </insert>
 
     <!--회원별 가장 최근 생성 채팅방 조회-->
@@ -35,8 +35,8 @@
 
     <!-- 하루봇 채팅방 입장시 하루봇들 의견 저장-->
     <update id="insertSelectedHaruOpinion" parameterType="HaruChatMessage">
-        INSERT INTO haru_chat_room_haru_tb (chat_room_no, haru_no, haru_opinion)
-        VALUES (#{chatRoomNo}, #{chatSendHaruNo}, #{chatMsgContent})
+        INSERT INTO haru_chat_room_haru_tb (chat_room_no, haru_no, haru_opinion, createAt)
+        VALUES (#{chatRoomNo}, #{chatSendHaruNo}, #{chatMsgContent}, #{createAt})
     </update>
 
     <!-- 채팅방 내 하루봇 의견 조회-->
@@ -70,9 +70,10 @@
         INSERT INTO haru_chat_message_tb (`chat_room_no` , `chat_msg_content`
         <if test="chatSendUserNo !=0">,`chat_send_user_no`</if>
         <if test="chatSendUserNo ==0">, `chat_send_haru_no`</if>
-        ) VALUES (#{chatRoomNo},#{chatMsgContent}
+        , `chat_create_at`) VALUES (#{chatRoomNo},#{chatMsgContent}
         <if test="chatSendUserNo !=0">,#{chatSendUserNo}</if>
         <if test="chatSendUserNo ==0">, #{chatSendHaruNo}</if>
+        , #{createAt}
         )
     </insert>
 

@@ -15,7 +15,7 @@ import java.util.Map;
 public class SelectedHaruInfo {
 
     private int chatRoomNo, userNo, subNo;
-    private String subject;
+    private String subject, createAt;
     private Map<String, String> haruName, haruPrompt;
     private List<Integer> haruNo;
 

@@ -13,5 +13,5 @@ public class HaruChatMessage {
 
     private int chatRoomNo, chatSendUserNo, chatSendHaruNo, toHaruNo;
 
-    private String chatMsgContent, haruImgPath, haruName;
+    private String chatMsgContent, haruImgPath, haruName, createAt;
 }
