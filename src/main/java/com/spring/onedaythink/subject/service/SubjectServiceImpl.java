@@ -67,8 +67,6 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
 
-
-
     // 논제 전체 조회
     @Override
     public List<Subject> getSubjects() {
@@ -86,6 +84,8 @@ public class SubjectServiceImpl implements SubjectService {
         if (mainSubject != null) {
             return mainSubject;
         } else {
+            log.debug("-------- 오류 발생");
+            log.debug(subject);
             // 조회가 안될 경우
             // 1) subject list 중에서 subDate 가 null 인 리스트를 조회
             List<Subject> nullSubjectDateList = subjectMapper.selectNullSubjectDates();

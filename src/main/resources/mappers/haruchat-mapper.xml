@@ -35,8 +35,8 @@
 
     <!-- 하루봇 채팅방 입장시 하루봇들 의견 저장-->
     <update id="insertSelectedHaruOpinion" parameterType="HaruChatMessage">
-        INSERT INTO haru_chat_room_haru_tb (chat_room_no, haru_no, haru_opinion, create_at)
-        VALUES (#{chatRoomNo}, #{chatSendHaruNo}, #{chatMsgContent}, #{createAt})
+        INSERT INTO haru_chat_room_haru_tb (chat_room_no, haru_no, haru_opinion)
+        VALUES (#{chatRoomNo}, #{chatSendHaruNo}, #{chatMsgContent})
     </update>
 
     <!-- 채팅방 내 하루봇 의견 조회-->
