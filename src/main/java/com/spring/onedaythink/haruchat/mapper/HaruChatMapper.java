@@ -50,4 +50,6 @@ public interface HaruChatMapper {
 
     public HaruChatRoom selectRecentHaruChatRoomByUserNo(HaruChatRoom haruChatRoom);
     public List<HaruChatMessageDetail> selectAllMsgByChatRoomNo(HaruChatRoom haruChatRoom);
+
+    public List<SelectedChar> selectSelectedChar(SelectedChar selectedChar);
 }

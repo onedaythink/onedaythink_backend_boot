@@ -5,8 +5,8 @@
 <mapper namespace="com.spring.onedaythink.chat.mapper.ChatMapper">
 
     <insert id="insertChatRoom" parameterType="ChatRoom">
-        insert into chat_room_tb (to_user_opi_no, from_user_no)
-            values (#{toUserOpiNo}, #{fromUserNo})
+        insert into chat_room_tb (to_user_opi_no, from_user_no, create_at)
+            values (#{toUserOpiNo}, #{fromUserNo}, #{createAt})
     </insert>
 
     <select id="selectLastMessage" parameterType="ChatRoom" resultType="ChatMessage">
@@ -89,10 +89,12 @@
         insert into chat_message_tb (
             `chat_room_no`,
             `chat_send_user_no`,
-            `chat_msg_content`)
+            `chat_msg_content`,
+             `create_at`)
         values (#{chatRoomNo},
                 #{chatSendUserNo},
-                #{chatMsgContent})
+                #{chatMsgContent},
+                #{createAt})
     </insert>
 
     <!-- 전체 채팅방 조회(admin용: status, close 무관)-->

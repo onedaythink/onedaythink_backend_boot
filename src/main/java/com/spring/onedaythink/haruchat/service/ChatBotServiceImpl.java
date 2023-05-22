@@ -2,6 +2,7 @@ package com.spring.onedaythink.haruchat.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.onedaythink.chat.vo.ChatMessageDetail;
+import com.spring.onedaythink.config.UtilLibrary;
 import com.spring.onedaythink.haruchat.mapper.HaruChatMapper;
 import com.spring.onedaythink.haruchat.vo.*;
 import com.spring.onedaythink.user.mapper.UserMapper;
@@ -139,6 +140,7 @@ public class ChatBotServiceImpl implements ChatBotService{
     public List<HaruChatMessage> getFirstMsgFromChatGPT(SelectedHaruInfo selectedHaruInfo) throws ExecutionException, InterruptedException {
 
         log.debug("createHaruChatRoom");
+        selectedHaruInfo.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
         haruChatMapper.insertHaruChatRoom(selectedHaruInfo);
         HaruChatRoom haruChatRoom = haruChatMapper.selectRecentHaruChatRoomByUserNo(HaruChatRoom.builder().userNo(selectedHaruInfo.getUserNo()).build());
         selectedHaruInfo.setChatRoomNo(haruChatRoom.getChatRoomNo());
@@ -178,8 +180,8 @@ public class ChatBotServiceImpl implements ChatBotService{
             HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(Integer.parseInt(entry.getKey())).build());
             haruChatMessageResponse.setHaruImgPath(haruChat.getHaruImgPath());
             haruChatMessageResponse.setHaruName(haruChat.getHaruName());
+            haruChatMessageResponse.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
-
             haruChatMapper.insertSelectedHaruOpinion(haruChatMessageResponse);
 
             responseList.add(haruChatMessageResponse);
@@ -234,6 +236,7 @@ public class ChatBotServiceImpl implements ChatBotService{
                 haruChatMessageResponse.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
                 haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
                 haruChatMessageResponse.setChatMsgContent(answerFromGPT);
+                haruChatMessageResponse.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
                 haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
                 responseList.add(haruChatMessageResponse);
 
@@ -262,6 +265,7 @@ public class ChatBotServiceImpl implements ChatBotService{
         userMessage.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
         userMessage.setChatSendUserNo(selectedHaruInfoDetail.getUserNo());
         userMessage.setChatMsgContent(selectedHaruInfoDetail.getUserMsg());
+        userMessage.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
         haruChatMapper.insertHaruChatMsg(userMessage);
 
         // if there is 'request' from user, stop ongoing auto call
@@ -287,6 +291,7 @@ public class ChatBotServiceImpl implements ChatBotService{
             haruChatMessageResponse.setHaruName(haruChat.getHaruName());
             haruChatMessageResponse.setHaruImgPath(haruChat.getHaruImgPath());
             haruChatMessageResponse.setChatMsgContent(answerFromGPT);
+            haruChatMessageResponse.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
             responseList.add(haruChatMessageResponse);
         }
@@ -409,5 +414,11 @@ public class ChatBotServiceImpl implements ChatBotService{
         log.debug("sub test");
         log.debug(list);
         simpMessagingTemplate.convertAndSend("/sub/chat/haru/room/" + list.get(0).getChatRoomNo(), list);
+    }
+
+    @Override
+    public List<SelectedChar> getSelectedChar(SelectedChar selectedChar) {
+        log.debug(selectedChar);
+        return haruChatMapper.selectSelectedChar(selectedChar);
     }
 }

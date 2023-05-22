@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class HaruChatMessage {
+public class SelectedChar {
 
-    private int chatRoomNo, chatSendUserNo, chatSendHaruNo, toHaruNo;
-
-    private String chatMsgContent, haruImgPath, haruName, createAt;
+    private int haruNo, userNo, chatRoomNo;
+    private String haruChatRoomDetail, haruImgPath, haruName, haruOriginImg, haruPrompt, status;
 }

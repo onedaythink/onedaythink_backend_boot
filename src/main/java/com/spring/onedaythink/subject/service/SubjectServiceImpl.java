@@ -1,6 +1,7 @@
 package com.spring.onedaythink.subject.service;
 
 import com.spring.onedaythink.chat.vo.ChatRoomDetail;
+import com.spring.onedaythink.config.UtilLibrary;
 import com.spring.onedaythink.subject.mapper.SubjectMapper;
 import com.spring.onedaythink.subject.vo.Subject;
 import com.spring.onedaythink.subject.vo.SubjectDetail;
@@ -47,10 +48,11 @@ public class SubjectServiceImpl implements SubjectService {
             ImageIO.write(image, "png", file);
 
             // Subject 객체의 SubImgPath 필드에 파일 경로 설정
-            subject.setSubImgPath(file.getPath());
-//            log.debug(file.getPath());
-//            log.debug("파일 형식 테스트트" + file.getPath());
+            log.debug(file.getPath());
+            log.debug("파일 형식 테스트" + file.getPath());
+
             subject.setSubOriginImg(fileName);
+            subject.setSubDate(new UtilLibrary().createDateFormat("yyyy-MM-dd"));
             return subjectMapper.insertSubject(subject);
         } catch (MalformedURLException e) {
             log.error("잘못된 URL입니다.", e);
