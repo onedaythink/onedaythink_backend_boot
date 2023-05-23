@@ -38,6 +38,7 @@ public class SubjectController {
     // 논제 랜덤 조회
     @PostMapping(value = "subjects/main/{subDate}")
     public ResponseEntity mainSubject(@PathVariable String subDate){
+        // 20230522
         log.debug("mainSubject");
         Subject subject = subjectService.getMainSubject(Subject.builder().subDate(subDate).build());
         return ResponseEntity.ok(subject);

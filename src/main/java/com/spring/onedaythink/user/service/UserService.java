@@ -1,6 +1,7 @@
 package com.spring.onedaythink.user.service;
 
 import com.spring.onedaythink.user.vo.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -47,4 +48,5 @@ public interface UserService {
 
     // mypage 유저정보 업데이트
     int mypageUpdateUser(User user);
+
 }

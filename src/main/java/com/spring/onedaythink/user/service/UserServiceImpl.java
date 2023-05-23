@@ -93,12 +93,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int withdrawUser(User user) {
-
         return userMapper.deleteUser(user);
     }
 
     public int mypageUpdateUser(User user) {
-
         int result = userMapper.mypageUpdateUser(user);
         return result;
     }

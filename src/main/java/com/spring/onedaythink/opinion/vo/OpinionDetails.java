@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class OpinionDetails {
     private int userOpiNo, userNo, subNo, likeCount;
     private String userId, userImgPath, nickname, status, opinion,
-            createAt, isPublic, withdraw, content, chatRoom;
-
+            createAt, isPublic, withdraw, content, chatRoom, subImgPath;
 
 }
