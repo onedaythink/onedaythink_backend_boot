@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int registerUser(User user) {
         user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
+        user.setUserImgPath("https://i.ibb.co/jfvCkSZ/basicprofile.jpg");
         log.debug(user.getUserPwd());
         return userMapper.insertUser(user);
     }
