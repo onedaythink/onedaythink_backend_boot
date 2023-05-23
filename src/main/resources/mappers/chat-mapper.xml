@@ -90,11 +90,11 @@
             `chat_room_no`,
             `chat_send_user_no`,
             `chat_msg_content`,
-             `create_at`)
+             `chat_create_at`)
         values (#{chatRoomNo},
                 #{chatSendUserNo},
                 #{chatMsgContent},
-                #{createAt})
+                #{chatCreateAt})
     </insert>
 
     <!-- 전체 채팅방 조회(admin용: status, close 무관)-->

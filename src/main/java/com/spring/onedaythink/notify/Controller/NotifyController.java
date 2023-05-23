@@ -34,8 +34,9 @@ public class NotifyController {
     }
 
     @PostMapping(value ="api/v1/notify/edit/users" )
-    public void editNotify(@RequestBody NotifyDetails notifyDetails) {
+    public ResponseEntity<Object> editNotify(@RequestBody NotifyDetails notifyDetails) {
         int result = notifyService.editNotify(notifyDetails);
+        return ResponseEntity.ok("success");
     }
 
     @MessageMapping(value = "/notify/enter")
