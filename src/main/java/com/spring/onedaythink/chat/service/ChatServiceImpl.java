@@ -54,6 +54,7 @@ public class ChatServiceImpl implements ChatService{
             NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
                     userOpiNo(chatRoom.getToUserOpiNo()).
                     inviteUserNo(chatRoom.getFromUserNo()).
+                    type("invite").
                     createAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss")).
                     build());
             notifyDetail.setMessage(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.");

@@ -17,7 +17,7 @@ public class SelectedHaruInfoDetail {
     private int chatRoomNo, userNo;
     private String subject;
     private String userMsg;
-    private Map<String, String> haruName, haruPrompt, haruOpinion;
+    private Map<String, String> haruName, haruPrompt;
     private List<Integer> haruNo;
 
 }

@@ -5,14 +5,17 @@
 <mapper namespace="com.spring.onedaythink.report.mapper.ReportMapper">
 
     <insert id="insertReport" parameterType="Report">
-        insert into chat_report_tb (`chat_room_no`, `r_t_no`, `report_result`, `accused_user_no`)
-        values
-        (#{chatRoomNo}, #{reportNo}, #{reportResult}, #{accusedUserNo})
+        <!-- insert into chat_report_tb (`chat_room_no`, `r_t_no`, `report_result`, `accused_user_no`)
+             values
+             (#{chatRoomNo}, #{reportNo}, #{reportResult}, #{accusedUserNo}) -->
+        INSERT INTO chat_report_tb (chat_room_no, accused_user_no, r_t_no, report_result)
+        VALUES (#{chatRoomNo}, (SELECT from_user_no FROM chat_room_tb WHERE chat_room_no = #{chatRoomNo}), #{reportNo}, 'W');
     </insert>
 
     <select id="selectAllReport" parameterType="Report" resultType="Report">
-        select *
-        from chat_report_tb
+        SELECT chat_report_tb.*, user_tb.nickname
+        FROM chat_report_tb
+        LEFT JOIN user_tb ON chat_report_tb.accused_user_no = user_tb.user_no
     </select>
 
     <select id="selectOneReport" parameterType="Report" resultType="Report">

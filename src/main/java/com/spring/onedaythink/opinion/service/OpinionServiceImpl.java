@@ -87,6 +87,7 @@ public class OpinionServiceImpl implements OpinionService{
 
     @Override
     public int likeOpinions(LikeOpinion likeOpinion) {
+        log.debug(likeOpinion);
         int result = 0;
         // 좋아요를 눌렀던 적이 있는지 확인.
         int cnt = opinionMapper.selectLikeOption(likeOpinion);
@@ -94,10 +95,14 @@ public class OpinionServiceImpl implements OpinionService{
         if (cnt == 0) {
             result = opinionMapper.insertLikeOpinion(likeOpinion);
             NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
-                    userOpiNo(likeOpinion.getUserOpiNo()).
-                    inviteUserNo(likeOpinion.getUserNo()).
-                    build());
+                                                        userOpiNo(likeOpinion.getUserOpiNo()).
+                                                        type("like").
+                                                        inviteUserNo(likeOpinion.getUserNo()).
+                                                        build());
+            log.debug(notifyDetail);
             notifyDetail.setMessage(likeOpinion.getNickname() + "님이 회원님의 의견에 좋아요를 눌렀습니다.");
+            notifyDetail.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
+            notifyDetail.setType("like");
             int notifyResult = notifyService.addNotify(notifyDetail);
             notifyService.sendMessage(notifyDetail);
         } else {
@@ -106,19 +111,4 @@ public class OpinionServiceImpl implements OpinionService{
         }
         return result;
     }
-
-//    @Override
-//    public int addLikeOpinions(LikeOpinion likeOpinion) {
-//        int result = opinionMapper.insertLikeOpinion(likeOpinion);
-//        int count = opinionMapper.getLikeOpinion(likeOpinion);
-//        return count;
-//    }
-//
-//    @Override
-//    public int DeleteLikeOpinion(LikeOpinion likeOpinion) {
-//        int result = opinionMapper.deleteLikeOpinion(likeOpinion);
-//        return result;
-//    }
-
-
 }
