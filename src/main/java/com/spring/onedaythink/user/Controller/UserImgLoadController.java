@@ -1,4 +1,4 @@
-package com.spring.onedaythink.subject.Controller;
+package com.spring.onedaythink.user.Controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,21 +14,25 @@ import java.net.URLConnection;
 
 @Controller
 @RequestMapping(value = "api/v1/imgfind")
-public class ImgLoadController {
+public class UserImgLoadController {
 
     private Logger log = LogManager.getLogger("case3");
 
-    @GetMapping(value = "/subjectImg")
+    @GetMapping(value = "/userImg")
     public String findImg(HttpServletRequest request,
-                          HttpServletResponse response, @RequestParam String subjectImgPath) {
+                          HttpServletResponse response, @RequestParam String userImgPath) {
 
+        // 사용자 이미지 경로가 null인 경우, 디폴트 이미지 경로를 설정
+        if (userImgPath == null || userImgPath.isEmpty()) {
+            userImgPath = "src\\main\\resources\\static\\profileImages\\default.png";
+        }
 
-        String contentType = URLConnection.guessContentTypeFromName(subjectImgPath);
+        String contentType = URLConnection.guessContentTypeFromName(userImgPath);
         response.setContentType(contentType);
 
         // IMAGE_DIRECTORY 상수는 이미지가 저장된 디렉토리의 경로
-        File imageFile = new File(subjectImgPath);
-        log.debug("subjectImgPath :" + subjectImgPath);
+        File imageFile = new File(userImgPath);
+        log.debug("userImgPath :" + userImgPath);
         log.debug("contentType" + contentType);
 
         try (OutputStream out = response.getOutputStream();
