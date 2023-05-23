@@ -216,11 +216,7 @@ public class ChatBotServiceImpl implements ChatBotService{
             Map<String, String> map2 = new HashMap<>();
             map2.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
             log.debug("####" + selectedHaruInfoDetail.getHaruPrompt().get(String.valueOf(randomHaruNo)));
-
             selectedHaruInfoDetail.setHaruPrompt(map2);
-            Map<String, String> map3 = new HashMap<>();
-            map3.put(String.valueOf(randomHaruNo), selectedHaruInfoDetail.getHaruOpinion().get(String.valueOf(randomHaruNo)));
-            selectedHaruInfoDetail.setHaruOpinion(map3);
 
             // response
             Map<String, String> prompt = generatePrompt(selectedHaruInfoDetail);
@@ -237,6 +233,10 @@ public class ChatBotServiceImpl implements ChatBotService{
                 haruChatMessageResponse.setChatSendHaruNo(Integer.parseInt(String.valueOf(entry.getKey())));
                 haruChatMessageResponse.setChatMsgContent(answerFromGPT);
                 haruChatMessageResponse.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
+                haruChatMessageResponse.setHaruName(selectedHaruInfoDetail.getHaruName().get(String.valueOf(randomHaruNo)));
+                HaruChat haruChat = haruChatMapper.selectHaruBotByHaruNo(HaruChat.builder().haruNo(randomHaruNo).build());
+                haruChatMessageResponse.setHaruImgPath(haruChat.getHaruImgPath());
+
                 haruChatMapper.insertHaruChatMsg(haruChatMessageResponse);
                 responseList.add(haruChatMessageResponse);
 
@@ -384,6 +384,8 @@ public class ChatBotServiceImpl implements ChatBotService{
             haruChatRoomDetail.setChatRoomNo(selectedHaruInfoDetail.getChatRoomNo());
             haruChatRoomDetail.setHaruNo(haruNo);
             String haruOpinion = haruChatMapper.selectHaruOpinion(haruChatRoomDetail);
+
+            log.debug("~~~~"+ haruOpinion);
 
             StringBuilder sb = new StringBuilder();
             sb.append(haruPrompt)
