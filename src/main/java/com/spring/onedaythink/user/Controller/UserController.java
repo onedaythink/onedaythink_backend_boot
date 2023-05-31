@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
@@ -88,8 +89,8 @@ public class UserController {
         return ResponseEntity.ok(deleteUser);
     }
     //나의 공간 - 회원정보수정
-    @PostMapping(value="mypage/users/update")
-    public ResponseEntity<Object> mypageUpdateUser(@ModelAttribute User user, MultipartFile upfile) throws MalformedURLException {
+    @PostMapping(value="mypage/users/updateprofile")
+    public ResponseEntity<Object> mypageUpdateUser(@ModelAttribute User user, MultipartFile upfile) throws IOException {
         log.debug("updateOpinions");
 
         // axios 에서 데이터를 전송할 떄, content-type="multipart/form-data" 의 형태로 전송해주어야 한다.
@@ -110,8 +111,10 @@ public class UserController {
         // 넘어온 첨부파일이 있을 경우 b : 제목, 내용, 작성자, 원본파일명, 수정파일명
         // 넘어온 첨부파일이 없을 경우 b : 제목, 내용, 작성자
 
-        int result = userService.mypageUpdateUser(user);
-        return ResponseEntity.ok(result);
+        log.debug(user);
+        User users = userService.editUser(user);
+        log.debug(users);
+        return ResponseEntity.ok(users);
     }
 
 }

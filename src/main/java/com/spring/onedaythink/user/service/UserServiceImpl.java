@@ -85,9 +85,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User editUser(User user) {
-        user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
-        userMapper.updateUser(user);
-        return userMapper.selectUser(user);
+        if(user.getUserPwd() != null && user.getUserPwd().equals("")){
+            user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
+        }
+        int result = userMapper.updateUser(user);
+        log.debug(result);
+        User u = userMapper.selectUser(user);
+        log.debug(u);
+        return u;
     }
 
     @Override
@@ -96,6 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public int mypageUpdateUser(User user) {
+        log.debug(user);
         int result = userMapper.mypageUpdateUser(user);
         return result;
     }
