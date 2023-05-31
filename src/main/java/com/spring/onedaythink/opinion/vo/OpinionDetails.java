@@ -14,5 +14,4 @@ public class OpinionDetails {
     private String userId, userImgPath, nickname, status, opinion,
             createAt, isPublic, withdraw, content, chatRoom, subImgPath;
 
-
 }
