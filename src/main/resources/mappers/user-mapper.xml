@@ -61,13 +61,13 @@
         update user_tb
         <set>
             <if test="userPwd != null and userPwd != ''">user_pwd = #{userPwd}</if>
-            <if test="gender != null and gender !+ ''">gender = #{gender}</if>
-            <if test="birth != null and birth != ''">birth = #{birth}</if>
-            <if test="userName != null and userName != ''">user_name = #{userName}</if>
-            <if test="nickname != null and nickname != ''">nickname = #{nickname}</if>
-            <if test="email != null and email != ''">email = #{email}</if>
-            <if test="userOriginImg != null and userOriginImg != ''">user_origin_img = #{userOriginImg}</if>
-            <if test="userImgPath != null and userImgPath != ''">user_img_path = #{userImgPath}</if>
+            <if test="gender != null and gender != ''">, gender = #{gender}</if>
+            <if test="birth != null and birth != ''">, birth = #{birth}</if>
+            <if test="userName != null and userName != ''">, user_name = #{userName}</if>
+            <if test="nickname != null and nickname != ''">, nickname = #{nickname}</if>
+            <if test="email != null and email != ''">, email = #{email}</if>
+            <if test="userOriginImg != null and userOriginImg != ''">, user_origin_img = #{userOriginImg}</if>
+            <if test="userImgPath != null and userImgPath != ''">, user_img_path = #{userImgPath}</if>
         </set>
         where user_no = #{userNo}
     </update>
@@ -82,8 +82,8 @@
         update user_tb
         <set>
             <if test="userPwd != null and userPwd != ''">user_pwd = #{userPwd}</if>
-            <if test="userName != null and userName != ''">user_name = #{userName}</if>
-            <if test="nickname != null and nickname != ''">nickname = #{nickname}</if>
+            <if test="userName != null and userName != ''">, user_name = #{userName}</if>
+            <if test="nickname != null and nickname != ''">, nickname = #{nickname}</if>
         </set>
         where user_no = #{userNo}
     </update>
