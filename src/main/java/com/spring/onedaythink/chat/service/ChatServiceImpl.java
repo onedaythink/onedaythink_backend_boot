@@ -49,7 +49,7 @@ public class ChatServiceImpl implements ChatService{
         if (result == 0) {
             chatRoom.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             result = chatMapper.insertChatRoom(chatRoom);
-            map.put("msg", "채팅창을 개설했습니다.");
+            map.put("msg", "타인과의 채팅방이 개설되었습니다. 유익한 사유 되세요!");
             // userOpi 정보를 가지고 유저의 정보를 가지고 와야 한다.
             NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
                     userOpiNo(chatRoom.getToUserOpiNo()).
@@ -63,7 +63,7 @@ public class ChatServiceImpl implements ChatService{
             int notifyResult = notifyService.addNotify(notifyDetail);
             notifyService.sendMessage(notifyDetail);
         } else {
-            map.put("msg", "이미 개설된 채팅방이 존재합니다.");
+            map.put("msg", "이미 동일한 상대방과의 채팅방이 존재합니다.");
         }
         return map;
     }
@@ -78,8 +78,8 @@ public class ChatServiceImpl implements ChatService{
     // 마지막 메세지 조회
     @Override
     public ChatMessage getLastMessage(ChatRoom chatRoom) {
-         log.debug("getLastMessage");
-         return chatMapper.selectLastMessage(chatRoom);
+        log.debug("getLastMessage");
+        return chatMapper.selectLastMessage(chatRoom);
     }
 
     @Override
