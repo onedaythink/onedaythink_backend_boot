@@ -6,7 +6,7 @@
 
     <insert id="insertSubject" parameterType="Subject">
         INSERT INTO subject_tb (content,sub_origin_img,sub_img_path, sub_date)
-        VALUES (#{content},#{subOriginImg},#{subImgPath}, #{subDate})
+        VALUES (#{content},#{subOriginImg},#{subImgPath}, null)
     </insert>
 
     <select id="selectSubjects" resultType="Subject">

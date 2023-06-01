@@ -29,8 +29,8 @@ public class ImgLoadController {
 
         // IMAGE_DIRECTORY 상수는 이미지가 저장된 디렉토리의 경로
         File imageFile = new File(subjectImgPath);
-        log.debug("subjectImgPath :" + subjectImgPath);
-        log.debug("contentType" + contentType);
+        log.debug("subjectImgPath : " + subjectImgPath);
+        log.debug("contentType : " + contentType);
 
         try (OutputStream out = response.getOutputStream();
              InputStream in = new FileInputStream(imageFile)) {
