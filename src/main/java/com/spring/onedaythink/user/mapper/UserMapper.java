@@ -24,7 +24,7 @@ public interface UserMapper {
     public List<User> selectListUsersAdmin(User user);
 
 
-    public User updateUser(User user);
+    public int updateUser(User user);
 
     public int deleteUser(User user);
 
