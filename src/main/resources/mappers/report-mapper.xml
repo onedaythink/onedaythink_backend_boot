@@ -9,7 +9,7 @@
              values
              (#{chatRoomNo}, #{reportNo}, #{reportResult}, #{accusedUserNo}) -->
         INSERT INTO chat_report_tb (chat_room_no, accused_user_no, r_t_no, report_result)
-        VALUES (#{chatRoomNo}, (SELECT from_user_no FROM chat_room_tb WHERE chat_room_no = #{chatRoomNo}), #{reportNo}, 'W');
+        VALUES (#{chatRoomNo}, (SELECT from_user_no FROM chat_room_tb WHERE chat_room_no = #{chatRoomNo}), #{chatReportNo}, 'W');
     </insert>
 
     <select id="selectAllReport" parameterType="Report" resultType="Report">
