@@ -50,13 +50,14 @@ public class ChatServiceImpl implements ChatService{
             chatRoom.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             result = chatMapper.insertChatRoom(chatRoom);
             map.put("msg", "채팅창을 개설했습니다.");
-            // userOpi 정보를 가지고 유저의 정보를 가지고 와야 한다.
+            // userOpi 정보를 가지고 글 쓴 유저의 유저의 정보를 가지고 와야 한다.
             NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
                     userOpiNo(chatRoom.getToUserOpiNo()).
                     inviteUserNo(chatRoom.getFromUserNo()).
                     type("invite").
                     createAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss")).
                     build());
+
             notifyDetail.setMessage(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.");
             notifyDetail.setType("invite");
             notifyDetail.setInviteNickname(chatRoom.getFromNickname());
