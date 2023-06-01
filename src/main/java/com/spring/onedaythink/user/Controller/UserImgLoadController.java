@@ -24,7 +24,7 @@ public class UserImgLoadController {
 
         // 사용자 이미지 경로가 null인 경우, 디폴트 이미지 경로를 설정
         if (userImgPath == null || userImgPath.isEmpty()) {
-            userImgPath = "src\\main\\resources\\static\\profileImages\\default.png";
+            userImgPath = "src/main/resources/static/profileImages/default.png";
         }
 
         String contentType = URLConnection.guessContentTypeFromName(userImgPath);
