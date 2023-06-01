@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ChatRoomDetail {
     private int chatRoomNo, findUserNo, toUserOpiNo, fromUserNo;
     private String toNickname, fromNickname, lastMessage, sendNickname,
-            creatAt, isClose;
+            creatAt, isClose, toUserOriginPath, toUserImgPath, fromUserOriginPath, fromUserImgPath;
 
 
 }

@@ -25,7 +25,7 @@
 
     <!-- 채팅룸 조회 -->
     <select id="selectChatRooms" parameterType="ChatRoomDetail" resultType="ChatRoomDetail">
-        select cr.chat_room_no, to_u.user_no as to_user_no, to_u.nickname as to_nickname, from_u.user_no as from_user_no, from_u.nickname as from_nickname,
+        select cr.chat_room_no, to_u.user_no as to_user_no, to_u.nickname as to_nickname, to_u.user_origin_img as to_userOriginPath, to_u.user_img_path as to_userImgPath, from_u.user_origin_img as from_userOriginPath, from_u.user_img_path as from_userImgPath,  from_u.user_no as from_user_no, from_u.nickname as from_nickname,
              cr.create_at, cr.is_close, cm.chat_msg_content as last_message, cm.nickname as send_nickname
         from chat_room_tb as cr
                  join user_opinion_tb as uo
