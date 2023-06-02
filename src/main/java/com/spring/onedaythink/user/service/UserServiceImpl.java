@@ -25,12 +25,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User userIdCheck(User user) {
-        return null;
+        return userMapper.userIdCheck(user);
     }
 
     @Override
     public User nicknameCheck(User user) {
-        return null;
+        return userMapper.nicknameCheck(user);
     }
 
     @Override

@@ -56,7 +56,7 @@
                       join user_opinion_tb AS t1 on cr.`to_user_opi_no` = t1.`user_opi_no`
                       JOIN user_tb AS t2 ON t1.user_no = t2.user_no
              WHERE t1.user_no = #{fromUserNo}
-               and cr.`to_user_opi_no`= (select t3.user_no
+               and cr.`from_user_no`= (select t3.user_no
                                          from user_tb as t3
                                          join user_opinion_tb as t4 on t3.user_no = t4.user_no
                                          where t4.`user_opi_no` = #{toUserOpiNo}
