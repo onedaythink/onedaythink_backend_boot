@@ -21,6 +21,9 @@ public interface UserService {
     // 회원가입 시 닉네임 중복 확인
     User nicknameCheck(User user);
 
+    // 회원정보 수정 시 이메일 중복 확인
+    User emailCheck(User user);
+
     // 회원 가입
     int registerUser(User user);
 

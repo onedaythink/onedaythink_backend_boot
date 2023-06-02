@@ -16,6 +16,13 @@
         where nickname = #{nickname}
     </select>
 
+    <select id="emailCheck" parameterType="User" resultType="User">
+        select email
+        from user_tb
+        where email = #{email}
+    </select>
+
+
     <insert id="insertUser" parameterType="User">
         insert into user_tb (`user_id`, `user_pwd`, `gender`, `birth`, `user_name`, `nickname`
         <if test='email != null and email != ""'>, email</if>
