@@ -55,6 +55,12 @@ public class UserController {
         return ResponseEntity.ok(userService.nicknameCheck(user));
     }
 
+    @PostMapping(value ="user/newUserUpdate/email-check" )
+    public ResponseEntity<Object> emailCheckUser(@RequestBody User user) {
+        log.debug("email check");
+        return ResponseEntity.ok(userService.emailCheck(user));
+    }
+
     @PostMapping(value = "auth/signup")
     public ResponseEntity<Object> registerUser(@RequestBody User user){
         log.debug(user);
