@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User emailCheck(User user) {
+        return userMapper.emailCheck(user);
+    }
+
+    @Override
     public int registerUser(User user) {
         user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
         log.debug(user.getUserPwd());

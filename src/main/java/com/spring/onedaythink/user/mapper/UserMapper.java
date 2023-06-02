@@ -12,6 +12,8 @@ public interface UserMapper {
 
     public User nicknameCheck(User user);
 
+    public User emailCheck(User user);
+
     public int insertUser(User user);
 
     public User selectLoginUser(User user);
