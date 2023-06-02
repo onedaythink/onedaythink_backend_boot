@@ -51,30 +51,6 @@
     <select id="selectChatRoomCountByUserNo" parameterType="ChatRoom" resultType="int">
         select
         -- 나는 채팅방에 초대된 사람이고, 외견번호의 외래키인 유저번호를 가진 유저가 사실 이전에 나에게 초대를 보낸 적이 있을 때
-        (SELECT COUNT(*)
-        FROM chat_room_tb cr
-        join user_opinion_tb AS t1 on cr.`to_user_opi_no` = t1.`user_opi_no`
-        JOIN user_tb AS t2 ON t1.user_no = t2.user_no
-        WHERE t1.user_no = #{fromUserNo}
-        and cr.`to_user_opi_no`= (select t3.user_no
-        from user_tb as t3
-        join user_opinion_tb as t4 on t3.user_no = t4.user_no
-        where t4.`user_opi_no` = #{toUserOpiNo}
-        )
-        and cr.is_close = 'n'
-        )
-        +
-        -- 내가 채팅의 초대자이고, 의견번호를 기준으로 채팅방을 초대할 때
-        (SELECT COUNT(*)
-        FROM chat_room_tb as cr
-        join user_opinion_tb as uo on cr.`to_user_opi_no` = uo.`user_opi_no`
-        WHERE uo.user_no = (select t1.user_no
-        from user_tb as t1
-        join user_opinion_tb as t2 on t1.user_no = t2.user_no
-        where t2.user_opi_no = #{toUserOpiNo})
-        and cr.from_user_no = #{fromUserNo}
-        AND cr.is_close = 'n') as `count`
-            -- 나는 채팅방에 초대된 사람이고, 외견번호의 외래키인 유저번호를 가진 유저가 사실 이전에 나에게 초대를 보낸 적이 있을 때
             (SELECT COUNT(*)
              FROM chat_room_tb cr
                       join user_opinion_tb AS t1 on cr.`to_user_opi_no` = t1.`user_opi_no`
