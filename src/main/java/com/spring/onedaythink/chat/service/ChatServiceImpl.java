@@ -49,21 +49,22 @@ public class ChatServiceImpl implements ChatService{
         if (result == 0) {
             chatRoom.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             result = chatMapper.insertChatRoom(chatRoom);
-            map.put("msg", "타인과의 채팅방이 개설되었습니다. 유익한 사유 되세요!");
-            // userOpi 정보를 가지고 유저의 정보를 가지고 와야 한다.
+            map.put("msg", "타인과의 채팅방이 개설되었습니다. 즐거운 사유 되세요!");
+            // userOpi 정보를 가지고 글 쓴 유저의 유저의 정보를 가지고 와야 한다.
             NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
                     userOpiNo(chatRoom.getToUserOpiNo()).
                     inviteUserNo(chatRoom.getFromUserNo()).
                     type("invite").
                     createAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss")).
                     build());
+
             notifyDetail.setMessage(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.");
             notifyDetail.setType("invite");
             notifyDetail.setInviteNickname(chatRoom.getFromNickname());
             int notifyResult = notifyService.addNotify(notifyDetail);
             notifyService.sendMessage(notifyDetail);
         } else {
-            map.put("msg", "이미 동일한 상대방과의 채팅방이 존재합니다.");
+            map.put("msg", "이미 상대방과의 채팅방이 존재합니다.");
         }
         return map;
     }

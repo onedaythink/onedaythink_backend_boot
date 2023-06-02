@@ -35,7 +35,7 @@
     <!-- 타인의 생각 전체조회 -->
     <select id="selectAllOtherOpinion" parameterType="OpinionDetails" resultType="OpinionDetails">
         <![CDATA[
-        SELECT B.nickname, B.user_origin_img, A.user_opi_no, A.user_no, A.opinion, A.sub_no,
+        SELECT B.nickname, B.user_origin_img, B.user_img_path, A.user_opi_no, A.user_no, A.opinion, A.sub_no,
                (SELECT COUNT(*)
                 FROM like_opinion_tb
                 WHERE user_opi_no = A.user_opi_no
@@ -49,6 +49,7 @@
         WHERE A.sub_no = #{subNo}
           and A.user_no != #{userNo}
           AND A.is_public = 'y'
+        and A.withdraw = 'n'
         ]]>
     </select>
 

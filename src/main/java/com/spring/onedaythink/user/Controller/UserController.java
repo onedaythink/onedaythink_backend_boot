@@ -43,7 +43,10 @@ public class UserController {
     @PostMapping(value ="auth/signup/id-check" )
     public ResponseEntity<Object> idCheckUser(@RequestBody User user) {
         log.debug("id check");
-        return ResponseEntity.ok(userService.userIdCheck(user));
+        log.debug(user);
+        User userCheck = userService.userIdCheck(user);
+        log.debug(userCheck);
+        return ResponseEntity.ok(userCheck);
     }
 
     @PostMapping(value ="auth/signup/nickname-check" )
