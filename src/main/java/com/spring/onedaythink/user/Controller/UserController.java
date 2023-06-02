@@ -83,13 +83,6 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-//    @PostMapping(value = "users")
-//    public ResponseEntity<Object> editUser(@RequestBody User user){
-//        log.debug(user);
-//        User updateUser = userService.editUser(user);
-//        return ResponseEntity.ok(updateUser);
-//    }
-
     // 회원 탈퇴(마이페이지)
     @PostMapping(value = "users/{userNo}")
     public ResponseEntity<Object> withdrawUser(@PathVariable int userNo, @RequestBody User user){
@@ -97,18 +90,27 @@ public class UserController {
         int deleteUser = userService.withdrawUser(user);
         return ResponseEntity.ok(deleteUser);
     }
+
+//    @PostMapping(value = "users")
+//    public ResponseEntity<Object> editUser(@RequestBody User user){
+//        log.debug(user);
+//        User updateUser = userService.editUser(user);
+//        return ResponseEntity.ok(updateUser);
+//    }
+
     //나의 공간 - 회원정보수정
     @PostMapping(value="mypage/users/updateprofile")
-    public ResponseEntity<Object> mypageUpdateUser(@ModelAttribute User user, MultipartFile upfile) throws IOException {
+    public ResponseEntity<Object> mypageUpdateUser(@ModelAttribute User user, @RequestParam(required = false) MultipartFile upfile) throws IOException {
         log.debug("updateOpinions");
-
+        log.debug(user);
+        log.debug(upfile);
         // axios 에서 데이터를 전송할 떄, content-type="multipart/form-data" 의 형태로 전송해주어야 한다.
 
         // 전달된 파일이 있을 경우
         // 1. 파일명 수정 => yyyymmddhhmmssxxxxx.확장자
         // 2. 서버로 업로드
         // 3. 원본명, 서버에 업로드된 수정명, 경로를 db 로 insert
-        if(!upfile.getOriginalFilename().equals("")) {
+        if(upfile != null && !upfile.getOriginalFilename().equals("")) {
 
             // saveFile 메소드로 위의 코드를 따로 정의함
             // 필요한 인자로는 업로드한 파일과 webapp 경로를 찾기 위한 request, image/food||bottle 을 구분하는 텍스트
