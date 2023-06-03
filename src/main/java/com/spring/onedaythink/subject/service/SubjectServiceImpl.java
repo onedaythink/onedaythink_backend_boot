@@ -41,20 +41,19 @@ public class SubjectServiceImpl implements SubjectService {
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");
             String fileNm = now.format(formatter);
-//            String fileNm = imagePath.substring(imagePath.lastIndexOf("/") + 1);
-//            String lastFiveChars = fileNm.substring(Math.max(0, fileNm.length() - 5)); // 변경된 코드
             String fileName = fileNm + ".png"; // 파일명에 .png 확장자 추가
             File file = new File("src/main/resources/static/images/" + fileName); // 경로와 파일명을 함께 지정
             ImageIO.write(image, "png", file);
 
             // Subject 객체의 SubImgPath 필드에 파일 경로 설정
             log.debug(file.getPath());
-            log.debug("파일 형식 테스트" + file.getPath());
+            log.debug("파일 형식 테스트!!!srcsrc" + file.getPath());
 
             subject.setSubOriginImg(fileName);
-            subject.setSubImgPath("src/main/resources/static/images/" + fileName);
+            subject.setSubImgPath(file.getPath());
             subject.setSubDate(new UtilLibrary().createDateFormat("yyyy-MM-dd"));
-
+            log.debug("파일 get형식 3" + file.getPath());
+            
             return subjectMapper.insertSubject(subject);
         } catch (MalformedURLException e) {
             log.error("잘못된 URL입니다.", e);
