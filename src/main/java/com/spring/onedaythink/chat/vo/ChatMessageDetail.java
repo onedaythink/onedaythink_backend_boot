@@ -13,7 +13,7 @@ public class ChatMessageDetail {
 
     private ChatMessage chatMessage;
     private int chatMsgNo,chatRoomNo,chatSendUserNo;
-    private String sendNickname, chatMsgContent, chatCreateAt, chatReadYn;
+    private String sendNickname, chatMsgContent, chatCreateAt, chatReadYn, userOriginImg, userImgPath;
 
 
 }

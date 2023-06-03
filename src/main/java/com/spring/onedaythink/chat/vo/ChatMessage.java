@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class ChatMessage {
 
     private int chatMsgNo,chatRoomNo,chatSendUserNo;
-    private String chatMsgContent, chatCreateAt, chatReadYn;
+    private String chatMsgContent, chatCreateAt, chatReadYn, userOriginImg, userImgPath;
 
 }

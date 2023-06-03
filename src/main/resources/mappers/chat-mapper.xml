@@ -10,8 +10,9 @@
     </insert>
 
     <select id="selectLastMessage" parameterType="ChatRoom" resultType="ChatMessage">
-        SELECT chat_send_user_no, chat_msg_content, chat_create_at
-        FROM chat_message_tb
+        SELECT chat_send_user_no, chat_msg_content, chat_create_at, ut.user_origin_img, ut.user_img_path
+        FROM chat_message_tb as cmt
+        join user_tb as ut on cmt.chat_send_user_no = ut.user_no
         WHERE chat_room_no = #{chatRoomNo}
         ORDER BY chat_create_at DESC
         LIMIT 1
@@ -79,8 +80,7 @@
     <select id="selectChatMessageDetails" parameterType="ChatRoomDetail" resultType="ChatMessageDetail">
         select cm.*, u.nickname as send_nickname, u.user_img_path
         from chat_message_tb cm
-        join user_tb u
-        on cm.chat_send_user_no = u.user_no
+        join user_tb u on cm.chat_send_user_no = u.user_no
         where chat_room_no = #{chatRoomNo}
         order by 1
     </select>
