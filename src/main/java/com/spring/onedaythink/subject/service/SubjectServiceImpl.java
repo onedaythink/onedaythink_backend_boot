@@ -52,7 +52,9 @@ public class SubjectServiceImpl implements SubjectService {
             log.debug("파일 형식 테스트" + file.getPath());
 
             subject.setSubOriginImg(fileName);
+            subject.setSubImgPath("src/main/resources/static/images/" + fileName);
             subject.setSubDate(new UtilLibrary().createDateFormat("yyyy-MM-dd"));
+
             return subjectMapper.insertSubject(subject);
         } catch (MalformedURLException e) {
             log.error("잘못된 URL입니다.", e);
@@ -65,7 +67,6 @@ public class SubjectServiceImpl implements SubjectService {
             throw new RuntimeException("알 수 없는 오류가 발생했습니다.", e);
         }
     }
-
 
     // 논제 전체 조회
     @Override
