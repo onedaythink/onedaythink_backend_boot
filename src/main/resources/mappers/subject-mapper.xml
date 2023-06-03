@@ -13,6 +13,7 @@
         SELECT *
         FROM subject_tb
         WHERE withdraw = 'n'
+        ORDER BY 1 DESC
     </select>
 
     <select id="selectNullSubjectDates" resultType="Subject">

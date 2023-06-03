@@ -25,6 +25,7 @@ public class SubjectController {
     public ResponseEntity getSubjects() {
         List<Subject> subjectList = subjectService.getSubjects();
         log.debug("getSubjects");
+        log.debug(subjectList.get(0));
         return ResponseEntity.ok(subjectList);
     }
 
