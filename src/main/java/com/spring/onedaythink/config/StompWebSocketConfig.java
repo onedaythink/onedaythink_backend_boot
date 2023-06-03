@@ -16,15 +16,15 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stomp/ws")
-                .setAllowedOrigins("http://localhost:8080", "http://localhost:4000")
+                .setAllowedOrigins("http://192.168.0.3:8080", "http://192.168.0.3:4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
                 .withSockJS();
 
         registry.addEndpoint("/stomp/notify/ws")
-                .setAllowedOrigins("http://localhost:8080", "http://localhost:4000")
+                .setAllowedOrigins("http://192.168.0.3:8080", "http://192.168.0.3:4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
                 .withSockJS();
 
         registry.addEndpoint("/stomp/haru/ws")
-                .setAllowedOrigins("http://localhost:8080", "http://localhost:4000")
+                .setAllowedOrigins("http://192.168.0.3:8080", "http://192.168.0.3:4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
                 .withSockJS();
 
     }

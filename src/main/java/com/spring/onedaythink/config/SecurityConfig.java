@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://localhost:4000", "http://localhost:5000")); // 클라이언트의 도메인
+        configuration.setAllowedOrigins(Arrays.asList("http://192.168.0.3:8080", "http://192.168.0.3:4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080", "http://localhost:8080", "http://localhost:4000", "http://localhost:5000")); // 클라이언트의 도메인
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "DELETE")); // 허용할 HTTP 메소드
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "RefreshToken", "Content-Type")); // JWT 토큰과 Content-Type 허용
         configuration.setExposedHeaders(Arrays.asList("Authorization", "RefreshToken")); // JWT 토큰 노출 허용

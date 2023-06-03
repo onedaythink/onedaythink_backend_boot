@@ -53,7 +53,7 @@ public class SubjectServiceImpl implements SubjectService {
             subject.setSubImgPath(file.getPath());
             subject.setSubDate(new UtilLibrary().createDateFormat("yyyy-MM-dd"));
             log.debug("파일 get형식 3" + file.getPath());
-            
+
             return subjectMapper.insertSubject(subject);
         } catch (MalformedURLException e) {
             log.error("잘못된 URL입니다.", e);
