@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User editUser(User user) {
-        if(user.getUserPwd() != null && user.getUserPwd().equals("")){
+        if(user.getUserPwd() != null && !user.getUserPwd().equals("")){
             user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
         }
         int result = userMapper.updateUser(user);
