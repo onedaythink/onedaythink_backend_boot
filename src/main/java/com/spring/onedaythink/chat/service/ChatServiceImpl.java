@@ -49,7 +49,7 @@ public class ChatServiceImpl implements ChatService{
         if (result == 0) {
             chatRoom.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             result = chatMapper.insertChatRoom(chatRoom);
-            map.put("msg", "타인과의 채팅방이 개설되었습니다. 즐거운 사유 되세요!");
+            map.put("msg", "채팅방이 개설되었습니다.");
             // userOpi 정보를 가지고 글 쓴 유저의 유저의 정보를 가지고 와야 한다.
             NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
                     userOpiNo(chatRoom.getToUserOpiNo()).
