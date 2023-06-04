@@ -37,4 +37,15 @@
           and cr.is_close = 'n'</if>
         limit 1
     </select>
+
+    <select id="selectBeforeNotifyInfoMessage" parameterType="NotifyDetail" resultType="NotifyDetail">
+        select uo.user_no as user_no, u.nickname as to_nickname, cr.from_user_no as from_user_no, u2.nickname as from_nickname, cr.chat_room_no
+        from user_opinion_tb as uo
+                 join user_tb as u on u.user_no = uo.user_no
+                 join chat_room_tb as cr on uo.user_opi_no = cr.to_user_opi_no
+                 join user_tb as u2 on u2.user_no = cr.from_user_no
+        where cr.chat_room_no = #{chatRoomNo}
+          and cr.is_close = 'n'
+        limit 1;
+    </select>
 </mapper>

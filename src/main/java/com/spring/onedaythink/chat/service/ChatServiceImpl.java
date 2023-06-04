@@ -55,9 +55,9 @@ public class ChatServiceImpl implements ChatService{
                     userOpiNo(chatRoom.getToUserOpiNo()).
                     inviteUserNo(chatRoom.getFromUserNo()).
                     type("invite").
-                    createAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss")).
                     build());
 
+            notifyDetail.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             notifyDetail.setMessage(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.");
             notifyDetail.setType("invite");
             notifyDetail.setInviteNickname(chatRoom.getFromNickname());
@@ -93,14 +93,26 @@ public class ChatServiceImpl implements ChatService{
         chatMessageDetail.setChatCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
         int result = chatMapper.insertChatMessage(chatMessageDetail);
 
-        // 메세지 생성 후 대상에게 전송
-//        NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfo(NotifyDetail.builder().
-//                chatRoomNo(chatMessageDetail.getChatRoomNo()).
-//                lastChatMessage(chatMessageDetail.getChatMsgContent()).
-//                build());
-//        notifyDetail.setMessage(chatMessageDetail.getSendNickname() + " : " + chatMessageDetail.getChatMessage());
-//        int notifyResult = notifyService.addNotify(notifyDetail);
-//        notifyService.sendMessage(notifyDetail);
+        //     메세지 생성 후 대상에게 전송
+        NotifyDetail notifyDetail = notifyService.getBeforeNotifyInfoMessage(NotifyDetail.builder().
+                chatRoomNo(chatMessageDetail.getChatRoomNo()).
+                type("message").
+                build());
+
+        log.debug(notifyDetail);
+        // 알림 유저 번호와 챗메세지의 전송 유저 번호가 동일하다면?
+        // 챗 개설자가 아닌 챗 초대자가 메세지를 보낸 것
+        if( notifyDetail.getUserNo() == chatMessageDetail.getChatSendUserNo()) {
+            notifyDetail.setUserNo(notifyDetail.getFromUserNo());
+            notifyDetail.setInviteNickname(notifyDetail.getFromNickname());
+        } else {
+            notifyDetail.setInviteNickname(notifyDetail.getToNickname());
+        }
+        notifyDetail.setMessage(chatMessageDetail.getSendNickname() + " : " + chatMessageDetail.getChatMsgContent());
+        notifyDetail.setType("message");
+        log.debug(notifyDetail);
+        int notifyResult = notifyService.addNotify(notifyDetail);
+        notifyService.sendMessage(notifyDetail);
         return result;
     }
 

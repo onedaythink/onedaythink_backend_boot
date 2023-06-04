@@ -16,4 +16,6 @@ public interface NotifyMapper {
     int editNotify(Notify notify);
 
     NotifyDetail selectBeforeNotifyInfo(NotifyDetail notifyDetail);
+
+    NotifyDetail selectBeforeNotifyInfoMessage(NotifyDetail notifyDetail);
 }

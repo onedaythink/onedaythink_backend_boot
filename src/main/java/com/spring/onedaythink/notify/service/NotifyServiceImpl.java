@@ -60,4 +60,9 @@ public class NotifyServiceImpl implements NotifyService{
     public NotifyDetail getBeforeNotifyInfo(NotifyDetail notifyDetail) {
         return notifyMapper.selectBeforeNotifyInfo(notifyDetail);
     }
+
+    @Override
+    public NotifyDetail getBeforeNotifyInfoMessage(NotifyDetail notifyDetail) {
+        return notifyMapper.selectBeforeNotifyInfoMessage(notifyDetail);
+    }
 }

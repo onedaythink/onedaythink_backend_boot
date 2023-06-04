@@ -22,4 +22,5 @@ public interface NotifyService {
 
     NotifyDetail getBeforeNotifyInfo(NotifyDetail notifyDetail);
 
+    NotifyDetail getBeforeNotifyInfoMessage(NotifyDetail notifyDetail);
 }

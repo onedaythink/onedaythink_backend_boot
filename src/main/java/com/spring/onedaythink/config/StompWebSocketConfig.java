@@ -1,5 +1,6 @@
 package com.spring.onedaythink.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -9,6 +10,9 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 @Configuration
 public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    @Value("${ip-address}")
+    private String IPADRESS;
     //endpoint를 /stomp로 하고, allowedOrigins를 "*"로 하면 페이지에서
     //Get /info 404 Error가 발생한다. 그래서 아래와 같이 2개의 계층으로 분리하고
     //origins를 개발 도메인으로 변경하니 잘 동작하였다.
@@ -16,15 +20,15 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stomp/ws")
-                .setAllowedOrigins("http://192.168.0.3:8080", "http://192.168.0.3:4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
+                .setAllowedOrigins("http://"+IPADRESS+":8080", "http://"+IPADRESS+":4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
                 .withSockJS();
 
         registry.addEndpoint("/stomp/notify/ws")
-                .setAllowedOrigins("http://192.168.0.3:8080", "http://192.168.0.3:4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
+                .setAllowedOrigins("http://"+IPADRESS+":8080", "http://"+IPADRESS+":4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
                 .withSockJS();
 
         registry.addEndpoint("/stomp/haru/ws")
-                .setAllowedOrigins("http://192.168.0.3:8080", "http://192.168.0.3:4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
+                .setAllowedOrigins("http://"+IPADRESS+":8080", "http://"+IPADRESS+":4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080","http://localhost:8080", "http://localhost:4000")
                 .withSockJS();
 
     }

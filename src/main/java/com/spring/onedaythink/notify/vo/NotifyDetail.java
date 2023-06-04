@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NotifyDetail {
 
-    private int notiNo, userNo;
+    private int notiNo, userNo, fromUserNo;
     private String message, readYn, createAt;
 
-    private int userOpiNo, inviteUserNo, lastChatUserNo, chatRoomNo;
-    private String type, inviteNickname, lastChatUserNickname, lastChatMessage, lastChatUserImgPath;
+    // 초대 받은 사람, 마지막 메세지를 받아야 하는 사람
+    private int userOpiNo, inviteUserNo, lastMsgReceiveUserNo, chatRoomNo;
+    private String type, toNickname, fromNickname, inviteNickname, lastChatUserNickname, lastChatMessage, lastChatUserImgPath;
 
     /*
     알림

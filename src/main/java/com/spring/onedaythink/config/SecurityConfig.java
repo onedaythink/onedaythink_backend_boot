@@ -1,5 +1,6 @@
 package com.spring.onedaythink.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
 //        this.jwtTokenProvider = jwtTokenProvider;
 //    }
+
+    @Value("${ip-address}")
+    private String IPADRESS;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -63,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("http://192.168.0.3:8080", "http://192.168.0.3:4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080", "http://localhost:8080", "http://localhost:4000", "http://localhost:5000")); // 클라이언트의 도메인
+        configuration.setAllowedOrigins(Arrays.asList("http://"+IPADRESS+":8080", "http://"+IPADRESS+":4000", "http://127.0.0.1:4000", "http://127.0.0.1:8080", "http://localhost:8080", "http://localhost:4000", "http://localhost:5000")); // 클라이언트의 도메인
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "DELETE")); // 허용할 HTTP 메소드
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "RefreshToken", "Content-Type")); // JWT 토큰과 Content-Type 허용
         configuration.setExposedHeaders(Arrays.asList("Authorization", "RefreshToken")); // JWT 토큰 노출 허용
