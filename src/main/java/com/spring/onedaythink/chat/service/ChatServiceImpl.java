@@ -41,6 +41,7 @@ public class ChatServiceImpl implements ChatService{
     @Override
     public Map<String, Object> addChatRoom(ChatRoom chatRoom){
         log.debug("add ChatRoom");
+        log.debug(chatRoom);
         Map<String, Object> map = new HashMap<>();
 
         // 기존에 채팅룸이 열려있는지 확인
@@ -56,12 +57,13 @@ public class ChatServiceImpl implements ChatService{
                     inviteUserNo(chatRoom.getFromUserNo()).
                     type("invite").
                     build());
-
+            log.debug("add chatroom notify : " + notifyDetail);
             notifyDetail.setCreateAt(new UtilLibrary().createDateFormat("yyyy-MM-dd HH:mm:ss"));
             notifyDetail.setMessage(chatRoom.getFromNickname() + "님이 채팅에 초대하셨습니다.");
             notifyDetail.setType("invite");
             notifyDetail.setInviteNickname(chatRoom.getFromNickname());
             int notifyResult = notifyService.addNotify(notifyDetail);
+            log.debug("add chatroom notify : " + notifyDetail);
             notifyService.sendMessage(notifyDetail);
         } else {
             map.put("msg", "이미 상대방과의 채팅방이 존재합니다.");
@@ -104,9 +106,9 @@ public class ChatServiceImpl implements ChatService{
         // 챗 개설자가 아닌 챗 초대자가 메세지를 보낸 것
         if( notifyDetail.getUserNo() == chatMessageDetail.getChatSendUserNo()) {
             notifyDetail.setUserNo(notifyDetail.getFromUserNo());
-            notifyDetail.setInviteNickname(notifyDetail.getFromNickname());
-        } else {
             notifyDetail.setInviteNickname(notifyDetail.getToNickname());
+        } else {
+            notifyDetail.setInviteNickname(notifyDetail.getFromNickname());
         }
         notifyDetail.setMessage(chatMessageDetail.getSendNickname() + " : " + chatMessageDetail.getChatMsgContent());
         notifyDetail.setType("message");

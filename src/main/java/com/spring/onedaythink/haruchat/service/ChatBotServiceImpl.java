@@ -245,7 +245,7 @@ public class ChatBotServiceImpl implements ChatBotService{
             hasScheduledTaskExecuted = true;
             sendMessage(responseList);
             return responseList;
-        }, 10, TimeUnit.SECONDS);
+        }, 120, TimeUnit.SECONDS);
 
         List<HaruChatMessage> msgList = future.get();
 
