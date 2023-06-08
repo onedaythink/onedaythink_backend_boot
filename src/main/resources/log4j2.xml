@@ -34,7 +34,7 @@
 			<AppenderRef ref="stdout_1" />
 		</Logger>
 
-		<Logger name="case3" level="info" additivity="false">
+		<Logger name="case3" level="debug" additivity="false">
 			<AppenderRef ref="stdout_1" />
 			<AppenderRef ref="File_1" />
 		</Logger>

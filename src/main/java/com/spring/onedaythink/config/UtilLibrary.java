@@ -56,6 +56,9 @@ public class UtilLibrary {
         return outputImage;
     }
 
+
+
+
     // 일반 메소드
     // * 스프링에서 반드시 요청을 처리하는 메소드만 Controller 에 들어가라는 법은 없다!!
     // 현재 넘어온 첨부파일의 이름을 수정 후 서버의 그 폴더에 저장하는 메소드

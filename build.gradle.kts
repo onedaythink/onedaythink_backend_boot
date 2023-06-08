@@ -66,6 +66,9 @@ dependencies {
     /** Object Mapper**/
     /** https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind **/
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.12.3")
+
+    /** redis **/
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 }
 
 tasks.withType<Test> {
